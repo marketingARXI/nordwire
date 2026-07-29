@@ -69,6 +69,28 @@ const revealObserver = new IntersectionObserver((entries, observer) => {
 
 revealItems.forEach((item) => revealObserver.observe(item));
 
+const rotatingWord = document.querySelector('[data-rotating-word]');
+const rotatingSequence = ['onde', 'quando', 'como', 'onde', 'quando', 'como', 'onde'];
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (rotatingWord && !reduceMotion) {
+  let wordIndex = 0;
+
+  const rotationTimer = window.setInterval(() => {
+    rotatingWord.classList.add('is-fading');
+
+    window.setTimeout(() => {
+      wordIndex += 1;
+      rotatingWord.textContent = rotatingSequence[wordIndex];
+      rotatingWord.classList.remove('is-fading');
+
+      if (wordIndex === rotatingSequence.length - 1) {
+        window.clearInterval(rotationTimer);
+      }
+    }, 320);
+  }, 2000);
+}
+
 if (nav) {
   nav.addEventListener('click', (event) => {
     const target = event.target;

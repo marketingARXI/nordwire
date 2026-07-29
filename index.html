@@ -41,61 +41,56 @@
 
     <main>
       <section class="hero section-dark" id="home">
+        <video
+          class="hero-background-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          poster="assets/images/hero-background.png"
+          aria-hidden="true"
+        >
+          <source src="assets/videos/hero-background.mp4" type="video/mp4">
+        </video>
+        <div class="hero-background-overlay" aria-hidden="true"></div>
+
         <div class="section-shell hero-shell">
           <div class="grid-12 hero-grid">
             <div class="hero-stage reveal" data-reveal>
-              <span class="hero-stage-line hero-stage-line-x" aria-hidden="true"></span>
-              <span class="hero-stage-line hero-stage-line-y" aria-hidden="true"></span>
-              <div class="hero-badge" aria-hidden="true">
-                <span>Custom Built</span>
-                <span>Monitoring Ready</span>
-                <span>3D Engineered</span>
-                <span>Bespoke Systems</span>
-              </div>
-
               <div class="hero-word-stack" aria-hidden="true">
                 <span class="hero-word-sub">BESPOKE</span>
                 <span class="hero-word">PROTOTYPE</span>
               </div>
-
-              <figure class="hero-media">
-                <img src="assets/images/hero-hardware.png" alt="Premium hardware render with dark shell, red illuminated details, and sculpted engineering lines.">
-              </figure>
-
-              <div class="hero-tagline">Where precise engineering meets bespoke design.</div>
             </div>
 
             <div class="hero-copy reveal" data-reveal>
-              <p class="eyebrow">Overview</p>
-              <h1>From concept to working device — built exactly to spec.</h1>
-              <p class="lead">
-                Forge One designs, prototypes, and monitors bespoke hardware systems with precision development, rapid validation loops, and refined enclosure design.
-              </p>
+              <h1>
+                Inteligência no chão de fábrica.<br>
+                Controlo total
+                <span class="hero-rotating-word" data-rotating-word aria-hidden="true">onde</span><span class="visually-hidden">onde</span>
+                quiser.
+              </h1>
 
               <div class="hero-actions">
-                <a class="button button-primary" href="#cta">
+                <a class="button button-primary" href="#ecosystem">
                   <span class="button-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none"><path d="M7 12h10M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </span>
-                  <span>Start a Project</span>
+                  <span>Explorar Mais</span>
                 </a>
-                <span class="micro-copy">Hardware customization • prototyping • monitoring</span>
+                <a class="button button-subtle" href="#cta">
+                  <span class="button-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M7 12h10M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <span>Tornar-me Parceiro</span>
+                </a>
               </div>
             </div>
-
-            <aside class="hero-meta reveal" data-reveal aria-label="Hero highlights">
-              <p class="eyebrow">Field-ready stack</p>
-              <ul class="meta-list">
-                <li><strong>Rapid loops</strong><span>Concept, fit, test, refine.</span></li>
-                <li><strong>3D enclosures</strong><span>Tailored shells and finishes.</span></li>
-                <li><strong>Live telemetry</strong><span>Remote insight from deployment.</span></li>
-              </ul>
-            </aside>
           </div>
         </div>
       </section>
 
-      <section class="logo-strip section-dark" aria-label="Technology ecosystem">
+      <section class="logo-strip section-dark" id="ecosystem" aria-label="Technology ecosystem">
         <div class="section-shell">
           <div class="logo-grid reveal" data-reveal>
             <div class="logo-pill">CAD / CAM</div>
@@ -153,7 +148,7 @@
             </div>
 
             <figure class="section-visual section-visual-right reveal" data-reveal>
-              <img src="assets/images/prototype-module.svg" alt="Dark floating prototype module render with red engineering highlights.">
+              <img src="assets/images/prototype-module.png" alt="Dark floating prototype module render with red engineering highlights.">
             </figure>
           </div>
         </div>
@@ -163,7 +158,7 @@
         <div class="section-shell">
           <div class="grid-12 feature-grid feature-grid-mirrored">
             <figure class="section-visual section-visual-left reveal" data-reveal>
-              <img src="assets/images/enclosure-case.svg" alt="Custom enclosure carry case render with premium dark shell and red accent plate.">
+              <img src="assets/images/enclosure-case.png" alt="Custom enclosure carry case render with premium dark shell and red accent plate.">
             </figure>
 
             <div class="section-copy reveal" data-reveal>
@@ -239,7 +234,7 @@
             </div>
 
             <figure class="promo-visual">
-              <img src="assets/images/promo-hardware.svg" alt="Dark premium product composition fading into a rounded call-to-action panel.">
+              <img src="assets/images/promo-hardware.png" alt="Dark premium product composition fading into a rounded call-to-action panel.">
             </figure>
           </article>
         </div>
