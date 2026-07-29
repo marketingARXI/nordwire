@@ -1,0 +1,23 @@
+<svg width="1200" height="880" viewBox="0 0 1200 880" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="caseGrad" x1="292" y1="217" x2="819" y2="688" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2A2A2A"/>
+      <stop offset="0.46" stop-color="#171717"/>
+      <stop offset="1" stop-color="#060606"/>
+    </linearGradient>
+    <filter id="caseShadow" x="176" y="110" width="890" height="660" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="34" stdDeviation="30" flood-color="#000000" flood-opacity="0.55"/>
+    </filter>
+  </defs>
+  <ellipse cx="604" cy="720" rx="260" ry="54" fill="#000000" fill-opacity="0.52"/>
+  <g filter="url(#caseShadow)">
+    <path d="M286 380C286 256.877 385.877 157 509 157H664C791.356 157 895 260.644 895 388V424C895 551.356 791.356 655 664 655H509C385.877 655 286 555.123 286 432V380Z" fill="url(#caseGrad)"/>
+    <path d="M437 178C452.96 142.943 488.003 118 528.875 118H640.125C680.997 118 716.04 142.943 732 178V210H437V178Z" fill="#181818"/>
+    <path d="M333 414C333 313.484 414.484 232 515 232H651C751.516 232 833 313.484 833 414V420C833 520.516 751.516 602 651 602H515C414.484 602 333 520.516 333 420V414Z" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="2"/>
+    <rect x="498" y="333" width="184" height="118" rx="28" fill="#FF2C52"/>
+    <rect x="513" y="348" width="154" height="88" rx="20" fill="#E81E49"/>
+    <path d="M918 356V532" stroke="#D7D7D7" stroke-opacity="0.36" stroke-width="11" stroke-linecap="round"/>
+    <path d="M933 408V470" stroke="#FF2C52" stroke-opacity="0.94" stroke-width="8" stroke-linecap="round"/>
+    <text x="590" y="405" fill="#FFF8F9" font-family="Poppins, Montserrat, sans-serif" font-size="40" font-weight="700" text-anchor="middle" letter-spacing="8">FORGE</text>
+  </g>
+</svg>

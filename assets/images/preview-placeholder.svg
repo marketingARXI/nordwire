@@ -1,0 +1,16 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#0B0B0B"/>
+  <rect x="120" y="108" width="1360" height="684" rx="32" fill="#141414" stroke="#252525"/>
+  <path d="M240 258H1020" stroke="#242424" stroke-width="2"/>
+  <path d="M240 326H860" stroke="#2B2B2B" stroke-width="24" stroke-linecap="round"/>
+  <path d="M240 382H720" stroke="#666666" stroke-width="14" stroke-linecap="round"/>
+  <path d="M240 428H820" stroke="#555555" stroke-width="14" stroke-linecap="round"/>
+  <rect x="240" y="500" width="212" height="58" rx="29" fill="#1E1E1E" stroke="#393939"/>
+  <path d="M310 529H382" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+  <ellipse cx="1116" cy="452" rx="232" ry="176" fill="#171717"/>
+  <ellipse cx="1116" cy="452" rx="144" ry="110" fill="#222222"/>
+  <ellipse cx="1116" cy="452" rx="84" ry="84" fill="#0D0D0D"/>
+  <circle cx="1116" cy="452" r="34" stroke="#FF2C52" stroke-width="5"/>
+  <text x="240" y="182" fill="#FFFFFF" font-family="Poppins, Montserrat, sans-serif" font-size="40" font-weight="700">Project Screenshot Placeholder</text>
+  <text x="240" y="642" fill="#8D8D8D" font-family="Poppins, Montserrat, sans-serif" font-size="24">Replace this image with a real homepage preview before publishing.</text>
+</svg>
