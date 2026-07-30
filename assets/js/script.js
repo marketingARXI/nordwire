@@ -2,40 +2,80 @@
 
 const body = document.body;
 const header = document.querySelector('.site-header');
+const headerBrand = document.querySelector('.header-brand');
 const menuToggle = document.querySelector('.menu-toggle');
-const nav = document.querySelector('.site-nav');
 const navLinks = Array.from(document.querySelectorAll('.site-nav a'));
+const homeSection = document.querySelector('#home');
 const revealItems = document.querySelectorAll('[data-reveal]');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const sections = navLinks
   .map((link) => document.querySelector(link.getAttribute('href')))
   .filter(Boolean);
 
-const closeNav = () => {
+const closeNav = ({ restoreFocus = false } = {}) => {
   body.classList.remove('nav-open');
   menuToggle?.setAttribute('aria-expanded', 'false');
+  menuToggle?.setAttribute('aria-label', 'Abrir menu de navegação');
+
+  if (restoreFocus) {
+    menuToggle?.focus();
+  }
 };
 
 menuToggle?.addEventListener('click', () => {
   const open = body.classList.toggle('nav-open');
   menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.setAttribute(
+    'aria-label',
+    open ? 'Fechar menu de navegação' : 'Abrir menu de navegação',
+  );
 });
 
-navLinks.forEach((link) => {
-  link.addEventListener('click', () => closeNav());
+const headerLinks = [headerBrand, ...navLinks].filter(Boolean);
+
+headerLinks.forEach((link) => {
+  link.addEventListener('click', (event) => {
+    const targetSelector = link.getAttribute('href');
+    const target = targetSelector ? document.querySelector(targetSelector) : null;
+
+    if (!target) {
+      return;
+    }
+
+    event.preventDefault();
+    closeNav();
+    target.scrollIntoView({
+      behavior: reduceMotion ? 'auto' : 'smooth',
+      block: 'start',
+    });
+    window.history.replaceState(null, '', targetSelector);
+  });
 });
 
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') {
+  if (event.key === 'Escape' && body.classList.contains('nav-open')) {
+    closeNav({ restoreFocus: true });
+  }
+});
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 1024 && body.classList.contains('nav-open')) {
     closeNav();
   }
 });
 
 const updateHeader = () => {
-  header?.classList.toggle('is-scrolled', window.scrollY > 12);
+  if (!header || !homeSection) {
+    return;
+  }
+
+  const heroBottom = homeSection.getBoundingClientRect().bottom;
+  header.classList.toggle('is-compact', heroBottom <= header.offsetHeight);
 };
 
 const setActiveLink = () => {
-  const scrollPoint = window.scrollY + window.innerHeight * 0.32;
+  const headerOffset = header?.offsetHeight ?? 0;
+  const scrollPoint = window.scrollY + headerOffset + window.innerHeight * 0.28;
 
   let currentId = sections[0]?.id;
   sections.forEach((section) => {
@@ -47,6 +87,11 @@ const setActiveLink = () => {
   navLinks.forEach((link) => {
     const active = link.getAttribute('href') === `#${currentId}`;
     link.classList.toggle('is-active', active);
+    if (active) {
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
   });
 };
 
@@ -71,7 +116,6 @@ revealItems.forEach((item) => revealObserver.observe(item));
 
 const rotatingWord = document.querySelector('[data-rotating-word]');
 const rotatingSequence = ['onde', 'quando', 'como', 'onde', 'quando', 'como', 'onde'];
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 if (rotatingWord && !reduceMotion) {
   let wordIndex = 0;
@@ -210,14 +254,5 @@ if (prototypeModel) {
         cancelOscillation();
       }
     });
-  });
-}
-
-if (nav) {
-  nav.addEventListener('click', (event) => {
-    const target = event.target;
-    if (target instanceof HTMLElement && target.matches('a')) {
-      closeNav();
-    }
   });
 }
