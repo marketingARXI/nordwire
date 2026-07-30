@@ -6,7 +6,7 @@ const headerBrand = document.querySelector('.header-brand');
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = Array.from(document.querySelectorAll('.site-nav a'));
 const homeSection = document.querySelector('#home');
-const revealItems = document.querySelectorAll('[data-reveal]');
+const revealGroups = Array.from(document.querySelectorAll('[data-reveal]'));
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const sections = navLinks
   .map((link) => document.querySelector(link.getAttribute('href')))
@@ -103,16 +103,61 @@ window.addEventListener('scroll', () => {
   setActiveLink();
 }, { passive: true });
 
-const revealObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('is-visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.16 });
+const revealTargetSelector = [
+  '.eyebrow',
+  'h1',
+  'h2',
+  '.section-copy > p',
+  '.promo-copy > p',
+  '.hero-actions',
+  '.feature-item',
+  '.prototype-model-column',
+  '.copy-actions',
+  '.stat-block',
+  '.promo-copy > .button',
+  '.promo-visual',
+].join(',');
 
-revealItems.forEach((item) => revealObserver.observe(item));
+const revealCounts = new WeakMap();
+const revealTargets = revealGroups.flatMap((group) => {
+  const nestedTargets = Array.from(group.querySelectorAll(revealTargetSelector));
+  const targets = nestedTargets.length ? nestedTargets : [group];
+  const section = group.closest('section') ?? group;
+  let targetIndex = revealCounts.get(section) ?? 0;
+
+  targets.forEach((target) => {
+    target.classList.add('reveal-item');
+    target.style.setProperty(
+      '--reveal-delay',
+      `${Math.min(targetIndex, 7) * 65}ms`,
+    );
+    targetIndex += 1;
+  });
+
+  revealCounts.set(section, targetIndex);
+  return targets;
+});
+
+if (
+  !reduceMotion
+  && 'IntersectionObserver' in window
+  && revealTargets.length
+) {
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.12,
+    rootMargin: '0px 0px -8% 0px',
+  });
+
+  revealTargets.forEach((target) => revealObserver.observe(target));
+  document.documentElement.classList.add('reveal-enabled');
+}
 
 const rotatingWord = document.querySelector('[data-rotating-word]');
 const rotatingSequence = ['onde', 'quando', 'como', 'onde', 'quando', 'como', 'onde'];
