@@ -16,13 +16,13 @@
     <rect x="314" y="252" width="244" height="128" rx="22" fill="#101010" stroke="#FFFFFF" stroke-opacity="0.06"/>
     <rect x="588" y="252" width="284" height="128" rx="22" fill="#101010" stroke="#FFFFFF" stroke-opacity="0.06"/>
     <rect x="314" y="408" width="558" height="190" rx="26" fill="#101010" stroke="#FFFFFF" stroke-opacity="0.06"/>
-    <path d="M350 346C386 329 406 288 446 288C486 288 509 349 550 349" stroke="#FF2C52" stroke-width="6" stroke-linecap="round"/>
+    <path d="M350 346C386 329 406 288 446 288C486 288 509 349 550 349" stroke="#2260F2" stroke-width="6" stroke-linecap="round"/>
     <path d="M618 338H846" stroke="#FFFFFF" stroke-opacity="0.1" stroke-width="14" stroke-linecap="round"/>
     <path d="M618 304H764" stroke="#FFFFFF" stroke-opacity="0.2" stroke-width="10" stroke-linecap="round"/>
-    <path d="M366 542C420 464 488 492 538 438C577 397 624 427 674 466C719 502 769 488 820 446" stroke="#FF2C52" stroke-width="7" stroke-linecap="round"/>
-    <circle cx="538" cy="438" r="10" fill="#FF2C52"/>
-    <circle cx="674" cy="466" r="10" fill="#FF2C52"/>
-    <circle cx="820" cy="446" r="10" fill="#FF2C52"/>
+    <path d="M366 542C420 464 488 492 538 438C577 397 624 427 674 466C719 502 769 488 820 446" stroke="#2260F2" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="538" cy="438" r="10" fill="#2260F2"/>
+    <circle cx="674" cy="466" r="10" fill="#2260F2"/>
+    <circle cx="820" cy="446" r="10" fill="#2260F2"/>
     <path d="M350 566H838" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="2"/>
     <path d="M420 498V598" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="2"/>
     <path d="M556 452V598" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="2"/>

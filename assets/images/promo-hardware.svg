@@ -12,7 +12,7 @@
   <rect x="792" y="338" width="34" height="164" rx="17" transform="rotate(-16 792 338)" fill="url(#promoGrad)"/>
   <circle cx="532" cy="522" r="112" fill="url(#promoGrad)"/>
   <circle cx="810" cy="504" r="124" fill="url(#promoGrad)"/>
-  <circle cx="810" cy="504" r="54" stroke="#FF2C52" stroke-width="4" stroke-opacity="0.82"/>
+  <circle cx="810" cy="504" r="54" stroke="#2260F2" stroke-width="4" stroke-opacity="0.82"/>
   <ellipse cx="742" cy="334" rx="180" ry="140" fill="#FFFFFF" fill-opacity="0.05"/>
-  <ellipse cx="834" cy="452" rx="150" ry="84" fill="#FF2C52" fill-opacity="0.16"/>
+  <ellipse cx="834" cy="452" rx="150" ry="84" fill="#2260F2" fill-opacity="0.16"/>
 </svg>

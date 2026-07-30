@@ -6,8 +6,8 @@
       <stop offset="1" stop-color="#070707"/>
     </linearGradient>
     <radialGradient id="panelGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(714 492) rotate(90) scale(180 240)">
-      <stop stop-color="#FF2C52" stop-opacity="0.34"/>
-      <stop offset="1" stop-color="#FF2C52" stop-opacity="0"/>
+      <stop stop-color="#2260F2" stop-opacity="0.34"/>
+      <stop offset="1" stop-color="#2260F2" stop-opacity="0"/>
     </radialGradient>
     <filter id="moduleShadow" x="174" y="148" width="868" height="584" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
       <feDropShadow dx="0" dy="34" stdDeviation="28" flood-color="#000000" flood-opacity="0.58"/>
@@ -20,9 +20,9 @@
     <rect x="570" y="232" width="258" height="360" rx="122" transform="rotate(12 570 232)" fill="url(#panel)"/>
     <circle cx="386" cy="594" r="132" fill="url(#panel)"/>
     <circle cx="736" cy="584" r="112" fill="url(#panel)"/>
-    <circle cx="736" cy="584" r="54" stroke="#FF2C52" stroke-width="4" stroke-opacity="0.82"/>
+    <circle cx="736" cy="584" r="54" stroke="#2260F2" stroke-width="4" stroke-opacity="0.82"/>
     <path d="M492 318L640 270" stroke="#FAFAFA" stroke-opacity="0.08" stroke-width="8" stroke-linecap="round"/>
-    <path d="M664 328C719 336 767 360 807 400" stroke="#FF2C52" stroke-opacity="0.26" stroke-width="9" stroke-linecap="round"/>
-    <path d="M304 642C360 684 414 706 482 710" stroke="#FF2C52" stroke-opacity="0.18" stroke-width="10" stroke-linecap="round"/>
+    <path d="M664 328C719 336 767 360 807 400" stroke="#2260F2" stroke-opacity="0.26" stroke-width="9" stroke-linecap="round"/>
+    <path d="M304 642C360 684 414 706 482 710" stroke="#2260F2" stroke-opacity="0.18" stroke-width="10" stroke-linecap="round"/>
   </g>
 </svg>
