@@ -91,6 +91,128 @@ if (rotatingWord && !reduceMotion) {
   }, 2000);
 }
 
+const prototypeModel = document.querySelector('#prototype-model');
+
+if (prototypeModel) {
+  customElements.whenDefined('model-viewer').then(() => {
+    const idleDelay = 3500;
+    const repeatDelay = 1400;
+    let idleTimer;
+    let modelReady = false;
+    let userInteracting = false;
+    let oscillating = false;
+
+    const clearIdleTimer = () => {
+      window.clearTimeout(idleTimer);
+    };
+
+    const cancelOscillation = () => {
+      if (!oscillating || !modelReady) {
+        return;
+      }
+
+      oscillating = false;
+      prototypeModel.classList.remove('is-oscillating');
+      const orbit = prototypeModel.getCameraOrbit();
+      prototypeModel.cameraOrbit = `${orbit.theta}rad ${orbit.phi}rad ${orbit.radius}m`;
+    };
+
+    const playOscillation = () => {
+      if (
+        reduceMotion ||
+        !modelReady ||
+        userInteracting ||
+        !prototypeModel.modelIsVisible
+      ) {
+        return;
+      }
+
+      oscillating = true;
+      prototypeModel.classList.add('is-oscillating');
+      prototypeModel.interact(2200, {
+        x: {
+          initialValue: 0.5,
+          keyframes: [
+            { frames: 1, value: 0.485 },
+            { frames: 2, value: 0.515 },
+            { frames: 1, value: 0.5 },
+          ],
+        },
+        y: {
+          initialValue: 0.5,
+          keyframes: [{ frames: 1, value: 0.5 }],
+        },
+      });
+    };
+
+    const queueOscillation = (delay = idleDelay) => {
+      clearIdleTimer();
+
+      if (reduceMotion || userInteracting || !modelReady) {
+        return;
+      }
+
+      idleTimer = window.setTimeout(playOscillation, delay);
+    };
+
+    const beginInteraction = () => {
+      userInteracting = true;
+      prototypeModel.classList.add('is-interacting');
+      clearIdleTimer();
+      cancelOscillation();
+    };
+
+    const endInteraction = () => {
+      userInteracting = false;
+      prototypeModel.classList.remove('is-interacting');
+      queueOscillation();
+    };
+
+    prototypeModel.addEventListener('load', () => {
+      modelReady = true;
+      prototypeModel.classList.add('is-ready');
+      queueOscillation();
+    });
+
+    prototypeModel.addEventListener('pointerdown', beginInteraction);
+    prototypeModel.addEventListener('pointerup', endInteraction);
+    prototypeModel.addEventListener('pointercancel', endInteraction);
+    prototypeModel.addEventListener('keydown', beginInteraction);
+    prototypeModel.addEventListener('keyup', endInteraction);
+    prototypeModel.addEventListener('wheel', () => {
+      beginInteraction();
+      endInteraction();
+    }, { passive: true });
+
+    prototypeModel.addEventListener('camera-change', (event) => {
+      if (event.detail.source === 'user-interaction') {
+        userInteracting = false;
+        oscillating = false;
+        prototypeModel.classList.remove('is-interacting', 'is-oscillating');
+        queueOscillation();
+      }
+    });
+
+    prototypeModel.addEventListener('interact-stopped', (event) => {
+      oscillating = false;
+      prototypeModel.classList.remove('is-oscillating');
+
+      if (event.detail.source === 'automatic' && !userInteracting) {
+        queueOscillation(repeatDelay);
+      }
+    });
+
+    prototypeModel.addEventListener('model-visibility', (event) => {
+      if (event.detail.visible) {
+        queueOscillation();
+      } else {
+        clearIdleTimer();
+        cancelOscillation();
+      }
+    });
+  });
+}
+
 if (nav) {
   nav.addEventListener('click', (event) => {
     const target = event.target;
