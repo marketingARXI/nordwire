@@ -9,6 +9,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    window.ModelViewerElement = window.ModelViewerElement || {};
+    window.ModelViewerElement.dracoDecoderLocation = "https://www.gstatic.com/draco/versioned/decoders/1.5.7/";
+  </script>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -137,9 +142,27 @@
               </div>
             </div>
 
-            <figure class="section-visual section-visual-right reveal" data-reveal>
-              <img src="assets/images/prototype-module.png" alt="Dark floating prototype module render with red engineering highlights.">
-            </figure>
+            <div class="prototype-model-column reveal" data-reveal>
+              <model-viewer
+                id="prototype-model"
+                class="prototype-model-viewer"
+                src="assets/models/nordwire-3d.glb"
+                alt="Interactive 3D model of the Nordwire prototype device."
+                camera-controls
+                disable-pan
+                touch-action="pan-y"
+                loading="lazy"
+                reveal="auto"
+                interaction-prompt="none"
+                camera-orbit="114deg 70deg 110%"
+                field-of-view="32deg"
+                tone-mapping="neutral"
+              >
+                <div class="model-poster" slot="poster" aria-hidden="true">
+                  <span class="model-loader"></span>
+                </div>
+              </model-viewer>
+            </div>
           </div>
         </div>
       </section>
