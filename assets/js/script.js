@@ -9,7 +9,11 @@ const navLinks = Array.from(document.querySelectorAll('.site-nav a'));
 const homeSection = document.querySelector('#inicio');
 const heroVideo = document.querySelector('.hero-background-video');
 const heroCopy = document.querySelector('.hero-copy');
-const revealGroups = Array.from(document.querySelectorAll('[data-reveal]'));
+const revealGroups = Array.from(document.querySelectorAll('[data-reveal]'))
+  .filter((group) => (
+    !group.closest('#inicio')
+    && !group.matches('.prototype-model-column')
+  ));
 const hotspotButtons = Array.from(document.querySelectorAll('[data-hotspot]'));
 const demoForms = Array.from(document.querySelectorAll('[data-demo-form]'));
 const placeholderLinks = Array.from(document.querySelectorAll('[data-placeholder-link]'));
@@ -370,6 +374,7 @@ const buildHorizontalProgress = () => {
       'aria-label',
       `Ir para ${sectionLabel}`,
     );
+    button.dataset.label = sectionLabel;
     button.addEventListener('click', () => navigateToSection(index));
     horizontalProgress.append(button);
     return button;
@@ -532,6 +537,7 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 horizontalMedia.addEventListener('change', syncHorizontalLayout);
+buildHorizontalProgress();
 syncHorizontalLayout();
 updateHeader();
 setActiveLink();
@@ -562,7 +568,7 @@ const revealTargets = revealGroups.flatMap((group) => {
     target.classList.add('reveal-item');
     target.style.setProperty(
       '--reveal-delay',
-      `${Math.min(targetIndex, 7) * 65}ms`,
+      `${Math.min(targetIndex, 7) * 110}ms`,
     );
     targetIndex += 1;
   });
