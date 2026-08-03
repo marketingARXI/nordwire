@@ -255,6 +255,11 @@ const updateNavigationState = (index) => {
     }
   });
 
+  body.classList.toggle(
+    'footer-visible',
+    isHorizontalLayout() && currentId === 'contactos',
+  );
+
   updateHeader();
 };
 
@@ -472,6 +477,7 @@ const disableHorizontalLayout = () => {
   main.removeEventListener('scroll', handleHorizontalScroll);
   main.removeEventListener('scrollend', releaseWheelLock);
   documentRoot.classList.remove('horizontal-ready');
+  body.classList.remove('footer-visible');
   main.scrollLeft = 0;
   releaseWheelLock();
 
