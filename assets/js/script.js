@@ -79,21 +79,25 @@ const positionHotspotTooltip = (button) => {
 
 hotspotButtons.forEach((button) => {
   button.addEventListener('pointerenter', () => {
-    window.requestAnimationFrame(() => positionHotspotTooltip(button));
+    positionHotspotTooltip(button);
   });
 
   button.addEventListener('focus', () => {
-    window.requestAnimationFrame(() => positionHotspotTooltip(button));
+    positionHotspotTooltip(button);
   });
 
   button.addEventListener('click', () => {
+    if (documentRoot.classList.contains('horizontal-ready')) {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+
     const willOpen = !button.classList.contains('is-open');
     closeHotspots({ except: button });
     button.classList.toggle('is-open', willOpen);
     button.setAttribute('aria-expanded', String(willOpen));
 
     if (willOpen) {
-      window.requestAnimationFrame(() => positionHotspotTooltip(button));
+      positionHotspotTooltip(button);
     } else {
       button.classList.remove('tooltip-below');
     }
@@ -509,14 +513,12 @@ const revealTargetSelector = [
   'h2',
   '.hero-subtitle',
   '.section-copy > p',
-  '.promo-copy > p',
   '.hero-actions',
   '.feature-item',
+  '.value-highlight',
   '.prototype-model-column',
   '.copy-actions',
   '.stat-block',
-  '.promo-copy > .button',
-  '.promo-visual',
 ].join(',');
 
 const revealCounts = new WeakMap();
