@@ -10,6 +10,7 @@ const homeSection = document.querySelector('#inicio');
 const heroVideo = document.querySelector('.hero-background-video');
 const heroCopy = document.querySelector('.hero-copy');
 const revealGroups = Array.from(document.querySelectorAll('[data-reveal]'));
+const hotspotButtons = Array.from(document.querySelectorAll('[data-hotspot]'));
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const horizontalMedia = window.matchMedia('(min-width: 768px)');
 const staticHeroMedia = window.matchMedia('(max-width: 1024px)');
@@ -25,6 +26,85 @@ let wheelLocked = false;
 let wheelLockTimer;
 let horizontalScrollFrame;
 let heroRevealTimer;
+
+const closeHotspots = ({ except, restoreFocus = false } = {}) => {
+  hotspotButtons.forEach((button) => {
+    if (button === except || !button.classList.contains('is-open')) {
+      return;
+    }
+
+    button.classList.remove('is-open', 'tooltip-below');
+    button.setAttribute('aria-expanded', 'false');
+    button.querySelector('.product-hotspot-tooltip')
+      ?.style.removeProperty('--tooltip-shift-x');
+
+    if (restoreFocus) {
+      button.focus();
+    }
+  });
+};
+
+const positionHotspotTooltip = (button) => {
+  const tooltip = button.querySelector('.product-hotspot-tooltip');
+  if (!tooltip) {
+    return;
+  }
+
+  const viewportPadding = 12;
+  const transitionBuffer = 8;
+  const viewportWidth = document.documentElement.clientWidth;
+  tooltip.style.setProperty('--tooltip-shift-x', '0px');
+  button.classList.remove('tooltip-below');
+
+  const buttonRect = button.getBoundingClientRect();
+  const tooltipHeight = tooltip.getBoundingClientRect().height;
+  if (buttonRect.top < tooltipHeight + viewportPadding + 12) {
+    button.classList.add('tooltip-below');
+  }
+
+  const tooltipRect = tooltip.getBoundingClientRect();
+  let shiftX = 0;
+
+  if (tooltipRect.left < viewportPadding) {
+    shiftX += viewportPadding - tooltipRect.left + transitionBuffer;
+  }
+
+  if (tooltipRect.right > viewportWidth - viewportPadding) {
+    shiftX -= tooltipRect.right - (viewportWidth - viewportPadding)
+      + transitionBuffer;
+  }
+
+  tooltip.style.setProperty('--tooltip-shift-x', `${shiftX}px`);
+};
+
+hotspotButtons.forEach((button) => {
+  button.addEventListener('pointerenter', () => {
+    window.requestAnimationFrame(() => positionHotspotTooltip(button));
+  });
+
+  button.addEventListener('focus', () => {
+    window.requestAnimationFrame(() => positionHotspotTooltip(button));
+  });
+
+  button.addEventListener('click', () => {
+    const willOpen = !button.classList.contains('is-open');
+    closeHotspots({ except: button });
+    button.classList.toggle('is-open', willOpen);
+    button.setAttribute('aria-expanded', String(willOpen));
+
+    if (willOpen) {
+      window.requestAnimationFrame(() => positionHotspotTooltip(button));
+    } else {
+      button.classList.remove('tooltip-below');
+    }
+  });
+});
+
+document.addEventListener('pointerdown', (event) => {
+  if (!event.target.closest?.('[data-hotspot]')) {
+    closeHotspots();
+  }
+});
 
 const revealHeroCopy = (reason) => {
   window.clearTimeout(heroRevealTimer);
@@ -386,8 +466,12 @@ const syncHorizontalLayout = () => {
 };
 
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && body.classList.contains('nav-open')) {
-    closeNav({ restoreFocus: true });
+  if (event.key === 'Escape') {
+    closeHotspots({ restoreFocus: true });
+
+    if (body.classList.contains('nav-open')) {
+      closeNav({ restoreFocus: true });
+    }
   }
 });
 
@@ -401,6 +485,10 @@ window.addEventListener('resize', () => {
       positionHorizontalSection(activeSectionIndex);
     });
   }
+
+  hotspotButtons
+    .filter((button) => button.classList.contains('is-open'))
+    .forEach(positionHotspotTooltip);
 });
 
 window.addEventListener('scroll', () => {

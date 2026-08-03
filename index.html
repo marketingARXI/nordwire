@@ -232,10 +232,58 @@
               <h2>Os nossos produtos.</h2>
               <p>Hardware desenhado à medida da produção real. Explora as soluções que já desenvolvemos.</p>
             </div>
-            <div class="product-placeholder-grid reveal" data-reveal aria-label="Espaço reservado para produtos">
-              <div class="product-placeholder" aria-hidden="true"></div>
-              <div class="product-placeholder" aria-hidden="true"></div>
-              <div class="product-placeholder" aria-hidden="true"></div>
+            <div class="product-hotspot-visual reveal" data-reveal>
+              <div class="product-hotspot-stage" role="group" aria-label="Detalhes interativos da placa NordCore">
+                <img class="product-hotspot-image" src="assets/images/nordcore.png" alt="Placa eletrónica NordCore vista de cima.">
+
+                <button class="product-hotspot" type="button" style="--hotspot-x: 43%; --hotspot-y: 21%;" aria-label="Módulo de processamento" aria-describedby="hotspot-processing" aria-expanded="false" data-hotspot>
+                  <span class="product-hotspot-dot" aria-hidden="true"></span>
+                  <span class="product-hotspot-tooltip" id="hotspot-processing" role="tooltip">
+                    <strong>Módulo de processamento</strong>
+                    <span>O cérebro do sistema — processa os dados recolhidos no chão de fábrica em tempo real.</span>
+                  </span>
+                </button>
+
+                <button class="product-hotspot" type="button" style="--hotspot-x: 41%; --hotspot-y: 84%;" aria-label="Ligação à rede" aria-describedby="hotspot-network" aria-expanded="false" data-hotspot>
+                  <span class="product-hotspot-dot" aria-hidden="true"></span>
+                  <span class="product-hotspot-tooltip" id="hotspot-network" role="tooltip">
+                    <strong>Ligação à rede</strong>
+                    <span>Ligação de rede estável para comunicar com a infraestrutura da fábrica.</span>
+                  </span>
+                </button>
+
+                <button class="product-hotspot" type="button" style="--hotspot-x: 57%; --hotspot-y: 93%;" aria-label="Alimentação e configuração" aria-describedby="hotspot-power" aria-expanded="false" data-hotspot>
+                  <span class="product-hotspot-dot" aria-hidden="true"></span>
+                  <span class="product-hotspot-tooltip" id="hotspot-power" role="tooltip">
+                    <strong>Alimentação e configuração</strong>
+                    <span>Alimentação e configuração simples, prontas a integrar em qualquer ambiente.</span>
+                  </span>
+                </button>
+
+                <button class="product-hotspot" type="button" style="--hotspot-x: 17%; --hotspot-y: 72%;" aria-label="Memória de segurança" aria-describedby="hotspot-memory" aria-expanded="false" data-hotspot>
+                  <span class="product-hotspot-dot" aria-hidden="true"></span>
+                  <span class="product-hotspot-tooltip" id="hotspot-memory" role="tooltip">
+                    <strong>Memória de segurança</strong>
+                    <span>Mantém as definições e o registo temporal seguros, mesmo sem energia.</span>
+                  </span>
+                </button>
+
+                <button class="product-hotspot" type="button" style="--hotspot-x: 82%; --hotspot-y: 84%;" aria-label="Expansão" aria-describedby="hotspot-expansion" aria-expanded="false" data-hotspot>
+                  <span class="product-hotspot-dot" aria-hidden="true"></span>
+                  <span class="product-hotspot-tooltip" id="hotspot-expansion" role="tooltip">
+                    <strong>Expansão</strong>
+                    <span>Preparado para expansão e armazenamento adicional, à medida das necessidades.</span>
+                  </span>
+                </button>
+
+                <button class="product-hotspot" type="button" style="--hotspot-x: 69%; --hotspot-y: 20%;" aria-label="Arrefecimento" aria-describedby="hotspot-cooling" aria-expanded="false" data-hotspot>
+                  <span class="product-hotspot-dot" aria-hidden="true"></span>
+                  <span class="product-hotspot-tooltip" id="hotspot-cooling" role="tooltip">
+                    <strong>Arrefecimento</strong>
+                    <span>Arrefecimento ativo para um funcionamento fiável e contínuo.</span>
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
