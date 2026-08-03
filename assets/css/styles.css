@@ -398,6 +398,60 @@ main > section {
   gap: 1rem;
 }
 
+.language-switcher {
+  position: relative;
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  min-height: 44px;
+  padding: 0.2rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: rgba(13, 15, 20, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.language-option {
+  min-width: 40px;
+  min-height: 36px;
+  padding: 0.3rem 0.45rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  transition: color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+}
+
+.language-option:hover,
+.language-option:focus-visible {
+  color: var(--text);
+}
+
+.language-option:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.language-option.is-active {
+  background: rgba(34, 96, 242, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(34, 96, 242, 0.32), 0 0 16px rgba(34, 96, 242, 0.1);
+  color: var(--accent);
+}
+
+.language-divider {
+  width: 1px;
+  height: 14px;
+  background: var(--line);
+}
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -1536,6 +1590,48 @@ main > section:not(.hero) > .section-shell {
   }
 }
 
+@media (min-width: 1025px) and (max-width: 1180px) {
+  .header-shell {
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+  }
+
+  .site-nav {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    gap: 1.4rem;
+    background: rgba(8, 8, 8, 0.98);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 200ms ease, visibility 200ms ease;
+  }
+
+  body.nav-open .site-nav {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .site-nav a {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+  }
+
+  .menu-toggle {
+    position: relative;
+    z-index: 90;
+    display: inline-flex;
+  }
+
+  .header-actions {
+    gap: 0.65rem;
+  }
+}
+
 @media (max-width: 1024px) {
   :root {
     --content-width: min(100vw - 40px, 1540px);
@@ -1576,6 +1672,10 @@ main > section:not(.hero) > .section-shell {
     display: inline-flex;
     position: relative;
     z-index: 90;
+  }
+
+  .header-actions {
+    gap: 0.65rem;
   }
 
   .feature-grid-standard .section-copy,
