@@ -7,9 +7,12 @@ const header = document.querySelector('.site-header');
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = Array.from(document.querySelectorAll('.site-nav a'));
 const homeSection = document.querySelector('#inicio');
+const heroVideo = document.querySelector('.hero-background-video');
+const heroCopy = document.querySelector('.hero-copy');
 const revealGroups = Array.from(document.querySelectorAll('[data-reveal]'));
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const horizontalMedia = window.matchMedia('(min-width: 768px)');
+const staticHeroMedia = window.matchMedia('(max-width: 1024px)');
 const sections = Array.from(main?.querySelectorAll(':scope > section') ?? []);
 const sectionByHash = new Map(sections.map((section) => [`#${section.id}`, section]));
 const sectionLinks = Array.from(document.querySelectorAll('a[href^="#"]'))
@@ -21,6 +24,66 @@ let horizontalProgressButtons = [];
 let wheelLocked = false;
 let wheelLockTimer;
 let horizontalScrollFrame;
+let heroRevealTimer;
+
+const revealHeroCopy = (reason) => {
+  window.clearTimeout(heroRevealTimer);
+  heroCopy?.classList.add('is-hero-visible');
+
+  if (heroCopy) {
+    heroCopy.dataset.revealReason = reason;
+  }
+};
+
+const handleHeroRevealFallback = () => {
+  const remainingSeconds = heroVideo
+    ? heroVideo.duration - heroVideo.currentTime
+    : 0;
+  const videoIsProgressing = Boolean(
+    heroVideo
+    && !heroVideo.paused
+    && heroVideo.currentTime > 0
+    && Number.isFinite(remainingSeconds)
+    && remainingSeconds > 0.15,
+  );
+
+  if (videoIsProgressing) {
+    heroRevealTimer = window.setTimeout(
+      () => revealHeroCopy('timeout-fallback'),
+      (remainingSeconds * 1000) + 250,
+    );
+    return;
+  }
+
+  revealHeroCopy('timeout-fallback');
+};
+
+if (!heroCopy) {
+  documentRoot.classList.remove('hero-reveal-pending');
+} else if (reduceMotion) {
+  revealHeroCopy('reduced-motion');
+} else if (!heroVideo || staticHeroMedia.matches) {
+  revealHeroCopy('static-background');
+} else {
+  heroVideo.addEventListener('ended', () => revealHeroCopy('video-ended'), {
+    once: true,
+  });
+
+  heroRevealTimer = window.setTimeout(
+    handleHeroRevealFallback,
+    6000,
+  );
+
+  if (heroVideo.ended) {
+    revealHeroCopy('video-already-ended');
+  }
+}
+
+staticHeroMedia.addEventListener('change', (event) => {
+  if (event.matches) {
+    revealHeroCopy('static-background');
+  }
+});
 
 const closeNav = ({ restoreFocus = false } = {}) => {
   body.classList.remove('nav-open');
@@ -356,6 +419,7 @@ const revealTargetSelector = [
   '.eyebrow',
   'h1',
   'h2',
+  '.hero-subtitle',
   '.section-copy > p',
   '.promo-copy > p',
   '.hero-actions',
@@ -406,27 +470,6 @@ if (
 
   revealTargets.forEach((target) => revealObserver.observe(target));
   document.documentElement.classList.add('reveal-enabled');
-}
-
-const rotatingWord = document.querySelector('[data-rotating-word]');
-const rotatingSequence = ['onde', 'quando', 'como', 'onde', 'quando', 'como', 'onde'];
-
-if (rotatingWord && !reduceMotion) {
-  let wordIndex = 0;
-
-  const rotationTimer = window.setInterval(() => {
-    rotatingWord.classList.add('is-fading');
-
-    window.setTimeout(() => {
-      wordIndex += 1;
-      rotatingWord.textContent = rotatingSequence[wordIndex];
-      rotatingWord.classList.remove('is-fading');
-
-      if (wordIndex === rotatingSequence.length - 1) {
-        window.clearInterval(rotationTimer);
-      }
-    }, 320);
-  }, 2000);
 }
 
 const prototypeModel = document.querySelector('#prototype-model');

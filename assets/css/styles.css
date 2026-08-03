@@ -548,6 +548,21 @@ body.nav-open .menu-toggle span:nth-child(3) {
   width: min(100%, 720px);
   margin: 0;
   padding: clamp(4rem, 8vh, 7rem) 0;
+  transition:
+    opacity 720ms ease,
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-reveal-pending .hero-copy {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: heroCopyFallback 720ms cubic-bezier(0.22, 1, 0.36, 1) 6s forwards;
+}
+
+.hero-reveal-pending .hero-copy.is-hero-visible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: none;
 }
 
 .hero-meta {
@@ -584,36 +599,13 @@ body.nav-open .menu-toggle span:nth-child(3) {
   text-align: right;
 }
 
-.hero-title-last-line {
-  display: block;
-  white-space: nowrap;
-}
-
-.hero-rotating-word {
-  display: inline-block;
-  width: 6ch;
-  color: #2260f2;
+.hero-subtitle {
+  max-width: 44rem;
+  margin: 1.5rem 0 0 auto;
+  color: var(--muted);
+  font-size: clamp(0.98rem, 1.15vw, 1.08rem);
+  line-height: 1.75;
   text-align: right;
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 320ms ease, transform 320ms ease;
-}
-
-.hero-rotating-word.is-fading {
-  opacity: 0;
-  transform: translateY(0.14em);
-}
-
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 }
 
 .lead,
@@ -1104,6 +1096,13 @@ body.nav-open .menu-toggle span:nth-child(3) {
   to { transform: rotate(360deg); }
 }
 
+@keyframes heroCopyFallback {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 1200px) {
   .hero-copy {
     grid-column: 6 / -1;
@@ -1206,6 +1205,12 @@ body.nav-open .menu-toggle span:nth-child(3) {
     padding-bottom: 0;
   }
 
+  .hero-reveal-pending .hero-copy {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
   .hero-grid {
     align-items: center;
   }
@@ -1284,6 +1289,11 @@ body.nav-open .menu-toggle span:nth-child(3) {
     max-width: 14ch;
     margin-inline: auto;
     font-size: clamp(2.2rem, 8vw, 3.4rem);
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    margin-inline: auto;
     text-align: center;
   }
 
@@ -1402,5 +1412,11 @@ body.nav-open .menu-toggle span:nth-child(3) {
   .reveal-enabled .reveal-item {
     opacity: 1;
     transform: none;
+  }
+
+  .hero-reveal-pending .hero-copy {
+    opacity: 1;
+    transform: none;
+    animation: none;
   }
 }
