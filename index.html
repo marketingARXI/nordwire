@@ -8,7 +8,7 @@
   <link rel="preload" href="assets/images/hero-hardware.png" as="image" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>
     document.documentElement.classList.add("hero-reveal-pending");
     window.ModelViewerElement = window.ModelViewerElement || {};
@@ -90,11 +90,29 @@
 
       <section class="feature-section placeholder-section section-dark" id="o-que-fazemos" data-nav-label="O que fazemos">
         <div class="section-shell">
-          <div class="grid-12 feature-grid placeholder-layout">
+          <div class="grid-12 feature-grid placeholder-layout what-we-do-grid">
             <div class="section-copy reveal" data-reveal>
               <p class="eyebrow">O que fazemos</p>
               <h2>Cada máquina tem uma história para contar.</h2>
               <p>Todos os dias, o teu chão de fábrica gera milhares de dados. A questão não é se eles existem — é se estás a aproveitá-los.</p>
+            </div>
+
+            <div class="value-highlights reveal" data-reveal aria-label="Destaques do que fazemos">
+              <article class="value-highlight">
+                <span class="value-highlight-index" aria-hidden="true">01</span>
+                <h3>Tempo real</h3>
+                <p>Dados capturados no momento em que acontecem.</p>
+              </article>
+              <article class="value-highlight">
+                <span class="value-highlight-index" aria-hidden="true">02</span>
+                <h3>Acesso remoto</h3>
+                <p>A tua produção acessível onde quer que estejas.</p>
+              </article>
+              <article class="value-highlight">
+                <span class="value-highlight-index" aria-hidden="true">03</span>
+                <h3>À tua medida</h3>
+                <p>Cada solução desenhada para o teu chão de fábrica.</p>
+              </article>
             </div>
           </div>
         </div>
@@ -289,27 +307,16 @@
         </div>
       </section>
 
-      <section class="cta-section section-dark" id="parceiros" data-nav-label="Parceiros">
+      <section class="feature-section placeholder-section section-dark" id="parceiros" data-nav-label="Parceiros">
         <div class="section-shell">
-          <article class="promo-panel reveal" data-reveal>
-            <div class="promo-copy">
-              <p class="eyebrow">Launch faster</p>
+          <div class="grid-12 feature-grid placeholder-layout partner-layout">
+            <div class="section-copy reveal" data-reveal>
               <h2>Crescemos com quem trabalha connosco.</h2>
               <p>
                 Nós desenvolvemos a tecnologia. Os nossos parceiros levam-na às fábricas de todo o lado. Juntos, transformamos dados em decisões.
               </p>
-              <a class="button button-primary" href="#top">
-                <span class="button-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </span>
-                <span>Start Now</span>
-              </a>
             </div>
-
-            <figure class="promo-visual">
-              <img src="assets/images/promo-hardware.png" alt="Dark premium product composition fading into a rounded call-to-action panel.">
-            </figure>
-          </article>
+          </div>
         </div>
       </section>
 
