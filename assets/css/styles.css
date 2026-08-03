@@ -78,6 +78,90 @@ main > section {
   background-color: #0d0f14;
 }
 
+#o-que-fazemos,
+#monitorizacao,
+#cloud,
+#nordgo,
+#produtos,
+#parceiros {
+  position: relative;
+  isolation: isolate;
+  background-color: #0d0f14;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#o-que-fazemos {
+  background-image: url("../images/bg-o-que-fazemos.png");
+}
+
+#monitorizacao {
+  background-image: url("../images/bg-monitorizacao.png");
+}
+
+#cloud {
+  background-image: url("../images/bg-cloud.png");
+}
+
+#nordgo {
+  background-image: url("../images/bg-nordgo.png");
+}
+
+#produtos {
+  background-image: url("../images/bg-produtos.png");
+}
+
+#parceiros {
+  background-image: url("../images/bg-parceiros.png");
+}
+
+#o-que-fazemos::before,
+#monitorizacao::before,
+#cloud::before,
+#nordgo::before,
+#produtos::before,
+#parceiros::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(13, 15, 20, 0.72) 0%,
+    rgba(13, 15, 20, 0.55) 52%,
+    rgba(13, 15, 20, 0.42) 100%
+  );
+}
+
+#monitorizacao::before {
+  background: linear-gradient(
+    90deg,
+    rgba(13, 15, 20, 0.78) 0%,
+    rgba(13, 15, 20, 0.56) 48%,
+    rgba(13, 15, 20, 0.34) 100%
+  );
+}
+
+#produtos::before {
+  background: rgba(13, 15, 20, 0.55);
+}
+
+#parceiros::before {
+  background: rgba(13, 15, 20, 0.48);
+}
+
+#o-que-fazemos > .section-shell,
+#monitorizacao > .section-shell,
+#cloud > .section-shell,
+#nordgo > .section-shell,
+#produtos > .section-shell,
+#parceiros > .section-shell {
+  position: relative;
+  z-index: 1;
+}
+
 .section-shell {
   width: var(--content-width);
   margin-inline: auto;
