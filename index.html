@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NordWire — Sistemas eletrónicos para a indústria</title>
-  <meta name="description" content="A NordWire desenvolve sistemas eletrónicos, monitorização industrial e soluções à medida para o chão de fábrica.">
+  <title data-i18n="meta.title">NordWire - Sistemas eletrónicos para a indústria</title>
+  <meta name="description" content="A NordWire desenvolve sistemas eletrónicos, monitorização industrial e soluções à medida para o chão de fábrica." data-i18n-content="meta.description">
   <link rel="preload" href="assets/images/hero-hardware.png" as="image" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,26 +21,31 @@
   <div class="site-shell">
     <header class="site-header" id="top">
       <div class="section-shell header-shell">
-        <a class="header-brand" href="#inicio" aria-label="Nordwire — ir para o início">
+        <a class="header-brand" href="#inicio" aria-label="NordWire - ir para o início" data-i18n-aria-label="header.homeLabel">
           <span class="header-logo-frame" aria-hidden="true">
             <img class="header-logo" src="assets/images/nordwire-logo.png" alt="">
           </span>
         </a>
 
-        <nav class="site-nav" id="site-nav" aria-label="Navegação principal">
-          <a href="#inicio" class="is-active" aria-current="page">Início</a>
-          <a href="#o-que-fazemos">O que fazemos</a>
-          <a href="#monitorizacao">Monitorização</a>
-          <a href="#cloud">Nuvem</a>
-          <a href="#nordgo">NordGo</a>
-          <a href="#prototipagem">Prototipagem</a>
-          <a href="#produtos">Produtos</a>
-          <a href="#parceiros">Parceiros</a>
-          <a href="#contactos">Contactos</a>
+        <nav class="site-nav" id="site-nav" aria-label="Navegação principal" data-i18n-aria-label="header.navLabel">
+          <a href="#inicio" class="is-active" aria-current="page" data-i18n="nav.home">Início</a>
+          <a href="#o-que-fazemos" data-i18n="nav.whatWeDo">O que fazemos</a>
+          <a href="#monitorizacao" data-i18n="nav.monitoring">Monitorização</a>
+          <a href="#cloud" data-i18n="nav.cloud">Nuvem</a>
+          <a href="#nordgo" data-i18n="nav.nordgo">NordGo</a>
+          <a href="#prototipagem" data-i18n="nav.prototyping">Prototipagem</a>
+          <a href="#produtos" data-i18n="nav.products">Produtos</a>
+          <a href="#parceiros" data-i18n="nav.partners">Parceiros</a>
+          <a href="#contactos" data-i18n="nav.contact">Contactos</a>
         </nav>
 
         <div class="header-actions">
-          <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menu de navegação">
+          <div class="language-switcher" role="group" aria-label="Seleção de idioma" data-i18n-aria-label="language.groupLabel">
+            <button class="language-option is-active" type="button" data-language="pt" aria-pressed="true" aria-label="Usar Português" data-i18n-aria-label="language.ptLabel">PT</button>
+            <span class="language-divider" aria-hidden="true"></span>
+            <button class="language-option" type="button" data-language="en" aria-pressed="false" aria-label="Usar Inglês" data-i18n-aria-label="language.enLabel">EN</button>
+          </div>
+          <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menu de navegação" data-i18n-aria-label="header.openMenu">
             <span></span>
             <span></span>
             <span></span>
@@ -50,7 +55,7 @@
     </header>
 
     <main>
-      <section class="hero section-dark" id="inicio" data-nav-label="Início">
+      <section class="hero section-dark" id="inicio" data-nav-label="Início" data-i18n-nav-label="nav.home">
         <video
           class="hero-background-video"
           autoplay
@@ -66,21 +71,21 @@
         <div class="section-shell hero-shell">
           <div class="grid-12 hero-grid">
             <div class="hero-copy reveal" data-reveal>
-              <h1>Tudo começa no chão de fábrica.</h1>
-              <p class="hero-subtitle">A NordWire desenvolve sistemas eletrónicos que capturam tudo o que acontece na tua produção — e transformam cada segundo em informação útil.</p>
+              <h1 data-i18n="hero.title">Tudo começa no chão de fábrica.</h1>
+              <p class="hero-subtitle" data-i18n="hero.subtitle">A NordWire desenvolve sistemas eletrónicos que capturam tudo o que acontece na tua produção - e transformam cada segundo em informação útil.</p>
 
               <div class="hero-actions">
                 <a class="button button-primary" href="#o-que-fazemos">
                   <span class="button-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none"><path d="M7 12h10M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </span>
-                  <span>Explorar Mais</span>
+                  <span data-i18n="cta.explore">Explorar Mais</span>
                 </a>
                 <a class="button button-subtle" href="#parceiros">
                   <span class="button-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none"><path d="M7 12h10M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </span>
-                  <span>Tornar-me Parceiro</span>
+                  <span data-i18n="cta.partner">Tornar-me Parceiro</span>
                 </a>
               </div>
             </div>
@@ -88,58 +93,58 @@
         </div>
       </section>
 
-      <section class="feature-section placeholder-section section-dark" id="o-que-fazemos" data-nav-label="O que fazemos">
+      <section class="feature-section placeholder-section section-dark" id="o-que-fazemos" data-nav-label="O que fazemos" data-i18n-nav-label="nav.whatWeDo">
         <div class="section-shell">
           <div class="grid-12 feature-grid placeholder-layout what-we-do-grid">
             <div class="section-copy reveal" data-reveal>
-              <p class="eyebrow">O que fazemos</p>
-              <h2>Cada máquina tem uma história para contar.</h2>
-              <p>Todos os dias, o teu chão de fábrica gera milhares de dados. A questão não é se eles existem — é se estás a aproveitá-los.</p>
+              <p class="eyebrow" data-i18n="whatWeDo.eyebrow">O que fazemos</p>
+              <h2 data-i18n="whatWeDo.title">Cada máquina tem uma história para contar.</h2>
+              <p data-i18n="whatWeDo.subtitle">Todos os dias, o teu chão de fábrica gera milhares de dados. A questão não é se eles existem - é se estás a aproveitá-los.</p>
             </div>
 
-            <div class="value-highlights reveal" data-reveal aria-label="Destaques do que fazemos">
+            <div class="value-highlights reveal" data-reveal aria-label="Destaques do que fazemos" data-i18n-aria-label="whatWeDo.cardsLabel">
               <article class="value-highlight">
                 <span class="value-highlight-index" aria-hidden="true">01</span>
-                <h3>Tempo real</h3>
-                <p>Dados capturados no momento em que acontecem.</p>
+                <h3 data-i18n="whatWeDo.card1Title">Tempo real</h3>
+                <p data-i18n="whatWeDo.card1Text">Dados capturados no momento em que acontecem.</p>
               </article>
               <article class="value-highlight">
                 <span class="value-highlight-index" aria-hidden="true">02</span>
-                <h3>Acesso remoto</h3>
-                <p>A tua produção acessível onde quer que estejas.</p>
+                <h3 data-i18n="whatWeDo.card2Title">Acesso remoto</h3>
+                <p data-i18n="whatWeDo.card2Text">A tua produção acessível onde quer que estejas.</p>
               </article>
               <article class="value-highlight">
                 <span class="value-highlight-index" aria-hidden="true">03</span>
-                <h3>À tua medida</h3>
-                <p>Cada solução desenhada para o teu chão de fábrica.</p>
+                <h3 data-i18n="whatWeDo.card3Title">À tua medida</h3>
+                <p data-i18n="whatWeDo.card3Text">Cada solução desenhada para o teu chão de fábrica.</p>
               </article>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="feature-section section-dark" id="monitorizacao" data-nav-label="Monitorização">
+      <section class="feature-section section-dark" id="monitorizacao" data-nav-label="Monitorização" data-i18n-nav-label="nav.monitoring">
         <div class="section-shell">
           <div class="grid-12 monitoring-grid">
             <div class="section-copy reveal" data-reveal>
-              <p class="eyebrow">Monitorização</p>
-              <h2>Os sensores captam. Nada se perde.</h2>
-              <p>
+              <p class="eyebrow" data-i18n="monitoring.eyebrow">Monitorização</p>
+              <h2 data-i18n="monitoring.title">Os sensores captam. Nada se perde.</h2>
+              <p data-i18n="monitoring.subtitle">
                 Sensores desenvolvidos por nós registam a atividade de cada máquina em tempo real. E o acesso à informação é simples e imediato, diretamente junto de cada equipamento.
               </p>
 
-              <div class="stats-cluster" aria-label="Estatísticas de monitorização">
+              <div class="stats-cluster" aria-label="Estatísticas de monitorização" data-i18n-aria-label="monitoring.statsLabel">
                 <article class="stat-block">
                   <strong>99.2%</strong>
-                  <span>Disponibilidade das máquinas monitorizadas</span>
+                  <span data-i18n="monitoring.stat1">Disponibilidade das máquinas monitorizadas</span>
                 </article>
                 <article class="stat-block">
                   <strong>420+</strong>
-                  <span>Dispositivos visíveis nos painéis em tempo real</span>
+                  <span data-i18n="monitoring.stat2">Dispositivos visíveis nos painéis em tempo real</span>
                 </article>
                 <article class="stat-block">
                   <strong>34ms</strong>
-                  <span>Tempo médio de resposta</span>
+                  <span data-i18n="monitoring.stat3">Tempo médio de resposta</span>
                 </article>
               </div>
             </div>
@@ -148,80 +153,80 @@
         </div>
       </section>
 
-      <section class="feature-section placeholder-section section-dark" id="cloud" data-nav-label="Nuvem">
+      <section class="feature-section placeholder-section section-dark" id="cloud" data-nav-label="Nuvem" data-i18n-nav-label="nav.cloud">
         <div class="section-shell">
           <div class="grid-12 feature-grid placeholder-layout">
             <div class="section-copy reveal" data-reveal>
-              <p class="eyebrow">Nuvem</p>
-              <h2>Do chão de fábrica até onde tu estiveres.</h2>
-              <p>A informação sobe do sensor para a nuvem em segundos, ficando acessível a partir de qualquer PC ou telemóvel. O que acontece na produção deixa de ficar preso na produção.</p>
+              <p class="eyebrow" data-i18n="cloud.eyebrow">Nuvem</p>
+              <h2 data-i18n="cloud.title">Do chão de fábrica até onde tu estiveres.</h2>
+              <p data-i18n="cloud.subtitle">A informação sobe do sensor para a nuvem em segundos, ficando acessível a partir de qualquer PC ou telemóvel. O que acontece na produção deixa de ficar preso na produção.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="feature-section placeholder-section section-dark" id="nordgo" data-nav-label="NordGo">
+      <section class="feature-section placeholder-section section-dark" id="nordgo" data-nav-label="NordGo" data-i18n-nav-label="nav.nordgo">
         <div class="section-shell">
           <div class="grid-12 feature-grid placeholder-layout notes-section-grid">
             <div class="section-copy reveal" data-reveal>
-              <p class="eyebrow">NordGo</p>
-              <h2>NordGo — a tua fábrica no bolso.</h2>
-              <p>Acompanha tudo em tempo real, consulta o histórico e recebe o que interessa, onde quer que estejas. A tua produção, sempre à distância de um toque.</p>
+              <p class="eyebrow" data-i18n="nordgo.eyebrow">NordGo</p>
+              <h2 data-i18n="nordgo.title">NordGo - a tua fábrica no bolso.</h2>
+              <p data-i18n="nordgo.subtitle">Acompanha tudo em tempo real, consulta o histórico e recebe o que interessa, onde quer que estejas. A tua produção, sempre à distância de um toque.</p>
             </div>
 
-            <div class="value-highlights reveal" data-reveal aria-label="Funcionalidades da NordGo">
+            <div class="value-highlights reveal" data-reveal aria-label="Funcionalidades da NordGo" data-i18n-aria-label="nordgo.cardsLabel">
               <article class="value-highlight">
                 <span class="value-highlight-index" aria-hidden="true">01</span>
-                <h3>Tempo real</h3>
-                <p>Acompanha a produção ao minuto, onde quer que estejas.</p>
+                <h3 data-i18n="nordgo.card1Title">Tempo real</h3>
+                <p data-i18n="nordgo.card1Text">Acompanha a produção ao minuto, onde quer que estejas.</p>
               </article>
               <article class="value-highlight">
                 <span class="value-highlight-index" aria-hidden="true">02</span>
-                <h3>Histórico</h3>
-                <p>Consulta o que aconteceu e compara períodos.</p>
+                <h3 data-i18n="nordgo.card2Title">Histórico</h3>
+                <p data-i18n="nordgo.card2Text">Consulta o que aconteceu e compara períodos.</p>
               </article>
               <article class="value-highlight">
                 <span class="value-highlight-index" aria-hidden="true">03</span>
-                <h3>Notificações</h3>
-                <p>Recebe alertas do que realmente importa.</p>
+                <h3 data-i18n="nordgo.card3Title">Notificações</h3>
+                <p data-i18n="nordgo.card3Text">Recebe alertas do que realmente importa.</p>
               </article>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="feature-section section-dark" id="prototipagem" data-nav-label="Prototipagem">
+      <section class="feature-section section-dark" id="prototipagem" data-nav-label="Prototipagem" data-i18n-nav-label="nav.prototyping">
         <div class="section-shell">
           <div class="grid-12 feature-grid feature-grid-standard">
             <div class="section-copy reveal" data-reveal>
-              <p class="eyebrow">Prototipagem</p>
-              <h2>Do conceito ao produto final.</h2>
-              <p>
-                Cada solução é desenhada de raiz para o teu chão de fábrica — do circuito à caixa. Hardware e software pensados para o teu caso, e não para um caso qualquer.
+              <p class="eyebrow" data-i18n="prototyping.eyebrow">Prototipagem</p>
+              <h2 data-i18n="prototyping.title">Do conceito ao produto final.</h2>
+              <p data-i18n="prototyping.subtitle">
+                Cada solução é desenhada de raiz para o teu chão de fábrica - do circuito à caixa. Hardware e software pensados para o teu caso, e não para um caso qualquer.
               </p>
 
-              <div class="prototype-note-list" aria-label="Etapas da prototipagem">
+              <div class="prototype-note-list" aria-label="Etapas da prototipagem" data-i18n-aria-label="prototyping.cardsLabel">
                 <article class="value-highlight prototype-note">
                   <span class="value-highlight-index" aria-hidden="true">01</span>
                   <div>
-                    <h3>Hardware</h3>
-                    <p>Do circuito à caixa, desenhado de raiz.</p>
+                    <h3 data-i18n="prototyping.card1Title">Hardware</h3>
+                    <p data-i18n="prototyping.card1Text">Do circuito à caixa, desenhado de raiz.</p>
                   </div>
                 </article>
 
                 <article class="value-highlight prototype-note">
                   <span class="value-highlight-index" aria-hidden="true">02</span>
                   <div>
-                    <h3>Software</h3>
-                    <p>Firmware e interface pensados para o teu caso.</p>
+                    <h3 data-i18n="prototyping.card2Title">Software</h3>
+                    <p data-i18n="prototyping.card2Text">Firmware e interface pensados para o teu caso.</p>
                   </div>
                 </article>
 
                 <article class="value-highlight prototype-note">
                   <span class="value-highlight-index" aria-hidden="true">03</span>
                   <div>
-                    <h3>Produção</h3>
-                    <p>Do protótipo ao produto final, connosco.</p>
+                    <h3 data-i18n="prototyping.card3Title">Produção</h3>
+                    <p data-i18n="prototyping.card3Text">Do protótipo ao produto final, connosco.</p>
                   </div>
                 </article>
               </div>
@@ -233,7 +238,9 @@
                 class="prototype-model-viewer"
                 src="assets/models/nordwire-3d.glb"
                 alt="Modelo 3D interativo do dispositivo protótipo da NordWire."
+                data-i18n-alt="prototyping.modelAlt"
                 aria-label="Modelo 3D interativo do dispositivo protótipo da NordWire. Rode o modelo com o rato, toque ou teclas de seta."
+                data-i18n-aria-label="prototyping.modelLabel"
                 camera-controls
                 disable-pan
                 touch-action="pan-y"
@@ -253,66 +260,66 @@
         </div>
       </section>
 
-      <section class="feature-section placeholder-section section-dark" id="produtos" data-nav-label="Produtos">
+      <section class="feature-section placeholder-section section-dark" id="produtos" data-nav-label="Produtos" data-i18n-nav-label="nav.products">
         <div class="section-shell">
           <div class="grid-12 feature-grid placeholder-layout placeholder-layout-products">
             <div class="section-copy reveal" data-reveal>
-              <p class="eyebrow">Produtos</p>
-              <h2>Os nossos produtos.</h2>
-              <p>Hardware desenhado à medida da produção real. Explora as soluções que já desenvolvemos.</p>
+              <p class="eyebrow" data-i18n="products.eyebrow">Produtos</p>
+              <h2 data-i18n="products.title">Os nossos produtos.</h2>
+              <p data-i18n="products.subtitle">Hardware desenhado à medida da produção real. Explora as soluções que já desenvolvemos.</p>
               <div class="product-actions">
-                <a class="button button-primary" href="#" data-placeholder-link>Ver Loja</a>
+                <a class="button button-primary" href="#" data-placeholder-link data-i18n="products.storeButton">Ver Loja</a>
               </div>
             </div>
             <div class="product-hotspot-visual reveal" data-reveal>
-              <div class="product-hotspot-stage" role="group" aria-label="Detalhes interativos da placa NordCore">
-                <img class="product-hotspot-image" src="assets/images/nordcore.png" alt="Placa eletrónica NordCore vista de cima.">
+              <div class="product-hotspot-stage" role="group" aria-label="Detalhes interativos da placa NordCore" data-i18n-aria-label="products.hotspotsLabel">
+                <img class="product-hotspot-image" src="assets/images/nordcore.png" alt="Placa eletrónica NordCore vista de cima." data-i18n-alt="products.imageAlt">
 
-                <button class="product-hotspot" type="button" style="--hotspot-x: 43%; --hotspot-y: 21%;" aria-label="Módulo de processamento" aria-describedby="hotspot-processing" aria-expanded="false" data-hotspot>
+                <button class="product-hotspot" type="button" style="--hotspot-x: 43%; --hotspot-y: 21%;" aria-label="Módulo de processamento" data-i18n-aria-label="products.processingTitle" aria-describedby="hotspot-processing" aria-expanded="false" data-hotspot>
                   <span class="product-hotspot-dot" aria-hidden="true"></span>
                   <span class="product-hotspot-tooltip" id="hotspot-processing" role="tooltip">
-                    <strong>Módulo de processamento</strong>
-                    <span>O cérebro do sistema — processa os dados recolhidos no chão de fábrica em tempo real.</span>
+                    <strong data-i18n="products.processingTitle">Módulo de processamento</strong>
+                    <span data-i18n="products.processingText">O cérebro do sistema - processa os dados recolhidos no chão de fábrica em tempo real.</span>
                   </span>
                 </button>
 
-                <button class="product-hotspot" type="button" style="--hotspot-x: 41%; --hotspot-y: 84%;" aria-label="Ligação à rede" aria-describedby="hotspot-network" aria-expanded="false" data-hotspot>
+                <button class="product-hotspot" type="button" style="--hotspot-x: 41%; --hotspot-y: 84%;" aria-label="Ligação à rede" data-i18n-aria-label="products.networkTitle" aria-describedby="hotspot-network" aria-expanded="false" data-hotspot>
                   <span class="product-hotspot-dot" aria-hidden="true"></span>
                   <span class="product-hotspot-tooltip" id="hotspot-network" role="tooltip">
-                    <strong>Ligação à rede</strong>
-                    <span>Ligação de rede estável para comunicar com a infraestrutura da fábrica.</span>
+                    <strong data-i18n="products.networkTitle">Ligação à rede</strong>
+                    <span data-i18n="products.networkText">Ligação de rede estável para comunicar com a infraestrutura da fábrica.</span>
                   </span>
                 </button>
 
-                <button class="product-hotspot" type="button" style="--hotspot-x: 57%; --hotspot-y: 93%;" aria-label="Alimentação e configuração" aria-describedby="hotspot-power" aria-expanded="false" data-hotspot>
+                <button class="product-hotspot" type="button" style="--hotspot-x: 57%; --hotspot-y: 93%;" aria-label="Alimentação e configuração" data-i18n-aria-label="products.powerTitle" aria-describedby="hotspot-power" aria-expanded="false" data-hotspot>
                   <span class="product-hotspot-dot" aria-hidden="true"></span>
                   <span class="product-hotspot-tooltip" id="hotspot-power" role="tooltip">
-                    <strong>Alimentação e configuração</strong>
-                    <span>Alimentação e configuração simples, prontas a integrar em qualquer ambiente.</span>
+                    <strong data-i18n="products.powerTitle">Alimentação e configuração</strong>
+                    <span data-i18n="products.powerText">Alimentação e configuração simples, prontas a integrar em qualquer ambiente.</span>
                   </span>
                 </button>
 
-                <button class="product-hotspot" type="button" style="--hotspot-x: 17%; --hotspot-y: 72%;" aria-label="Memória de segurança" aria-describedby="hotspot-memory" aria-expanded="false" data-hotspot>
+                <button class="product-hotspot" type="button" style="--hotspot-x: 17%; --hotspot-y: 72%;" aria-label="Memória de segurança" data-i18n-aria-label="products.memoryTitle" aria-describedby="hotspot-memory" aria-expanded="false" data-hotspot>
                   <span class="product-hotspot-dot" aria-hidden="true"></span>
                   <span class="product-hotspot-tooltip" id="hotspot-memory" role="tooltip">
-                    <strong>Memória de segurança</strong>
-                    <span>Mantém as definições e o registo temporal seguros, mesmo sem energia.</span>
+                    <strong data-i18n="products.memoryTitle">Memória de segurança</strong>
+                    <span data-i18n="products.memoryText">Mantém as definições e o registo temporal seguros, mesmo sem energia.</span>
                   </span>
                 </button>
 
-                <button class="product-hotspot" type="button" style="--hotspot-x: 82%; --hotspot-y: 84%;" aria-label="Expansão" aria-describedby="hotspot-expansion" aria-expanded="false" data-hotspot>
+                <button class="product-hotspot" type="button" style="--hotspot-x: 82%; --hotspot-y: 84%;" aria-label="Expansão" data-i18n-aria-label="products.expansionTitle" aria-describedby="hotspot-expansion" aria-expanded="false" data-hotspot>
                   <span class="product-hotspot-dot" aria-hidden="true"></span>
                   <span class="product-hotspot-tooltip" id="hotspot-expansion" role="tooltip">
-                    <strong>Expansão</strong>
-                    <span>Preparado para expansão e armazenamento adicional, à medida das necessidades.</span>
+                    <strong data-i18n="products.expansionTitle">Expansão</strong>
+                    <span data-i18n="products.expansionText">Preparado para expansão e armazenamento adicional, à medida das necessidades.</span>
                   </span>
                 </button>
 
-                <button class="product-hotspot" type="button" style="--hotspot-x: 69%; --hotspot-y: 20%;" aria-label="Arrefecimento" aria-describedby="hotspot-cooling" aria-expanded="false" data-hotspot>
+                <button class="product-hotspot" type="button" style="--hotspot-x: 69%; --hotspot-y: 20%;" aria-label="Arrefecimento" data-i18n-aria-label="products.coolingTitle" aria-describedby="hotspot-cooling" aria-expanded="false" data-hotspot>
                   <span class="product-hotspot-dot" aria-hidden="true"></span>
                   <span class="product-hotspot-tooltip" id="hotspot-cooling" role="tooltip">
-                    <strong>Arrefecimento</strong>
-                    <span>Arrefecimento ativo para um funcionamento fiável e contínuo.</span>
+                    <strong data-i18n="products.coolingTitle">Arrefecimento</strong>
+                    <span data-i18n="products.coolingText">Arrefecimento ativo para um funcionamento fiável e contínuo.</span>
                   </span>
                 </button>
               </div>
@@ -321,37 +328,37 @@
         </div>
       </section>
 
-      <section class="feature-section placeholder-section section-dark" id="parceiros" data-nav-label="Parceiros">
+      <section class="feature-section placeholder-section section-dark" id="parceiros" data-nav-label="Parceiros" data-i18n-nav-label="nav.partners">
         <div class="section-shell">
           <div class="grid-12 feature-grid placeholder-layout partner-layout">
             <div class="section-copy reveal" data-reveal>
-              <h2>Crescemos com quem trabalha connosco.</h2>
-              <p>
+              <h2 data-i18n="partners.title">Crescemos com quem trabalha connosco.</h2>
+              <p data-i18n="partners.subtitle">
                 Nós desenvolvemos a tecnologia. Os nossos parceiros levam-na às fábricas de todo o lado. Juntos, transformamos dados em decisões.
               </p>
             </div>
 
-            <form class="premium-form reveal" data-reveal data-demo-form data-success-message="Obrigado! Entraremos em contacto para falar sobre a parceria." aria-label="Formulário de parceria">
+            <form class="premium-form reveal" data-reveal data-demo-form data-success-message="Obrigado! Entraremos em contacto para falar sobre a parceria." data-i18n-success-message="partners.success" aria-label="Formulário de parceria" data-i18n-aria-label="partners.formLabel">
               <div class="form-row">
                 <label class="form-field">
-                  <span>Nome</span>
+                  <span data-i18n="form.name">Nome</span>
                   <input type="text" name="nome" autocomplete="name" required>
                 </label>
                 <label class="form-field">
-                  <span>Empresa</span>
+                  <span data-i18n="form.company">Empresa</span>
                   <input type="text" name="empresa" autocomplete="organization" required>
                 </label>
               </div>
               <label class="form-field">
-                <span>Email</span>
+                <span data-i18n="form.email">Email</span>
                 <input type="email" name="email" autocomplete="email" required>
               </label>
               <label class="form-field">
-                <span>Mensagem</span>
+                <span data-i18n="form.message">Mensagem</span>
                 <textarea name="mensagem" rows="3" required></textarea>
               </label>
               <div class="form-footer">
-                <button class="button button-primary" type="submit">Quero ser parceiro</button>
+                <button class="button button-primary" type="submit" data-i18n="partners.submit">Quero ser parceiro</button>
                 <p class="form-status" aria-live="polite"></p>
               </div>
             </form>
@@ -359,31 +366,31 @@
         </div>
       </section>
 
-      <section class="feature-section placeholder-section section-dark" id="contactos" data-nav-label="Contactos">
+      <section class="feature-section placeholder-section section-dark" id="contactos" data-nav-label="Contactos" data-i18n-nav-label="nav.contact">
         <div class="section-shell">
           <div class="grid-12 feature-grid placeholder-layout placeholder-layout-contact">
             <div class="section-copy reveal" data-reveal>
-              <p class="eyebrow">Contactos</p>
-              <h2>Vamos levar os teus dados mais longe.</h2>
-              <p>Conta-nos o que se passa no teu chão de fábrica. Nós tratamos do resto.</p>
+              <p class="eyebrow" data-i18n="contact.eyebrow">Contactos</p>
+              <h2 data-i18n="contact.title">Vamos levar os teus dados mais longe.</h2>
+              <p data-i18n="contact.subtitle">Conta-nos o que se passa no teu chão de fábrica. Nós tratamos do resto.</p>
             </div>
-            <form class="premium-form reveal" data-reveal data-demo-form data-success-message="Mensagem registada. Obrigado pelo teu contacto!" aria-label="Formulário de contacto">
+            <form class="premium-form reveal" data-reveal data-demo-form data-success-message="Mensagem registada. Obrigado pelo teu contacto!" data-i18n-success-message="contact.success" aria-label="Formulário de contacto" data-i18n-aria-label="contact.formLabel">
               <div class="form-row">
                 <label class="form-field">
-                  <span>Nome</span>
+                  <span data-i18n="form.name">Nome</span>
                   <input type="text" name="nome" autocomplete="name" required>
                 </label>
                 <label class="form-field">
-                  <span>Email</span>
+                  <span data-i18n="form.email">Email</span>
                   <input type="email" name="email" autocomplete="email" required>
                 </label>
               </div>
               <label class="form-field">
-                <span>Mensagem</span>
+                <span data-i18n="form.message">Mensagem</span>
                 <textarea name="mensagem" rows="4" required></textarea>
               </label>
               <div class="form-footer">
-                <button class="button button-primary" type="submit">Enviar</button>
+                <button class="button button-primary" type="submit" data-i18n="contact.submit">Enviar</button>
                 <p class="form-status" aria-live="polite"></p>
               </div>
             </form>
@@ -396,26 +403,26 @@
       <div class="section-shell footer-shell">
         <div class="footer-heading-wrap">
           <p class="eyebrow">NordWire</p>
-          <h2>VAMOS CRIAR ALGO</h2>
+          <h2 data-i18n="footer.heading">VAMOS CRIAR ALGO</h2>
         </div>
 
         <div class="footer-grid">
-          <a class="brand footer-brand" href="#inicio" aria-label="Página inicial da NordWire">
+          <a class="brand footer-brand" href="#inicio" aria-label="Página inicial da NordWire" data-i18n-aria-label="footer.homeLabel">
             <span class="brand-mark" aria-hidden="true">N</span>
             <span class="brand-name">NordWire</span>
           </a>
 
-          <nav class="footer-nav" aria-label="Navegação do rodapé">
-            <a href="#inicio">Início</a>
-            <a href="#o-que-fazemos">O que fazemos</a>
-            <a href="#monitorizacao">Monitorização</a>
-            <a href="#prototipagem">Prototipagem</a>
-            <a href="#produtos">Produtos</a>
-            <a href="#parceiros">Parceiros</a>
-            <a href="#contactos">Contactos</a>
+          <nav class="footer-nav" aria-label="Navegação do rodapé" data-i18n-aria-label="footer.navLabel">
+            <a href="#inicio" data-i18n="nav.home">Início</a>
+            <a href="#o-que-fazemos" data-i18n="nav.whatWeDo">O que fazemos</a>
+            <a href="#monitorizacao" data-i18n="nav.monitoring">Monitorização</a>
+            <a href="#prototipagem" data-i18n="nav.prototyping">Prototipagem</a>
+            <a href="#produtos" data-i18n="nav.products">Produtos</a>
+            <a href="#parceiros" data-i18n="nav.partners">Parceiros</a>
+            <a href="#contactos" data-i18n="nav.contact">Contactos</a>
           </nav>
 
-          <div class="social-links" aria-label="Redes sociais">
+          <div class="social-links" aria-label="Redes sociais" data-i18n-aria-label="footer.socialLabel">
             <a href="#" aria-label="GitHub">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.5 2.87 8.31 6.84 9.66.5.1.68-.22.68-.5 0-.24-.01-1.05-.01-1.91-2.78.62-3.37-1.2-3.37-1.2-.46-1.2-1.11-1.51-1.11-1.51-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.58 2.35 1.13 2.92.86.09-.67.35-1.13.63-1.39-2.22-.26-4.56-1.15-4.56-5.1 0-1.12.39-2.03 1.03-2.75-.1-.27-.45-1.34.1-2.8 0 0 .84-.28 2.75 1.05A9.23 9.23 0 0 1 12 6.87c.85 0 1.71.12 2.51.35 1.9-1.33 2.74-1.05 2.74-1.05.56 1.46.21 2.53.1 2.8.64.72 1.03 1.63 1.03 2.75 0 3.96-2.34 4.84-4.57 5.09.36.32.67.94.67 1.9 0 1.38-.01 2.49-.01 2.83 0 .28.18.61.69.5A10.24 10.24 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z"/></svg>
             </a>
@@ -432,7 +439,7 @@
         </div>
 
         <div class="footer-bottom">
-          <p>2026 NordWire. Todos os direitos reservados.</p>
+          <p data-i18n="footer.copyright">2026 NordWire. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>

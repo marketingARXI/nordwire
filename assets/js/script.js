@@ -17,6 +17,7 @@ const revealGroups = Array.from(document.querySelectorAll('[data-reveal]'))
 const hotspotButtons = Array.from(document.querySelectorAll('[data-hotspot]'));
 const demoForms = Array.from(document.querySelectorAll('[data-demo-form]'));
 const placeholderLinks = Array.from(document.querySelectorAll('[data-placeholder-link]'));
+const languageButtons = Array.from(document.querySelectorAll('[data-language]'));
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const horizontalMedia = window.matchMedia('(min-width: 768px)');
 const staticHeroMedia = window.matchMedia('(max-width: 1024px)');
@@ -32,6 +33,333 @@ let wheelLocked = false;
 let wheelLockTimer;
 let horizontalScrollFrame;
 let heroRevealTimer;
+let refreshModelLocalization = () => {};
+
+const languageStorageKey = 'nordwire-language';
+const translations = {
+  pt: {
+    'meta.title': 'NordWire - Sistemas eletrónicos para a indústria',
+    'meta.description': 'A NordWire desenvolve sistemas eletrónicos, monitorização industrial e soluções à medida para o chão de fábrica.',
+    'language.groupLabel': 'Seleção de idioma',
+    'language.ptLabel': 'Usar Português',
+    'language.enLabel': 'Usar Inglês',
+    'header.homeLabel': 'NordWire - ir para o início',
+    'header.navLabel': 'Navegação principal',
+    'header.openMenu': 'Abrir menu de navegação',
+    'header.closeMenu': 'Fechar menu de navegação',
+    'nav.home': 'Início',
+    'nav.whatWeDo': 'O que fazemos',
+    'nav.monitoring': 'Monitorização',
+    'nav.cloud': 'Nuvem',
+    'nav.nordgo': 'NordGo',
+    'nav.prototyping': 'Prototipagem',
+    'nav.products': 'Produtos',
+    'nav.partners': 'Parceiros',
+    'nav.contact': 'Contactos',
+    'progress.label': 'Posição nas secções',
+    'progress.goTo': 'Ir para {section}',
+    'hero.title': 'Tudo começa no chão de fábrica.',
+    'hero.subtitle': 'A NordWire desenvolve sistemas eletrónicos que capturam tudo o que acontece na tua produção - e transformam cada segundo em informação útil.',
+    'cta.explore': 'Explorar Mais',
+    'cta.partner': 'Tornar-me Parceiro',
+    'whatWeDo.eyebrow': 'O que fazemos',
+    'whatWeDo.title': 'Cada máquina tem uma história para contar.',
+    'whatWeDo.subtitle': 'Todos os dias, o teu chão de fábrica gera milhares de dados. A questão não é se eles existem - é se estás a aproveitá-los.',
+    'whatWeDo.cardsLabel': 'Destaques do que fazemos',
+    'whatWeDo.card1Title': 'Tempo real',
+    'whatWeDo.card1Text': 'Dados capturados no momento em que acontecem.',
+    'whatWeDo.card2Title': 'Acesso remoto',
+    'whatWeDo.card2Text': 'A tua produção acessível onde quer que estejas.',
+    'whatWeDo.card3Title': 'À tua medida',
+    'whatWeDo.card3Text': 'Cada solução desenhada para o teu chão de fábrica.',
+    'monitoring.eyebrow': 'Monitorização',
+    'monitoring.title': 'Os sensores captam. Nada se perde.',
+    'monitoring.subtitle': 'Sensores desenvolvidos por nós registam a atividade de cada máquina em tempo real. E o acesso à informação é simples e imediato, diretamente junto de cada equipamento.',
+    'monitoring.statsLabel': 'Estatísticas de monitorização',
+    'monitoring.stat1': 'Disponibilidade das máquinas monitorizadas',
+    'monitoring.stat2': 'Dispositivos visíveis nos painéis em tempo real',
+    'monitoring.stat3': 'Tempo médio de resposta',
+    'cloud.eyebrow': 'Nuvem',
+    'cloud.title': 'Do chão de fábrica até onde tu estiveres.',
+    'cloud.subtitle': 'A informação sobe do sensor para a nuvem em segundos, ficando acessível a partir de qualquer PC ou telemóvel. O que acontece na produção deixa de ficar preso na produção.',
+    'nordgo.eyebrow': 'NordGo',
+    'nordgo.title': 'NordGo - a tua fábrica no bolso.',
+    'nordgo.subtitle': 'Acompanha tudo em tempo real, consulta o histórico e recebe o que interessa, onde quer que estejas. A tua produção, sempre à distância de um toque.',
+    'nordgo.cardsLabel': 'Funcionalidades da NordGo',
+    'nordgo.card1Title': 'Tempo real',
+    'nordgo.card1Text': 'Acompanha a produção ao minuto, onde quer que estejas.',
+    'nordgo.card2Title': 'Histórico',
+    'nordgo.card2Text': 'Consulta o que aconteceu e compara períodos.',
+    'nordgo.card3Title': 'Notificações',
+    'nordgo.card3Text': 'Recebe alertas do que realmente importa.',
+    'prototyping.eyebrow': 'Prototipagem',
+    'prototyping.title': 'Do conceito ao produto final.',
+    'prototyping.subtitle': 'Cada solução é desenhada de raiz para o teu chão de fábrica - do circuito à caixa. Hardware e software pensados para o teu caso, e não para um caso qualquer.',
+    'prototyping.cardsLabel': 'Etapas da prototipagem',
+    'prototyping.card1Title': 'Hardware',
+    'prototyping.card1Text': 'Do circuito à caixa, desenhado de raiz.',
+    'prototyping.card2Title': 'Software',
+    'prototyping.card2Text': 'Firmware e interface pensados para o teu caso.',
+    'prototyping.card3Title': 'Produção',
+    'prototyping.card3Text': 'Do protótipo ao produto final, connosco.',
+    'prototyping.modelAlt': 'Modelo 3D interativo do dispositivo protótipo da NordWire.',
+    'prototyping.modelLabel': 'Modelo 3D interativo do dispositivo protótipo da NordWire. Rode o modelo com o rato, toque ou teclas de seta.',
+    'prototyping.viewSpace': 'Ver no seu espaço',
+    'prototyping.exitAr': 'Sair da realidade aumentada',
+    'prototyping.liveAnnouncements': 'Avisos em direto',
+    'products.eyebrow': 'Produtos',
+    'products.title': 'Os nossos produtos.',
+    'products.subtitle': 'Hardware desenhado à medida da produção real. Explora as soluções que já desenvolvemos.',
+    'products.storeButton': 'Ver Loja',
+    'products.hotspotsLabel': 'Detalhes interativos da placa NordCore',
+    'products.imageAlt': 'Placa eletrónica NordCore vista de cima.',
+    'products.processingTitle': 'Módulo de processamento',
+    'products.processingText': 'O cérebro do sistema - processa os dados recolhidos no chão de fábrica em tempo real.',
+    'products.networkTitle': 'Ligação à rede',
+    'products.networkText': 'Ligação de rede estável para comunicar com a infraestrutura da fábrica.',
+    'products.powerTitle': 'Alimentação e configuração',
+    'products.powerText': 'Alimentação e configuração simples, prontas a integrar em qualquer ambiente.',
+    'products.memoryTitle': 'Memória de segurança',
+    'products.memoryText': 'Mantém as definições e o registo temporal seguros, mesmo sem energia.',
+    'products.expansionTitle': 'Expansão',
+    'products.expansionText': 'Preparado para expansão e armazenamento adicional, à medida das necessidades.',
+    'products.coolingTitle': 'Arrefecimento',
+    'products.coolingText': 'Arrefecimento ativo para um funcionamento fiável e contínuo.',
+    'partners.title': 'Crescemos com quem trabalha connosco.',
+    'partners.subtitle': 'Nós desenvolvemos a tecnologia. Os nossos parceiros levam-na às fábricas de todo o lado. Juntos, transformamos dados em decisões.',
+    'partners.formLabel': 'Formulário de parceria',
+    'partners.submit': 'Quero ser parceiro',
+    'partners.success': 'Obrigado! Entraremos em contacto para falar sobre a parceria.',
+    'contact.eyebrow': 'Contactos',
+    'contact.title': 'Vamos levar os teus dados mais longe.',
+    'contact.subtitle': 'Conta-nos o que se passa no teu chão de fábrica. Nós tratamos do resto.',
+    'contact.formLabel': 'Formulário de contacto',
+    'contact.submit': 'Enviar',
+    'contact.success': 'Mensagem registada. Obrigado pelo teu contacto!',
+    'form.name': 'Nome',
+    'form.company': 'Empresa',
+    'form.email': 'Email',
+    'form.message': 'Mensagem',
+    'footer.heading': 'VAMOS CRIAR ALGO',
+    'footer.homeLabel': 'Página inicial da NordWire',
+    'footer.navLabel': 'Navegação do rodapé',
+    'footer.socialLabel': 'Redes sociais',
+    'footer.copyright': '2026 NordWire. Todos os direitos reservados.',
+  },
+  en: {
+    'meta.title': 'NordWire - Electronic systems for industry',
+    'meta.description': 'NordWire develops electronic systems, industrial monitoring and tailored solutions for the factory floor.',
+    'language.groupLabel': 'Language selection',
+    'language.ptLabel': 'Use Portuguese',
+    'language.enLabel': 'Use English',
+    'header.homeLabel': 'NordWire - go to home',
+    'header.navLabel': 'Main navigation',
+    'header.openMenu': 'Open navigation menu',
+    'header.closeMenu': 'Close navigation menu',
+    'nav.home': 'Home',
+    'nav.whatWeDo': 'What we do',
+    'nav.monitoring': 'Monitoring',
+    'nav.cloud': 'Cloud',
+    'nav.nordgo': 'NordGo',
+    'nav.prototyping': 'Prototyping',
+    'nav.products': 'Products',
+    'nav.partners': 'Partners',
+    'nav.contact': 'Contact',
+    'progress.label': 'Section position',
+    'progress.goTo': 'Go to {section}',
+    'hero.title': 'It all starts on the factory floor.',
+    'hero.subtitle': 'NordWire builds electronic systems that capture everything happening on your production line - turning every second into useful information.',
+    'cta.explore': 'Explore More',
+    'cta.partner': 'Become a Partner',
+    'whatWeDo.eyebrow': 'What we do',
+    'whatWeDo.title': 'Every machine has a story to tell.',
+    'whatWeDo.subtitle': "Every day, your factory floor generates thousands of data points. The question isn't whether they exist - it's whether you're making the most of them.",
+    'whatWeDo.cardsLabel': 'What we do highlights',
+    'whatWeDo.card1Title': 'Real time',
+    'whatWeDo.card1Text': 'Data captured the moment it happens.',
+    'whatWeDo.card2Title': 'Remote access',
+    'whatWeDo.card2Text': 'Your production accessible wherever you are.',
+    'whatWeDo.card3Title': 'Tailored to you',
+    'whatWeDo.card3Text': 'Every solution designed for your factory floor.',
+    'monitoring.eyebrow': 'Monitoring',
+    'monitoring.title': 'The sensors capture. Nothing gets lost.',
+    'monitoring.subtitle': "Sensors we develop record each machine's activity in real time. And access to the information is simple and immediate, right next to each piece of equipment.",
+    'monitoring.statsLabel': 'Monitoring statistics',
+    'monitoring.stat1': 'Uptime of monitored machines',
+    'monitoring.stat2': 'Devices visible on live dashboards',
+    'monitoring.stat3': 'Average response time',
+    'cloud.eyebrow': 'Cloud',
+    'cloud.title': 'From the factory floor to wherever you are.',
+    'cloud.subtitle': 'Information travels from the sensor to the cloud in seconds, becoming accessible from any computer or phone. What happens in production no longer stays trapped in production.',
+    'nordgo.eyebrow': 'NordGo',
+    'nordgo.title': 'NordGo - your factory in your pocket.',
+    'nordgo.subtitle': 'Track everything in real time, review the history and get what matters, wherever you are. Your production, always a tap away.',
+    'nordgo.cardsLabel': 'NordGo features',
+    'nordgo.card1Title': 'Real time',
+    'nordgo.card1Text': 'Follow production by the minute, wherever you are.',
+    'nordgo.card2Title': 'History',
+    'nordgo.card2Text': 'Review what happened and compare periods.',
+    'nordgo.card3Title': 'Notifications',
+    'nordgo.card3Text': 'Get alerts about what really matters.',
+    'prototyping.eyebrow': 'Prototyping',
+    'prototyping.title': 'From concept to finished product.',
+    'prototyping.subtitle': 'Every solution is built from scratch for your factory floor - from the circuit to the enclosure. Hardware and software designed for your case, not just any case.',
+    'prototyping.cardsLabel': 'Prototyping stages',
+    'prototyping.card1Title': 'Hardware',
+    'prototyping.card1Text': 'From circuit to enclosure, built from scratch.',
+    'prototyping.card2Title': 'Software',
+    'prototyping.card2Text': 'Firmware and interface designed for your case.',
+    'prototyping.card3Title': 'Production',
+    'prototyping.card3Text': 'From prototype to finished product, with us.',
+    'prototyping.modelAlt': 'Interactive 3D model of the NordWire prototype device.',
+    'prototyping.modelLabel': 'Interactive 3D model of the NordWire prototype device. Rotate the model with the mouse, touch or arrow keys.',
+    'prototyping.viewSpace': 'View in your space',
+    'prototyping.exitAr': 'Exit AR',
+    'prototyping.liveAnnouncements': 'Live announcements',
+    'products.eyebrow': 'Products',
+    'products.title': 'Our products.',
+    'products.subtitle': "Hardware built to fit real production. Explore the solutions we've already developed.",
+    'products.storeButton': 'Visit Store',
+    'products.hotspotsLabel': 'Interactive details of the NordCore board',
+    'products.imageAlt': 'NordCore electronic board viewed from above.',
+    'products.processingTitle': 'Processing module',
+    'products.processingText': 'The brain of the system - processes data collected on the factory floor in real time.',
+    'products.networkTitle': 'Network connection',
+    'products.networkText': "Stable network connection for communicating with the factory's infrastructure.",
+    'products.powerTitle': 'Power and configuration',
+    'products.powerText': 'Simple power and configuration, ready to integrate into any environment.',
+    'products.memoryTitle': 'Backup memory',
+    'products.memoryText': 'Keeps settings and time records safe, even without power.',
+    'products.expansionTitle': 'Expansion',
+    'products.expansionText': 'Ready for expansion and additional storage as needs grow.',
+    'products.coolingTitle': 'Cooling',
+    'products.coolingText': 'Active cooling for reliable, continuous operation.',
+    'partners.title': 'We grow with those who work with us.',
+    'partners.subtitle': 'We develop the technology. Our partners bring it to factories everywhere. Together, we turn data into decisions.',
+    'partners.formLabel': 'Partnership form',
+    'partners.submit': 'Become a partner',
+    'partners.success': 'Thank you! We will get in touch to discuss the partnership.',
+    'contact.eyebrow': 'Contact',
+    'contact.title': "Let's take your data further.",
+    'contact.subtitle': "Tell us what's happening on your factory floor. We'll handle the rest.",
+    'contact.formLabel': 'Contact form',
+    'contact.submit': 'Send',
+    'contact.success': 'Message received. Thank you for contacting us!',
+    'form.name': 'Name',
+    'form.company': 'Company',
+    'form.email': 'Email',
+    'form.message': 'Message',
+    'footer.heading': "LET'S CREATE SOMETHING",
+    'footer.homeLabel': 'NordWire home page',
+    'footer.navLabel': 'Footer navigation',
+    'footer.socialLabel': 'Social media',
+    'footer.copyright': '2026 NordWire. All rights reserved.',
+  },
+};
+
+const getStoredLanguage = () => {
+  try {
+    const storedLanguage = window.localStorage.getItem(languageStorageKey);
+    return storedLanguage === 'en' ? 'en' : 'pt';
+  } catch {
+    return 'pt';
+  }
+};
+
+let currentLanguage = getStoredLanguage();
+
+const translate = (key, replacements = {}) => {
+  const value = translations[currentLanguage]?.[key]
+    ?? translations.pt[key]
+    ?? key;
+
+  return Object.entries(replacements).reduce(
+    (text, [placeholder, replacement]) => (
+      text.replace(`{${placeholder}}`, replacement)
+    ),
+    value,
+  );
+};
+
+const updateProgressTranslations = () => {
+  horizontalProgress?.setAttribute('aria-label', translate('progress.label'));
+
+  horizontalProgressButtons.forEach((button, index) => {
+    const sectionLabel = sections[index]?.dataset.navLabel ?? sections[index]?.id;
+    button.dataset.label = sectionLabel;
+    button.setAttribute(
+      'aria-label',
+      translate('progress.goTo', { section: sectionLabel }),
+    );
+  });
+};
+
+const applyLanguage = (language, { persist = true } = {}) => {
+  currentLanguage = language === 'en' ? 'en' : 'pt';
+  documentRoot.lang = currentLanguage === 'en' ? 'en' : 'pt-PT';
+  documentRoot.dataset.language = currentLanguage;
+
+  document.querySelectorAll('[data-i18n]').forEach((element) => {
+    element.textContent = translate(element.dataset.i18n);
+  });
+
+  [
+    ['aria-label', 'i18nAriaLabel'],
+    ['alt', 'i18nAlt'],
+    ['content', 'i18nContent'],
+    ['data-nav-label', 'i18nNavLabel'],
+    ['data-success-message', 'i18nSuccessMessage'],
+  ].forEach(([attribute, datasetKey]) => {
+    const dataAttribute = datasetKey.replace(
+      /[A-Z]/g,
+      (letter) => `-${letter.toLowerCase()}`,
+    );
+
+    document.querySelectorAll(`[data-${dataAttribute}]`)
+      .forEach((element) => {
+        element.setAttribute(attribute, translate(element.dataset[datasetKey]));
+      });
+  });
+
+  languageButtons.forEach((button) => {
+    const active = button.dataset.language === currentLanguage;
+    button.classList.toggle('is-active', active);
+    button.setAttribute('aria-pressed', String(active));
+  });
+
+  menuToggle?.setAttribute(
+    'aria-label',
+    translate(body.classList.contains('nav-open')
+      ? 'header.closeMenu'
+      : 'header.openMenu'),
+  );
+  updateProgressTranslations();
+  refreshModelLocalization();
+
+  demoForms.forEach((form) => {
+    const status = form.querySelector('.form-status');
+    if (status) {
+      status.textContent = '';
+    }
+  });
+
+  if (persist) {
+    try {
+      window.localStorage.setItem(languageStorageKey, currentLanguage);
+    } catch {
+      // The language still changes when storage is unavailable.
+    }
+  }
+};
+
+applyLanguage(currentLanguage, { persist: false });
+
+languageButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    closeHotspots();
+    applyLanguage(button.dataset.language);
+  });
+});
 
 placeholderLinks.forEach((link) => {
   link.addEventListener('click', (event) => {
@@ -45,7 +373,7 @@ demoForms.forEach((form) => {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     status.textContent = form.dataset.successMessage
-      ?? 'Obrigado! A tua mensagem foi registada.';
+      ?? translate('contact.success');
     form.reset();
   });
 
@@ -199,7 +527,7 @@ staticHeroMedia.addEventListener('change', (event) => {
 const closeNav = ({ restoreFocus = false } = {}) => {
   body.classList.remove('nav-open');
   menuToggle?.setAttribute('aria-expanded', 'false');
-  menuToggle?.setAttribute('aria-label', 'Abrir menu de navegação');
+  menuToggle?.setAttribute('aria-label', translate('header.openMenu'));
 
   if (restoreFocus) {
     menuToggle?.focus();
@@ -211,7 +539,7 @@ menuToggle?.addEventListener('click', () => {
   menuToggle.setAttribute('aria-expanded', String(open));
   menuToggle.setAttribute(
     'aria-label',
-    open ? 'Fechar menu de navegação' : 'Abrir menu de navegação',
+    translate(open ? 'header.closeMenu' : 'header.openMenu'),
   );
 });
 
@@ -359,7 +687,7 @@ const buildHorizontalProgress = () => {
 
   horizontalProgress = document.createElement('nav');
   horizontalProgress.className = 'horizontal-progress';
-  horizontalProgress.setAttribute('aria-label', 'Posição nas secções');
+  horizontalProgress.setAttribute('aria-label', translate('progress.label'));
 
   horizontalProgressButtons = sections.map((section, index) => {
     const matchingLink = navLinks.find(
@@ -372,7 +700,7 @@ const buildHorizontalProgress = () => {
     button.type = 'button';
     button.setAttribute(
       'aria-label',
-      `Ir para ${sectionLabel}`,
+      translate('progress.goTo', { section: sectionLabel }),
     );
     button.dataset.label = sectionLabel;
     button.addEventListener('click', () => navigateToSection(index));
@@ -615,21 +943,42 @@ if (prototypeModel) {
         return;
       }
 
+      const setLocalizedLabel = (element, key) => {
+        const localizedLabel = translate(key);
+        if (element.getAttribute('aria-label') !== localizedLabel) {
+          element.setAttribute('aria-label', localizedLabel);
+        }
+      };
+
       shadowRoot.querySelectorAll('[aria-label]').forEach((element) => {
         const label = element.getAttribute('aria-label') || '';
 
-        if (label.includes('Use mouse, touch or arrow keys to move.')) {
-          element.setAttribute('aria-label', 'Modelo 3D interativo do dispositivo protótipo da NordWire. Rode o modelo com o rato, toque ou teclas de seta.');
-        } else if (label === 'View in your space') {
-          element.setAttribute('aria-label', 'Ver no seu espaço');
-        } else if (label === 'Exit AR') {
-          element.setAttribute('aria-label', 'Sair da realidade aumentada');
-        } else if (label === 'Live announcements') {
-          element.setAttribute('aria-label', 'Avisos em direto');
+        if (
+          label.includes('Use mouse, touch or arrow keys to move.')
+          || label.includes('Rode o modelo com o rato')
+          || label.includes('Rotate the model with the mouse')
+        ) {
+          setLocalizedLabel(element, 'prototyping.modelLabel');
+        } else if ([
+          translations.pt['prototyping.viewSpace'],
+          translations.en['prototyping.viewSpace'],
+        ].includes(label)) {
+          setLocalizedLabel(element, 'prototyping.viewSpace');
+        } else if ([
+          translations.pt['prototyping.exitAr'],
+          translations.en['prototyping.exitAr'],
+        ].includes(label)) {
+          setLocalizedLabel(element, 'prototyping.exitAr');
+        } else if ([
+          translations.pt['prototyping.liveAnnouncements'],
+          translations.en['prototyping.liveAnnouncements'],
+        ].includes(label)) {
+          setLocalizedLabel(element, 'prototyping.liveAnnouncements');
         }
       });
     };
 
+    refreshModelLocalization = localizeModelControls;
     localizeModelControls();
     const modelLocalizationObserver = new MutationObserver(localizeModelControls);
     if (prototypeModel.shadowRoot) {
