@@ -11,6 +11,8 @@ const heroVideo = document.querySelector('.hero-background-video');
 const heroCopy = document.querySelector('.hero-copy');
 const revealGroups = Array.from(document.querySelectorAll('[data-reveal]'));
 const hotspotButtons = Array.from(document.querySelectorAll('[data-hotspot]'));
+const demoForms = Array.from(document.querySelectorAll('[data-demo-form]'));
+const placeholderLinks = Array.from(document.querySelectorAll('[data-placeholder-link]'));
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const horizontalMedia = window.matchMedia('(min-width: 768px)');
 const staticHeroMedia = window.matchMedia('(max-width: 1024px)');
@@ -26,6 +28,27 @@ let wheelLocked = false;
 let wheelLockTimer;
 let horizontalScrollFrame;
 let heroRevealTimer;
+
+placeholderLinks.forEach((link) => {
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+  });
+});
+
+demoForms.forEach((form) => {
+  const status = form.querySelector('.form-status');
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    status.textContent = form.dataset.successMessage
+      ?? 'Obrigado! A tua mensagem foi registada.';
+    form.reset();
+  });
+
+  form.addEventListener('input', () => {
+    status.textContent = '';
+  });
+});
 
 const closeHotspots = ({ except, restoreFocus = false } = {}) => {
   hotspotButtons.forEach((button) => {
@@ -516,6 +539,7 @@ const revealTargetSelector = [
   '.hero-actions',
   '.feature-item',
   '.value-highlight',
+  '.product-actions',
   '.prototype-model-column',
   '.copy-actions',
   '.stat-block',
@@ -572,6 +596,38 @@ if (prototypeModel) {
     let modelReady = false;
     let userInteracting = false;
     let oscillating = false;
+
+    const localizeModelControls = () => {
+      const shadowRoot = prototypeModel.shadowRoot;
+      if (!shadowRoot) {
+        return;
+      }
+
+      shadowRoot.querySelectorAll('[aria-label]').forEach((element) => {
+        const label = element.getAttribute('aria-label') || '';
+
+        if (label.includes('Use mouse, touch or arrow keys to move.')) {
+          element.setAttribute('aria-label', 'Modelo 3D interativo do dispositivo protótipo da NordWire. Rode o modelo com o rato, toque ou teclas de seta.');
+        } else if (label === 'View in your space') {
+          element.setAttribute('aria-label', 'Ver no seu espaço');
+        } else if (label === 'Exit AR') {
+          element.setAttribute('aria-label', 'Sair da realidade aumentada');
+        } else if (label === 'Live announcements') {
+          element.setAttribute('aria-label', 'Avisos em direto');
+        }
+      });
+    };
+
+    localizeModelControls();
+    const modelLocalizationObserver = new MutationObserver(localizeModelControls);
+    if (prototypeModel.shadowRoot) {
+      modelLocalizationObserver.observe(prototypeModel.shadowRoot, {
+        attributes: true,
+        attributeFilter: ['aria-label'],
+        childList: true,
+        subtree: true,
+      });
+    }
 
     const clearIdleTimer = () => {
       window.clearTimeout(idleTimer);
@@ -642,6 +698,7 @@ if (prototypeModel) {
     prototypeModel.addEventListener('load', () => {
       modelReady = true;
       prototypeModel.classList.add('is-ready');
+      localizeModelControls();
       queueOscillation();
     });
 
