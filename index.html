@@ -20,18 +20,22 @@
   <div class="site-shell">
     <header class="site-header" id="top">
       <div class="section-shell header-shell">
-        <a class="header-brand" href="#home" aria-label="Nordwire — ir para o início">
+        <a class="header-brand" href="#inicio" aria-label="Nordwire — ir para o início">
           <span class="header-logo-frame" aria-hidden="true">
             <img class="header-logo" src="assets/images/nordwire-logo.png" alt="">
           </span>
         </a>
 
         <nav class="site-nav" id="site-nav" aria-label="Navegação principal">
-          <a href="#home" class="is-active" aria-current="page">Início</a>
-          <a href="#prototyping">Prototyping</a>
-          <a href="#enclosures">Enclosures</a>
-          <a href="#monitoring">Monitoring</a>
-          <a href="#cta">Parceiros</a>
+          <a href="#inicio" class="is-active" aria-current="page">Início</a>
+          <a href="#o-que-fazemos">O que fazemos</a>
+          <a href="#monitorizacao">Monitorização</a>
+          <a href="#cloud">Cloud</a>
+          <a href="#nordgo">NordGo</a>
+          <a href="#prototipagem">Prototipagem</a>
+          <a href="#produtos">Produtos</a>
+          <a href="#parceiros">Parceiros</a>
+          <a href="#contactos">Contactos</a>
         </nav>
 
         <div class="header-actions">
@@ -45,7 +49,7 @@
     </header>
 
     <main>
-      <section class="hero section-dark" id="home">
+      <section class="hero section-dark" id="inicio" data-nav-label="Início">
         <video
           class="hero-background-video"
           autoplay
@@ -68,13 +72,13 @@
               </h1>
 
               <div class="hero-actions">
-                <a class="button button-primary" href="#prototyping">
+                <a class="button button-primary" href="#o-que-fazemos">
                   <span class="button-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none"><path d="M7 12h10M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </span>
                   <span>Explorar Mais</span>
                 </a>
-                <a class="button button-subtle" href="#cta">
+                <a class="button button-subtle" href="#parceiros">
                   <span class="button-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none"><path d="M7 12h10M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </span>
@@ -86,11 +90,77 @@
         </div>
       </section>
 
-      <section class="feature-section section-dark" id="prototyping">
+      <section class="feature-section placeholder-section section-dark" id="o-que-fazemos" data-nav-label="O que fazemos">
+        <div class="section-shell">
+          <div class="grid-12 feature-grid placeholder-layout">
+            <div class="section-copy reveal" data-reveal>
+              <p class="eyebrow">O que fazemos</p>
+              <h2>O que fazemos — [placeholder]</h2>
+              <p>Conteúdo em preparação.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="feature-section section-dark" id="monitorizacao" data-nav-label="Monitorização">
+        <div class="section-shell">
+          <div class="grid-12 monitoring-grid">
+            <div class="section-copy reveal" data-reveal>
+              <p class="eyebrow">Monitorização</p>
+              <h2>Real-time monitoring for hardware that cannot afford guesswork.</h2>
+              <p>
+                Centralized dashboards, alerting, uptime metrics, and remote telemetry give product teams live insight from deployment through ongoing iteration.
+              </p>
+
+              <div class="stats-cluster" aria-label="Monitoring statistics">
+                <article class="stat-block">
+                  <strong>99.2%</strong>
+                  <span>Uptime across monitored fleets</span>
+                </article>
+                <article class="stat-block">
+                  <strong>420+</strong>
+                  <span>Devices surfaced in live dashboards</span>
+                </article>
+                <article class="stat-block">
+                  <strong>34ms</strong>
+                  <span>Average edge response latency</span>
+                </article>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="feature-section placeholder-section section-dark" id="cloud" data-nav-label="Cloud">
+        <div class="section-shell">
+          <div class="grid-12 feature-grid placeholder-layout">
+            <div class="section-copy reveal" data-reveal>
+              <p class="eyebrow">Cloud</p>
+              <h2>A viagem dos dados — [placeholder]</h2>
+              <p>Conteúdo em preparação.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="feature-section placeholder-section section-dark" id="nordgo" data-nav-label="NordGo">
+        <div class="section-shell">
+          <div class="grid-12 feature-grid placeholder-layout">
+            <div class="section-copy reveal" data-reveal>
+              <p class="eyebrow">NordGo</p>
+              <h2>NordGo — [placeholder]</h2>
+              <p>Conteúdo em preparação.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="feature-section section-dark" id="prototipagem" data-nav-label="Prototipagem">
         <div class="section-shell">
           <div class="grid-12 feature-grid feature-grid-standard">
             <div class="section-copy reveal" data-reveal>
-              <p class="eyebrow">Prototyping & bespoke development</p>
+              <p class="eyebrow">Prototipagem</p>
               <h2>Engineering sprints that turn ideas into validated hardware.</h2>
               <p>
                 The structure mirrors the reference page’s specs section: compact proof points, deliberate spacing, and one idea revealed at a time inside a dark editorial layout.
@@ -156,60 +226,24 @@
         </div>
       </section>
 
-      <section class="feature-section feature-section-wallpaper section-dark" id="enclosures">
+      <section class="feature-section placeholder-section section-dark" id="produtos" data-nav-label="Produtos">
         <div class="section-shell">
-          <div class="grid-12 feature-grid feature-grid-mirrored">
+          <div class="grid-12 feature-grid placeholder-layout placeholder-layout-products">
             <div class="section-copy reveal" data-reveal>
-              <p class="eyebrow">3D-printed & CNC housings</p>
-              <h2>Protective enclosures with tailored fit, premium finish, and durable intent.</h2>
-              <p>
-                Custom shells are designed for materials, tolerances, heat, access, and impact — so the form feels premium while the function stays operational in the field.
-              </p>
-
-              <div class="copy-actions">
-                <a class="button button-subtle" href="#monitoring">
-                  <span class="button-icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
-                  <span>More info</span>
-                </a>
-              </div>
+              <p class="eyebrow">Produtos</p>
+              <h2>Produtos — [placeholder]</h2>
+              <p>Conteúdo em preparação.</p>
+            </div>
+            <div class="product-placeholder-grid reveal" data-reveal aria-label="Espaço reservado para produtos">
+              <div class="product-placeholder" aria-hidden="true"></div>
+              <div class="product-placeholder" aria-hidden="true"></div>
+              <div class="product-placeholder" aria-hidden="true"></div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="feature-section feature-section-wallpaper section-dark" id="monitoring">
-        <div class="section-shell">
-          <div class="grid-12 monitoring-grid">
-            <div class="section-copy reveal" data-reveal>
-              <p class="eyebrow">Remote insight & telemetry</p>
-              <h2>Real-time monitoring for hardware that cannot afford guesswork.</h2>
-              <p>
-                Centralized dashboards, alerting, uptime metrics, and remote telemetry give product teams live insight from deployment through ongoing iteration.
-              </p>
-
-              <div class="stats-cluster" aria-label="Monitoring statistics">
-                <article class="stat-block">
-                  <strong>99.2%</strong>
-                  <span>Uptime across monitored fleets</span>
-                </article>
-                <article class="stat-block">
-                  <strong>420+</strong>
-                  <span>Devices surfaced in live dashboards</span>
-                </article>
-                <article class="stat-block">
-                  <strong>34ms</strong>
-                  <span>Average edge response latency</span>
-                </article>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <section class="cta-section section-dark" id="cta">
+      <section class="cta-section section-dark" id="parceiros" data-nav-label="Parceiros">
         <div class="section-shell">
           <article class="promo-panel reveal" data-reveal>
             <div class="promo-copy">
@@ -232,9 +266,22 @@
           </article>
         </div>
       </section>
+
+      <section class="feature-section placeholder-section section-dark" id="contactos" data-nav-label="Contactos">
+        <div class="section-shell">
+          <div class="grid-12 feature-grid placeholder-layout placeholder-layout-contact">
+            <div class="section-copy reveal" data-reveal>
+              <p class="eyebrow">Contactos</p>
+              <h2>Contactos — [placeholder]</h2>
+              <p>Conteúdo em preparação.</p>
+            </div>
+            <div class="contact-placeholder reveal" data-reveal aria-label="Espaço reservado para contacto"></div>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <footer class="site-footer section-dark" id="products">
+    <footer class="site-footer section-dark" id="site-footer">
       <div class="section-shell footer-shell">
         <div class="footer-heading-wrap">
           <p class="eyebrow">Forge One</p>
@@ -242,17 +289,19 @@
         </div>
 
         <div class="footer-grid">
-          <a class="brand footer-brand" href="#home" aria-label="Forge One home">
+          <a class="brand footer-brand" href="#inicio" aria-label="Forge One home">
             <span class="brand-mark" aria-hidden="true">F</span>
             <span class="brand-name">Forge One</span>
           </a>
 
           <nav class="footer-nav" aria-label="Footer navigation">
-            <a href="#home">Home</a>
-            <a href="#prototyping">Prototyping</a>
-            <a href="#enclosures">Enclosures</a>
-            <a href="#monitoring">Monitoring</a>
-            <a href="#products">Products</a>
+            <a href="#inicio">Início</a>
+            <a href="#o-que-fazemos">O que fazemos</a>
+            <a href="#monitorizacao">Monitorização</a>
+            <a href="#prototipagem">Prototipagem</a>
+            <a href="#produtos">Produtos</a>
+            <a href="#parceiros">Parceiros</a>
+            <a href="#contactos">Contactos</a>
           </nav>
 
           <div class="social-links" aria-label="Social links">

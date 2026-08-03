@@ -6,13 +6,11 @@ const main = document.querySelector('main');
 const header = document.querySelector('.site-header');
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = Array.from(document.querySelectorAll('.site-nav a'));
-const homeSection = document.querySelector('#home');
+const homeSection = document.querySelector('#inicio');
 const revealGroups = Array.from(document.querySelectorAll('[data-reveal]'));
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const horizontalMedia = window.matchMedia('(min-width: 768px)');
-const sections = navLinks
-  .map((link) => document.querySelector(link.getAttribute('href')))
-  .filter(Boolean);
+const sections = Array.from(main?.querySelectorAll(':scope > section') ?? []);
 const sectionByHash = new Map(sections.map((section) => [`#${section.id}`, section]));
 const sectionLinks = Array.from(document.querySelectorAll('a[href^="#"]'))
   .filter((link) => sectionByHash.has(link.getAttribute('href')));
@@ -188,11 +186,14 @@ const buildHorizontalProgress = () => {
     const matchingLink = navLinks.find(
       (link) => link.getAttribute('href') === `#${section.id}`,
     );
+    const sectionLabel = section.dataset.navLabel
+      ?? matchingLink?.textContent.trim()
+      ?? section.id;
     const button = document.createElement('button');
     button.type = 'button';
     button.setAttribute(
       'aria-label',
-      `Ir para ${matchingLink?.textContent.trim() ?? section.id}`,
+      `Ir para ${sectionLabel}`,
     );
     button.addEventListener('click', () => navigateToSection(index));
     horizontalProgress.append(button);
