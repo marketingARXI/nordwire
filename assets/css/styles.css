@@ -1691,6 +1691,29 @@ main > section:not(.hero) > .section-shell {
     bottom: calc(var(--footer-panel-height) - 1rem);
   }
 
+  #nordgo .value-highlights {
+    grid-template-columns: 1fr;
+    gap: clamp(0.55rem, 1.2vh, 0.8rem);
+  }
+
+  #nordgo .value-highlight {
+    display: grid;
+    grid-template-columns: auto minmax(7rem, 0.25fr) minmax(0, 1fr);
+    align-items: center;
+    column-gap: clamp(0.9rem, 1.6vw, 1.5rem);
+    min-height: 0;
+    padding-block: clamp(0.7rem, 1.4vh, 1rem);
+  }
+
+  #nordgo .value-highlight h3 {
+    margin: 0;
+  }
+
+  #nordgo .value-highlight p {
+    max-width: none;
+    white-space: nowrap;
+  }
+
   .horizontal-ready .hero,
   .horizontal-ready .hero-shell {
     min-height: 100dvh;
@@ -2205,6 +2228,24 @@ main > section:not(.hero) > .section-shell {
   .value-highlight {
     min-height: 0;
   }
+}
+
+.hero .hero-shell {
+  min-height: 100svh;
+  padding-top: 0;
+}
+
+.hero .hero-grid {
+  min-height: 100svh;
+  align-items: center;
+}
+
+.hero .hero-copy,
+.horizontal-ready .hero .hero-copy {
+  align-self: center;
+  margin-top: 0;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
