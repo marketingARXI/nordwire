@@ -58,13 +58,13 @@ const translations = {
     'nav.contact': 'Contactos',
     'progress.label': 'Posição nas secções',
     'progress.goTo': 'Ir para {section}',
-    'hero.title': 'Tudo começa no chão de fábrica.',
+    'hero.title': ['Tudo começa', 'no chão de fábrica.'],
     'hero.subtitle': 'A NordWire desenvolve sistemas eletrónicos que capturam tudo o que acontece na tua produção - e transformam cada segundo em informação útil.',
     'cta.explore': 'Explorar Mais',
     'cta.partner': 'Tornar-me Parceiro',
     'whatWeDo.eyebrow': 'O que fazemos',
     'whatWeDo.title': 'Cada máquina tem uma história para contar.',
-    'whatWeDo.subtitle': 'Todos os dias, o teu chão de fábrica gera milhares de dados. A questão não é se eles existem - é se estás a aproveitá-los.',
+    'whatWeDo.subtitle': ['Todos os dias, o teu chão de fábrica gera milhares de dados.', 'A questão não é se eles existem, é se estás a aproveitá-los.'],
     'whatWeDo.cardsLabel': 'Destaques do que fazemos',
     'whatWeDo.card1Title': 'Tempo real',
     'whatWeDo.card1Text': 'Dados capturados no momento em que acontecem.',
@@ -73,14 +73,14 @@ const translations = {
     'whatWeDo.card3Title': 'À tua medida',
     'whatWeDo.card3Text': 'Cada solução desenhada para o teu chão de fábrica.',
     'monitoring.eyebrow': 'Monitorização',
-    'monitoring.title': 'Os sensores captam. Nada se perde.',
+    'monitoring.title': ['Os sensores captam.', 'Nada se perde.'],
     'monitoring.subtitle': 'Sensores desenvolvidos por nós registam a atividade de cada máquina em tempo real. E o acesso à informação é simples e imediato, diretamente junto de cada equipamento.',
     'monitoring.statsLabel': 'Estatísticas de monitorização',
-    'monitoring.stat1': 'Disponibilidade das máquinas monitorizadas',
+    'monitoring.stat1': ['Disponibilidade', 'das máquinas', 'monitorizadas'],
     'monitoring.stat2': 'Dispositivos visíveis nos painéis em tempo real',
     'monitoring.stat3': 'Tempo médio de resposta',
     'cloud.eyebrow': 'Nuvem',
-    'cloud.title': 'Do chão de fábrica até onde tu estiveres.',
+    'cloud.title': ['Do chão de fábrica', 'até onde tu estiveres.'],
     'cloud.subtitle': 'A informação sobe do sensor para a nuvem em segundos, ficando acessível a partir de qualquer PC ou telemóvel. O que acontece na produção deixa de ficar preso na produção.',
     'nordgo.eyebrow': 'NordGo',
     'nordgo.title': 'NordGo - a tua fábrica no bolso.',
@@ -93,7 +93,7 @@ const translations = {
     'nordgo.card3Title': 'Notificações',
     'nordgo.card3Text': 'Recebe alertas do que realmente importa.',
     'prototyping.eyebrow': 'Prototipagem',
-    'prototyping.title': 'Do conceito ao produto final.',
+    'prototyping.title': ['Do conceito', 'ao produto final.'],
     'prototyping.subtitle': 'Cada solução é desenhada de raiz para o teu chão de fábrica - do circuito à caixa. Hardware e software pensados para o teu caso, e não para um caso qualquer.',
     'prototyping.cardsLabel': 'Etapas da prototipagem',
     'prototyping.card1Title': 'Hardware',
@@ -167,13 +167,13 @@ const translations = {
     'nav.contact': 'Contact',
     'progress.label': 'Section position',
     'progress.goTo': 'Go to {section}',
-    'hero.title': 'It all starts on the factory floor.',
+    'hero.title': ['It all starts', 'on the factory floor.'],
     'hero.subtitle': 'NordWire builds electronic systems that capture everything happening on your production line - turning every second into useful information.',
     'cta.explore': 'Explore More',
     'cta.partner': 'Become a Partner',
     'whatWeDo.eyebrow': 'What we do',
     'whatWeDo.title': 'Every machine has a story to tell.',
-    'whatWeDo.subtitle': "Every day, your factory floor generates thousands of data points. The question isn't whether they exist - it's whether you're making the most of them.",
+    'whatWeDo.subtitle': ["Every day, your factory floor generates thousands of data points.", "The question isn't whether they exist, it's whether you're making the most of them."],
     'whatWeDo.cardsLabel': 'What we do highlights',
     'whatWeDo.card1Title': 'Real time',
     'whatWeDo.card1Text': 'Data captured the moment it happens.',
@@ -182,14 +182,14 @@ const translations = {
     'whatWeDo.card3Title': 'Tailored to you',
     'whatWeDo.card3Text': 'Every solution designed for your factory floor.',
     'monitoring.eyebrow': 'Monitoring',
-    'monitoring.title': 'The sensors capture. Nothing gets lost.',
+    'monitoring.title': ['The sensors capture.', 'Nothing gets lost.'],
     'monitoring.subtitle': "Sensors we develop record each machine's activity in real time. And access to the information is simple and immediate, right next to each piece of equipment.",
     'monitoring.statsLabel': 'Monitoring statistics',
-    'monitoring.stat1': 'Uptime of monitored machines',
+    'monitoring.stat1': ['Uptime of', 'monitored', 'machines'],
     'monitoring.stat2': 'Devices visible on live dashboards',
     'monitoring.stat3': 'Average response time',
     'cloud.eyebrow': 'Cloud',
-    'cloud.title': 'From the factory floor to wherever you are.',
+    'cloud.title': ['From the factory floor', 'to wherever you are.'],
     'cloud.subtitle': 'Information travels from the sensor to the cloud in seconds, becoming accessible from any computer or phone. What happens in production no longer stays trapped in production.',
     'nordgo.eyebrow': 'NordGo',
     'nordgo.title': 'NordGo - your factory in your pocket.',
@@ -202,7 +202,7 @@ const translations = {
     'nordgo.card3Title': 'Notifications',
     'nordgo.card3Text': 'Get alerts about what really matters.',
     'prototyping.eyebrow': 'Prototyping',
-    'prototyping.title': 'From concept to finished product.',
+    'prototyping.title': ['From concept', 'to the finished product.'],
     'prototyping.subtitle': 'Every solution is built from scratch for your factory floor - from the circuit to the enclosure. Hardware and software designed for your case, not just any case.',
     'prototyping.cardsLabel': 'Prototyping stages',
     'prototyping.card1Title': 'Hardware',
@@ -273,12 +273,42 @@ const translate = (key, replacements = {}) => {
     ?? translations.pt[key]
     ?? key;
 
+  const textValue = Array.isArray(value) ? value.join(' ') : value;
+
   return Object.entries(replacements).reduce(
     (text, [placeholder, replacement]) => (
       text.replace(`{${placeholder}}`, replacement)
     ),
-    value,
+    textValue,
   );
+};
+
+const renderTranslatedLines = (element, key) => {
+  const translatedValue = translations[currentLanguage]?.[key]
+    ?? translations.pt[key]
+    ?? key;
+  const lines = Array.isArray(translatedValue)
+    ? translatedValue
+    : [translatedValue];
+  const fragment = document.createDocumentFragment();
+
+  lines.forEach((line, index) => {
+    if (index > 0) {
+      const lineBreak = document.createElement('br');
+      lineBreak.className = 'controlled-break';
+      const mobileSpace = document.createElement('span');
+      mobileSpace.className = 'mobile-line-space';
+      mobileSpace.textContent = ' ';
+      fragment.append(lineBreak, mobileSpace);
+    }
+
+    const lineElement = document.createElement('span');
+    lineElement.className = 'controlled-line';
+    lineElement.textContent = line;
+    fragment.append(lineElement);
+  });
+
+  element.replaceChildren(fragment);
 };
 
 const updateProgressTranslations = () => {
@@ -301,6 +331,10 @@ const applyLanguage = (language, { persist = true } = {}) => {
 
   document.querySelectorAll('[data-i18n]').forEach((element) => {
     element.textContent = translate(element.dataset.i18n);
+  });
+
+  document.querySelectorAll('[data-i18n-lines]').forEach((element) => {
+    renderTranslatedLines(element, element.dataset.i18nLines);
   });
 
   [
