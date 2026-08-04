@@ -29,6 +29,8 @@
   --section-subtitle-size: clamp(1rem, min(1.35vw, 2.4vh), 1.3rem);
   --section-content-top: 21dvh;
   --footer-panel-height: clamp(10.5rem, 24dvh, 14rem);
+  --motion-duration: 280ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * {
@@ -87,8 +89,10 @@ main > section {
 #cloud,
 #nordgo,
 #produtos,
-#parceiros {
+#parceiros,
+#contactos {
   position: relative;
+  overflow: hidden;
   isolation: isolate;
   background-color: #0d0f14;
   background-position: center;
@@ -97,27 +101,62 @@ main > section {
 }
 
 #o-que-fazemos {
+  --section-bg-image: url("../images/bg-o-que-fazemos.png");
   background-image: url("../images/bg-o-que-fazemos.png");
 }
 
 #monitorizacao {
+  --section-bg-image: url("../images/bg-monitorizacao.png");
   background-image: url("../images/bg-monitorizacao.png");
 }
 
 #cloud {
+  --section-bg-image: url("../images/bg-cloud.png");
   background-image: url("../images/bg-cloud.png");
 }
 
 #nordgo {
+  --section-bg-image: url("../images/bg-nordgo.png");
   background-image: url("../images/bg-nordgo.png");
 }
 
 #produtos {
+  --section-bg-image: url("../images/bg-produtos.png");
   background-image: url("../images/bg-produtos.png");
 }
 
 #parceiros {
+  --section-bg-image: url("../images/bg-parceiros.png");
   background-image: url("../images/bg-parceiros.png");
+}
+
+#contactos {
+  --section-bg-image: url("../images/bg-contactos.png");
+  background-image: url("../images/bg-contactos.png");
+}
+
+#o-que-fazemos::after,
+#monitorizacao::after,
+#cloud::after,
+#nordgo::after,
+#produtos::after,
+#parceiros::after,
+#contactos::after {
+  position: absolute;
+  inset: -3%;
+  z-index: 0;
+  background-color: #0d0f14;
+  background-image: var(--section-bg-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  content: "";
+  pointer-events: none;
+  transform: translate3d(
+    var(--parallax-x, 0),
+    var(--parallax-y, 0),
+    0
+  ) scale(1.025);
 }
 
 #o-que-fazemos::before,
@@ -125,11 +164,12 @@ main > section {
 #cloud::before,
 #nordgo::before,
 #produtos::before,
-#parceiros::before {
+#parceiros::before,
+#contactos::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
   background: linear-gradient(
     90deg,
@@ -156,14 +196,24 @@ main > section {
   background: rgba(13, 15, 20, 0.48);
 }
 
+#contactos::before {
+  background: linear-gradient(
+    90deg,
+    rgba(13, 15, 20, 0.76) 0%,
+    rgba(13, 15, 20, 0.58) 52%,
+    rgba(13, 15, 20, 0.52) 100%
+  );
+}
+
 #o-que-fazemos > .section-shell,
 #monitorizacao > .section-shell,
 #cloud > .section-shell,
 #nordgo > .section-shell,
 #produtos > .section-shell,
-#parceiros > .section-shell {
+#parceiros > .section-shell,
+#contactos > .section-shell {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .section-shell {
@@ -464,12 +514,16 @@ main > section {
   border: 1px solid var(--line);
   font-size: 0.95rem;
   font-weight: 600;
-  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+  transition:
+    transform var(--motion-duration) var(--motion-ease),
+    background var(--motion-duration) var(--motion-ease),
+    border-color var(--motion-duration) var(--motion-ease),
+    box-shadow var(--motion-duration) var(--motion-ease);
 }
 
 .button:hover,
 .button:focus-visible {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   outline: none;
 }
 
@@ -886,6 +940,7 @@ main > section:not(.hero) > .section-shell {
   place-items: center;
   touch-action: manipulation;
   transform: translate(-50%, -50%);
+  transition: transform var(--motion-duration) var(--motion-ease);
 }
 
 .product-hotspot::before {
@@ -898,6 +953,10 @@ main > section:not(.hero) > .section-shell {
   opacity: 0.42;
   box-shadow: 0 0 16px var(--accent-glow), inset 0 0 10px var(--accent-glow);
   animation: hotspot-pulse 2.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  transition:
+    opacity var(--motion-duration) var(--motion-ease),
+    box-shadow var(--motion-duration) var(--motion-ease),
+    transform var(--motion-duration) var(--motion-ease);
 }
 
 .product-hotspot-dot {
@@ -910,6 +969,9 @@ main > section:not(.hero) > .section-shell {
   box-shadow:
     0 0 0 4px rgba(34, 96, 242, 0.12),
     0 0 15px rgba(34, 96, 242, 0.5);
+  transition:
+    box-shadow var(--motion-duration) var(--motion-ease),
+    transform var(--motion-duration) var(--motion-ease);
 }
 
 .product-hotspot:focus-visible {
@@ -968,6 +1030,24 @@ main > section:not(.hero) > .section-shell {
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .product-hotspot:hover {
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+
+  .product-hotspot:hover::before {
+    opacity: 0.72;
+    box-shadow:
+      0 0 22px rgba(34, 96, 242, 0.42),
+      inset 0 0 12px rgba(34, 96, 242, 0.26);
+  }
+
+  .product-hotspot:hover .product-hotspot-dot {
+    box-shadow:
+      0 0 0 5px rgba(34, 96, 242, 0.16),
+      0 0 22px rgba(34, 96, 242, 0.68);
+    transform: scale(1.08);
+  }
+
   .product-hotspot:hover .product-hotspot-tooltip {
     display: grid;
     opacity: 1;
@@ -1054,6 +1134,21 @@ main > section:not(.hero) > .section-shell {
   border-radius: var(--radius-lg);
   background: rgba(13, 15, 20, 0.72);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition:
+    transform var(--motion-duration) var(--motion-ease),
+    border-color var(--motion-duration) var(--motion-ease),
+    box-shadow var(--motion-duration) var(--motion-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .value-highlight:hover {
+    border-color: rgba(34, 96, 242, 0.52);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 14px 34px rgba(0, 0, 0, 0.26),
+      0 0 26px rgba(34, 96, 242, 0.13);
+    transform: translateY(-4px);
+  }
 }
 
 .value-highlight::after {
@@ -1416,10 +1511,10 @@ main > section:not(.hero) > .section-shell {
 
 .reveal-enabled .reveal-item {
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(14px);
   transition:
-    opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 660ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 660ms cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: var(--reveal-delay, 0ms);
   will-change: opacity, transform;
 }
@@ -1428,6 +1523,14 @@ main > section:not(.hero) > .section-shell {
   opacity: 1;
   transform: translateY(0);
   will-change: auto;
+}
+
+.reveal-enabled .value-highlight.reveal-item.reveal-complete {
+  transition:
+    transform var(--motion-duration) var(--motion-ease),
+    border-color var(--motion-duration) var(--motion-ease),
+    box-shadow var(--motion-duration) var(--motion-ease);
+  transition-delay: 0ms;
 }
 
 @media (min-width: 768px) {
@@ -1474,10 +1577,14 @@ main > section:not(.hero) > .section-shell {
     height: 100dvh;
     overflow-x: auto;
     overflow-y: hidden;
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     scroll-snap-type: x mandatory;
     overscroll-behavior-x: contain;
     scrollbar-width: none;
+  }
+
+  .horizontal-ready main.is-programmatic-scroll {
+    scroll-snap-type: none;
   }
 
   .horizontal-ready main::-webkit-scrollbar {
@@ -1656,9 +1763,13 @@ main > section:not(.hero) > .section-shell {
     inset: 0;
     z-index: 80;
     display: grid;
+    width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
     align-content: center;
     justify-items: center;
     gap: 1.4rem;
+    overflow-y: auto;
     background: rgba(8, 8, 8, 0.98);
     opacity: 0;
     visibility: hidden;
@@ -1708,9 +1819,13 @@ main > section:not(.hero) > .section-shell {
     position: fixed;
     inset: 0;
     display: grid;
+    width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
     align-content: center;
     justify-items: center;
     gap: 1.4rem;
+    overflow-y: auto;
     background: rgba(8, 8, 8, 0.98);
     opacity: 0;
     visibility: hidden;
@@ -2119,5 +2234,29 @@ main > section:not(.hero) > .section-shell {
 
   .product-hotspot::before {
     animation: none;
+  }
+
+  #o-que-fazemos::after,
+  #monitorizacao::after,
+  #cloud::after,
+  #nordgo::after,
+  #produtos::after,
+  #parceiros::after,
+  #contactos::after {
+    transform: none;
+  }
+
+  .button:hover,
+  .button:focus-visible,
+  .value-highlight:hover {
+    transform: none;
+  }
+
+  .product-hotspot:hover {
+    transform: translate(-50%, -50%);
+  }
+
+  .product-hotspot:hover .product-hotspot-dot {
+    transform: none;
   }
 }
