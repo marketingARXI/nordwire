@@ -864,6 +864,16 @@ const buildHorizontalProgress = () => {
   body.append(horizontalProgress);
 };
 
+const hasScrollableVerticalContent = (section) => {
+  const { overflowY } = window.getComputedStyle(section);
+  const allowsVerticalScroll = overflowY === 'auto' || overflowY === 'scroll';
+
+  return (
+    allowsVerticalScroll
+    && section.scrollHeight > section.clientHeight + 2
+  );
+};
+
 const handleHorizontalWheel = (event) => {
   if (
     !isHorizontalLayout()
@@ -879,22 +889,25 @@ const handleHorizontalWheel = (event) => {
     return;
   }
 
-  const currentSection = sections[activeSectionIndex];
+  const currentIndex = getHorizontalSectionIndex();
+  const currentSection = sections[currentIndex];
   if (!currentSection) {
     return;
   }
 
-  const atTop = currentSection.scrollTop <= 1;
-  const atBottom = (
-    currentSection.scrollTop + currentSection.clientHeight
-    >= currentSection.scrollHeight - 2
-  );
+  if (hasScrollableVerticalContent(currentSection)) {
+    const atTop = currentSection.scrollTop <= 1;
+    const atBottom = (
+      currentSection.scrollTop + currentSection.clientHeight
+      >= currentSection.scrollHeight - 2
+    );
 
-  if ((direction > 0 && !atBottom) || (direction < 0 && !atTop)) {
-    return;
+    if ((direction > 0 && !atBottom) || (direction < 0 && !atTop)) {
+      return;
+    }
   }
 
-  const nextIndex = activeSectionIndex + direction;
+  const nextIndex = currentIndex + direction;
   if (nextIndex < 0 || nextIndex >= sections.length) {
     return;
   }
