@@ -27,6 +27,7 @@
   --font-body: "Inter", "Segoe UI", sans-serif;
   --section-title-size: clamp(2.15rem, min(5vw, 8vh), 4.5rem);
   --section-subtitle-size: clamp(1rem, min(1.35vw, 2.4vh), 1.3rem);
+  --section-content-top: 21dvh;
   --footer-panel-height: clamp(10.5rem, 24dvh, 14rem);
 }
 
@@ -1005,6 +1006,23 @@ main > section:not(.hero) > .section-shell {
   line-height: 1.5;
 }
 
+.controlled-line {
+  white-space: nowrap;
+}
+
+.mobile-line-space {
+  display: none;
+}
+
+#monitorizacao .section-copy {
+  grid-column: 1 / span 7;
+}
+
+#monitorizacao .section-copy h2,
+#cloud .section-copy h2 {
+  max-width: none;
+}
+
 .what-we-do-grid .section-copy,
 .notes-section-grid .section-copy {
   grid-column: 1 / span 7;
@@ -1413,6 +1431,43 @@ main > section:not(.hero) > .section-shell {
 }
 
 @media (min-width: 768px) {
+  .hero-grid {
+    align-items: start;
+  }
+
+  .hero-copy {
+    align-self: start;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: calc(var(--section-content-top) - var(--header-height));
+  }
+
+  main > section:not(.hero) > .section-shell {
+    align-items: start;
+    padding-top: calc(var(--section-content-top) - var(--section-space));
+  }
+
+  main > section:not(.hero) .feature-grid,
+  main > section:not(.hero) .monitoring-grid,
+  main > section:not(.hero) .placeholder-layout {
+    min-height: 0;
+    align-content: start;
+    align-items: start;
+  }
+
+  #prototipagem .prototype-model-column {
+    align-self: center;
+  }
+
+  .partner-layout .premium-form,
+  .placeholder-layout-contact .premium-form {
+    align-self: start;
+  }
+
+  .product-hotspot-visual {
+    align-self: center;
+  }
+
   .horizontal-ready main {
     display: flex;
     width: 100%;
@@ -1632,6 +1687,12 @@ main > section:not(.hero) > .section-shell {
   }
 }
 
+@media (min-width: 1025px) and (max-height: 800px) {
+  :root {
+    --section-content-top: 19.5dvh;
+  }
+}
+
 @media (max-width: 1024px) {
   :root {
     --content-width: min(100vw - 40px, 1540px);
@@ -1696,6 +1757,12 @@ main > section:not(.hero) > .section-shell {
     grid-column: 1 / span 6;
   }
 
+  #o-que-fazemos .section-copy,
+  #cloud .section-copy,
+  #monitorizacao .section-copy {
+    grid-column: 1 / -1;
+  }
+
   .footer-grid {
     grid-template-columns: 1fr;
   }
@@ -1721,6 +1788,11 @@ main > section:not(.hero) > .section-shell {
     grid-column: 6 / -1;
     margin-top: 0;
     padding-bottom: 0;
+  }
+
+  .horizontal-ready .hero-copy {
+    margin-top: calc(var(--section-content-top) - var(--header-height));
+    padding-top: 0;
   }
 
   .hero-reveal-pending .hero-copy {
@@ -1818,6 +1890,7 @@ main > section:not(.hero) > .section-shell {
     --section-space: clamp(4.5rem, 10vw, 6rem);
     --header-height: 76px;
     --header-height-compact: 64px;
+    --section-content-top: 23.5dvh;
   }
 
   .header-shell {
@@ -1941,6 +2014,45 @@ main > section:not(.hero) > .section-shell {
 }
 
 @media (max-width: 640px) {
+  :root {
+    --section-content-top: 17dvh;
+  }
+
+  .controlled-break {
+    display: none;
+  }
+
+  .controlled-line {
+    white-space: normal;
+  }
+
+  .mobile-line-space {
+    display: inline;
+  }
+
+  .hero-grid {
+    align-items: start;
+  }
+
+  .hero-copy {
+    align-self: start;
+    margin-top: calc(var(--section-content-top) - var(--header-height));
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  main > section:not(.hero) > .section-shell {
+    align-items: start;
+    padding-top: calc(var(--section-content-top) - var(--section-space));
+  }
+
+  main > section:not(.hero) .feature-grid,
+  main > section:not(.hero) .monitoring-grid,
+  main > section:not(.hero) .placeholder-layout {
+    align-content: start;
+    align-items: start;
+  }
+
   #prototipagem .section-copy,
   #prototipagem .prototype-model-column,
   .placeholder-layout .section-copy,
