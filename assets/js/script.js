@@ -22,6 +22,16 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
 const horizontalMedia = window.matchMedia('(min-width: 768px)');
 const staticHeroMedia = window.matchMedia('(max-width: 1024px)');
 const sections = Array.from(main?.querySelectorAll(':scope > section') ?? []);
+const parallaxSections = Array.from(document.querySelectorAll([
+  '#o-que-fazemos',
+  '#monitorizacao',
+  '#cloud',
+  '#nordgo',
+  '#produtos',
+  '#parceiros',
+  '#contactos',
+].join(',')));
+const countUpNumbers = Array.from(document.querySelectorAll('[data-count-up]'));
 const sectionByHash = new Map(sections.map((section) => [`#${section.id}`, section]));
 const sectionLinks = Array.from(document.querySelectorAll('a[href^="#"]'))
   .filter((link) => sectionByHash.has(link.getAttribute('href')));
@@ -32,6 +42,9 @@ let horizontalProgressButtons = [];
 let wheelLocked = false;
 let wheelLockTimer;
 let horizontalScrollFrame;
+let horizontalAnimationFrame;
+let horizontalAnimationTargetIndex;
+let parallaxFrame;
 let heroRevealTimer;
 let refreshModelLocalization = () => {};
 
@@ -58,7 +71,7 @@ const translations = {
     'nav.contact': 'Contactos',
     'progress.label': 'Posição nas secções',
     'progress.goTo': 'Ir para {section}',
-    'hero.title': ['Tudo começa', 'no chão de fábrica.'],
+    'hero.title': 'Tudo começa no chão de fábrica.',
     'hero.subtitle': 'A NordWire desenvolve sistemas eletrónicos que capturam tudo o que acontece na tua produção - e transformam cada segundo em informação útil.',
     'cta.explore': 'Explorar Mais',
     'cta.partner': 'Tornar-me Parceiro',
@@ -167,7 +180,7 @@ const translations = {
     'nav.contact': 'Contact',
     'progress.label': 'Section position',
     'progress.goTo': 'Go to {section}',
-    'hero.title': ['It all starts', 'on the factory floor.'],
+    'hero.title': 'It all starts on the factory floor.',
     'hero.subtitle': 'NordWire builds electronic systems that capture everything happening on your production line - turning every second into useful information.',
     'cta.explore': 'Explore More',
     'cta.partner': 'Become a Partner',
@@ -659,11 +672,117 @@ const setActiveLink = () => {
   );
 };
 
+const updateParallax = () => {
+  if (reduceMotion || !parallaxSections.length) {
+    return;
+  }
+
+  if (isHorizontalLayout() && main?.clientWidth) {
+    const viewportWidth = main.clientWidth;
+
+    parallaxSections.forEach((section) => {
+      const relativePosition = (
+        section.offsetLeft - main.scrollLeft
+      ) / viewportWidth;
+      const limitedPosition = Math.max(-1, Math.min(1, relativePosition));
+      section.style.setProperty(
+        '--parallax-x',
+        `${limitedPosition * -24}px`,
+      );
+      section.style.setProperty('--parallax-y', '0px');
+    });
+    return;
+  }
+
+  parallaxSections.forEach((section) => {
+    const bounds = section.getBoundingClientRect();
+    const centerOffset = (
+      bounds.top + (bounds.height / 2) - (window.innerHeight / 2)
+    ) / window.innerHeight;
+    const limitedOffset = Math.max(-1, Math.min(1, centerOffset));
+    section.style.setProperty('--parallax-x', '0px');
+    section.style.setProperty(
+      '--parallax-y',
+      `${limitedOffset * -14}px`,
+    );
+  });
+};
+
+const queueParallaxUpdate = () => {
+  if (reduceMotion || parallaxFrame) {
+    return;
+  }
+
+  parallaxFrame = window.requestAnimationFrame(() => {
+    parallaxFrame = undefined;
+    updateParallax();
+  });
+};
+
+const sectionTransitionEasing = (progress) => (
+  progress < 0.5
+    ? 4 * progress * progress * progress
+    : 1 - (Math.pow((-2 * progress) + 2, 3) / 2)
+);
+
+const cancelHorizontalAnimation = () => {
+  if (horizontalAnimationFrame) {
+    window.cancelAnimationFrame(horizontalAnimationFrame);
+    horizontalAnimationFrame = undefined;
+  }
+
+  horizontalAnimationTargetIndex = undefined;
+  main?.classList.remove('is-programmatic-scroll');
+};
+
+const animateHorizontalSection = (index) => {
+  if (!main) {
+    return;
+  }
+
+  cancelHorizontalAnimation();
+  const targetLeft = index * main.clientWidth;
+
+  if (reduceMotion || Math.abs(targetLeft - main.scrollLeft) < 1) {
+    main.scrollLeft = targetLeft;
+    updateNavigationState(index);
+    updateParallax();
+    return;
+  }
+
+  const startLeft = main.scrollLeft;
+  const distance = targetLeft - startLeft;
+  const duration = 900;
+  const startTime = performance.now();
+  horizontalAnimationTargetIndex = index;
+  main.classList.add('is-programmatic-scroll');
+
+  const step = (timestamp) => {
+    const elapsed = Math.min(1, (timestamp - startTime) / duration);
+    main.scrollLeft = startLeft + (distance * sectionTransitionEasing(elapsed));
+
+    if (elapsed < 1) {
+      horizontalAnimationFrame = window.requestAnimationFrame(step);
+      return;
+    }
+
+    main.scrollLeft = targetLeft;
+    horizontalAnimationFrame = undefined;
+    main.classList.remove('is-programmatic-scroll');
+    updateNavigationState(horizontalAnimationTargetIndex ?? index);
+    horizontalAnimationTargetIndex = undefined;
+    updateParallax();
+  };
+
+  horizontalAnimationFrame = window.requestAnimationFrame(step);
+};
+
 const positionHorizontalSection = (index) => {
   if (!main) {
     return;
   }
 
+  cancelHorizontalAnimation();
   const previousBehavior = main.style.scrollBehavior;
   main.style.scrollBehavior = 'auto';
   main.scrollLeft = index * main.clientWidth;
@@ -683,11 +802,9 @@ const navigateToSection = (index, { resetVertical = true } = {}) => {
       target.scrollTo({ top: 0, behavior: 'auto' });
     }
 
-    window.scrollTo({ top: 0, behavior });
-    main.scrollTo({
-      left: index * main.clientWidth,
-      behavior,
-    });
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    updateNavigationState(index);
+    animateHorizontalSection(index);
   } else {
     target.scrollIntoView({
       behavior,
@@ -695,7 +812,9 @@ const navigateToSection = (index, { resetVertical = true } = {}) => {
     });
   }
 
-  updateNavigationState(index);
+  if (!isHorizontalLayout()) {
+    updateNavigationState(index);
+  }
   window.history.replaceState(null, '', `#${target.id}`);
 };
 
@@ -795,7 +914,7 @@ const handleHorizontalWheel = (event) => {
   window.clearTimeout(wheelLockTimer);
   wheelLockTimer = window.setTimeout(
     releaseWheelLock,
-    reduceMotion ? 80 : 2400,
+    reduceMotion ? 80 : 1050,
   );
 };
 
@@ -806,7 +925,10 @@ const handleHorizontalScroll = () => {
 
   horizontalScrollFrame = window.requestAnimationFrame(() => {
     horizontalScrollFrame = undefined;
-    setActiveLink();
+    updateParallax();
+    if (!main?.classList.contains('is-programmatic-scroll')) {
+      setActiveLink();
+    }
   });
 };
 
@@ -832,6 +954,7 @@ const enableHorizontalLayout = () => {
   window.scrollTo({ top: 0, behavior: 'auto' });
   positionHorizontalSection(currentIndex);
   updateNavigationState(currentIndex);
+  updateParallax();
 };
 
 const disableHorizontalLayout = () => {
@@ -843,6 +966,7 @@ const disableHorizontalLayout = () => {
   main.removeEventListener('wheel', handleHorizontalWheel, { capture: true });
   main.removeEventListener('scroll', handleHorizontalScroll);
   main.removeEventListener('scrollend', releaseWheelLock);
+  cancelHorizontalAnimation();
   documentRoot.classList.remove('horizontal-ready');
   body.classList.remove('footer-visible');
   main.scrollLeft = 0;
@@ -854,6 +978,7 @@ const disableHorizontalLayout = () => {
       block: 'start',
     });
     updateNavigationState(currentIndex);
+    updateParallax();
   });
 };
 
@@ -873,6 +998,34 @@ document.addEventListener('keydown', (event) => {
       closeNav({ restoreFocus: true });
     }
   }
+
+  if (
+    !isHorizontalLayout()
+    || event.defaultPrevented
+    || event.target.closest?.('a, button, input, textarea, select, model-viewer')
+  ) {
+    return;
+  }
+
+  const direction = ['ArrowRight', 'PageDown'].includes(event.key)
+    ? 1
+    : ['ArrowLeft', 'PageUp'].includes(event.key)
+      ? -1
+      : 0;
+
+  if (!direction) {
+    return;
+  }
+
+  const nextIndex = Math.max(
+    0,
+    Math.min(sections.length - 1, activeSectionIndex + direction),
+  );
+
+  if (nextIndex !== activeSectionIndex) {
+    event.preventDefault();
+    navigateToSection(nextIndex);
+  }
 });
 
 window.addEventListener('resize', () => {
@@ -886,6 +1039,8 @@ window.addEventListener('resize', () => {
     });
   }
 
+  queueParallaxUpdate();
+
   hotspotButtons
     .filter((button) => button.classList.contains('is-open'))
     .forEach(positionHotspotTooltip);
@@ -895,6 +1050,7 @@ window.addEventListener('scroll', () => {
   updateHeader();
   if (!isHorizontalLayout()) {
     setActiveLink();
+    queueParallaxUpdate();
   }
 }, { passive: true });
 
@@ -903,6 +1059,7 @@ buildHorizontalProgress();
 syncHorizontalLayout();
 updateHeader();
 setActiveLink();
+updateParallax();
 
 const revealTargetSelector = [
   '.eyebrow',
@@ -927,11 +1084,13 @@ const revealTargets = revealGroups.flatMap((group) => {
   let targetIndex = revealCounts.get(section) ?? 0;
 
   targets.forEach((target) => {
+    const revealDelay = Math.min(targetIndex, 7) * 120;
     target.classList.add('reveal-item');
     target.style.setProperty(
       '--reveal-delay',
-      `${Math.min(targetIndex, 7) * 110}ms`,
+      `${revealDelay}ms`,
     );
+    target.dataset.revealDelay = String(revealDelay);
     targetIndex += 1;
   });
 
@@ -948,6 +1107,9 @@ if (
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('is-visible');
+        window.setTimeout(() => {
+          entry.target.classList.add('reveal-complete');
+        }, Number(entry.target.dataset.revealDelay ?? 0) + 680);
         observer.unobserve(entry.target);
       }
     });
@@ -958,6 +1120,74 @@ if (
 
   revealTargets.forEach((target) => revealObserver.observe(target));
   document.documentElement.classList.add('reveal-enabled');
+}
+
+const formatCountUpValue = (element, value) => {
+  const decimals = Number(element.dataset.countDecimals ?? 0);
+  const suffix = element.dataset.countSuffix ?? '';
+  return `${value.toFixed(decimals)}${suffix}`;
+};
+
+const showFinalCountUpValues = () => {
+  countUpNumbers.forEach((element) => {
+    const targetValue = Number(element.dataset.countTarget ?? 0);
+    element.textContent = formatCountUpValue(element, targetValue);
+  });
+};
+
+const runCountUp = (element) => {
+  if (element.dataset.counted === 'true') {
+    return;
+  }
+
+  const targetValue = Number(element.dataset.countTarget ?? 0);
+  const finalValue = formatCountUpValue(element, targetValue);
+  const duration = 1350;
+  const startTime = performance.now();
+  element.dataset.counted = 'true';
+  element.setAttribute('aria-label', finalValue);
+
+  const step = (timestamp) => {
+    const progress = Math.min(1, (timestamp - startTime) / duration);
+    const easedProgress = 1 - Math.pow(1 - progress, 3);
+    element.textContent = formatCountUpValue(
+      element,
+      targetValue * easedProgress,
+    );
+
+    if (progress < 1) {
+      window.requestAnimationFrame(step);
+    } else {
+      element.textContent = finalValue;
+    }
+  };
+
+  window.requestAnimationFrame(step);
+};
+
+const monitoringSection = document.querySelector('#monitorizacao');
+
+if (reduceMotion || !monitoringSection || !countUpNumbers.length) {
+  showFinalCountUpValues();
+} else if ('IntersectionObserver' in window) {
+  countUpNumbers.forEach((element) => {
+    element.textContent = formatCountUpValue(element, 0);
+  });
+
+  const countUpObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) {
+        return;
+      }
+
+      countUpNumbers.forEach(runCountUp);
+      observer.disconnect();
+    });
+  }, { threshold: 0.35 });
+
+  countUpObserver.observe(monitoringSection);
+} else {
+  showFinalCountUpValues();
 }
 
 const prototypeModel = document.querySelector('#prototype-model');
