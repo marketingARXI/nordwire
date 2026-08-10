@@ -101,62 +101,31 @@ main > section {
 }
 
 #o-que-fazemos {
-  --section-bg-image: url("../images/bg-o-que-fazemos.png");
   background-image: url("../images/bg-o-que-fazemos.png");
 }
 
 #monitorizacao {
-  --section-bg-image: url("../images/bg-monitorizacao.png");
   background-image: url("../images/bg-monitorizacao.png");
 }
 
 #cloud {
-  --section-bg-image: url("../images/bg-cloud.png");
   background-image: url("../images/bg-cloud.png");
 }
 
 #nordgo {
-  --section-bg-image: url("../images/bg-nordgo.png");
   background-image: url("../images/bg-nordgo.png");
 }
 
 #produtos {
-  --section-bg-image: url("../images/bg-produtos.png");
   background-image: url("../images/bg-produtos.png");
 }
 
 #parceiros {
-  --section-bg-image: url("../images/bg-parceiros.png");
   background-image: url("../images/bg-parceiros.png");
 }
 
 #contactos {
-  --section-bg-image: url("../images/bg-contactos.png");
   background-image: url("../images/bg-contactos.png");
-}
-
-#o-que-fazemos::after,
-#monitorizacao::after,
-#cloud::after,
-#nordgo::after,
-#produtos::after,
-#parceiros::after,
-#contactos::after {
-  position: absolute;
-  inset: -3%;
-  z-index: 0;
-  background-color: #0d0f14;
-  background-image: var(--section-bg-image);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  content: "";
-  pointer-events: none;
-  transform: translate3d(
-    var(--parallax-x, 0),
-    var(--parallax-y, 0),
-    0
-  ) scale(1.025);
 }
 
 #o-que-fazemos::before,
@@ -1185,13 +1154,16 @@ main > section:not(.hero) > .section-shell {
   line-height: 1.5;
 }
 
-.prototype-note-list {
+.prototype-note-list,
+#nordgo .value-highlights {
   display: grid;
+  grid-template-columns: 1fr;
   gap: clamp(0.5rem, 1.2vh, 0.75rem);
   margin-top: clamp(1.1rem, 2.5vh, 2rem);
 }
 
-.prototype-note {
+.prototype-note,
+#nordgo .value-highlight {
   display: grid;
   grid-template-columns: auto 1fr;
   min-height: 0;
@@ -1200,15 +1172,21 @@ main > section:not(.hero) > .section-shell {
   padding: clamp(0.7rem, 1.5vh, 1rem) 1rem;
 }
 
-.prototype-note .value-highlight-index {
+.prototype-note .value-highlight-index,
+#nordgo .value-highlight-index {
+  grid-row: 1 / span 2;
   padding-top: 0.2rem;
 }
 
-.prototype-note h3 {
+.prototype-note h3,
+#nordgo .value-highlight h3 {
+  grid-column: 2;
   margin: 0 0 0.25rem;
 }
 
-.prototype-note p {
+.prototype-note p,
+#nordgo .value-highlight p {
+  grid-column: 2;
   max-width: none;
 }
 
@@ -1689,29 +1667,6 @@ main > section:not(.hero) > .section-shell {
 
   .horizontal-ready body.footer-visible .horizontal-progress {
     bottom: calc(var(--footer-panel-height) - 1rem);
-  }
-
-  #nordgo .value-highlights {
-    grid-template-columns: 1fr;
-    gap: clamp(0.55rem, 1.2vh, 0.8rem);
-  }
-
-  #nordgo .value-highlight {
-    display: grid;
-    grid-template-columns: auto minmax(7rem, 0.25fr) minmax(0, 1fr);
-    align-items: center;
-    column-gap: clamp(0.9rem, 1.6vw, 1.5rem);
-    min-height: 0;
-    padding-block: clamp(0.7rem, 1.4vh, 1rem);
-  }
-
-  #nordgo .value-highlight h3 {
-    margin: 0;
-  }
-
-  #nordgo .value-highlight p {
-    max-width: none;
-    white-space: nowrap;
   }
 
   .horizontal-ready .hero,
@@ -2275,16 +2230,6 @@ main > section:not(.hero) > .section-shell {
 
   .product-hotspot::before {
     animation: none;
-  }
-
-  #o-que-fazemos::after,
-  #monitorizacao::after,
-  #cloud::after,
-  #nordgo::after,
-  #produtos::after,
-  #parceiros::after,
-  #contactos::after {
-    transform: none;
   }
 
   .button:hover,
