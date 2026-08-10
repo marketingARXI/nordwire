@@ -22,15 +22,6 @@ const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').match
 const horizontalMedia = window.matchMedia('(min-width: 768px)');
 const staticHeroMedia = window.matchMedia('(max-width: 1024px)');
 const sections = Array.from(main?.querySelectorAll(':scope > section') ?? []);
-const parallaxSections = Array.from(document.querySelectorAll([
-  '#o-que-fazemos',
-  '#monitorizacao',
-  '#cloud',
-  '#nordgo',
-  '#produtos',
-  '#parceiros',
-  '#contactos',
-].join(',')));
 const countUpNumbers = Array.from(document.querySelectorAll('[data-count-up]'));
 const sectionByHash = new Map(sections.map((section) => [`#${section.id}`, section]));
 const sectionLinks = Array.from(document.querySelectorAll('a[href^="#"]'))
@@ -44,7 +35,6 @@ let wheelLockTimer;
 let horizontalScrollFrame;
 let horizontalAnimationFrame;
 let horizontalAnimationTargetIndex;
-let parallaxFrame;
 let heroRevealTimer;
 let refreshModelLocalization = () => {};
 
@@ -672,53 +662,6 @@ const setActiveLink = () => {
   );
 };
 
-const updateParallax = () => {
-  if (reduceMotion || !parallaxSections.length) {
-    return;
-  }
-
-  if (isHorizontalLayout() && main?.clientWidth) {
-    const viewportWidth = main.clientWidth;
-
-    parallaxSections.forEach((section) => {
-      const relativePosition = (
-        section.offsetLeft - main.scrollLeft
-      ) / viewportWidth;
-      const limitedPosition = Math.max(-1, Math.min(1, relativePosition));
-      section.style.setProperty(
-        '--parallax-x',
-        `${limitedPosition * -24}px`,
-      );
-      section.style.setProperty('--parallax-y', '0px');
-    });
-    return;
-  }
-
-  parallaxSections.forEach((section) => {
-    const bounds = section.getBoundingClientRect();
-    const centerOffset = (
-      bounds.top + (bounds.height / 2) - (window.innerHeight / 2)
-    ) / window.innerHeight;
-    const limitedOffset = Math.max(-1, Math.min(1, centerOffset));
-    section.style.setProperty('--parallax-x', '0px');
-    section.style.setProperty(
-      '--parallax-y',
-      `${limitedOffset * -14}px`,
-    );
-  });
-};
-
-const queueParallaxUpdate = () => {
-  if (reduceMotion || parallaxFrame) {
-    return;
-  }
-
-  parallaxFrame = window.requestAnimationFrame(() => {
-    parallaxFrame = undefined;
-    updateParallax();
-  });
-};
-
 const sectionTransitionEasing = (progress) => (
   progress < 0.5
     ? 4 * progress * progress * progress
@@ -746,7 +689,6 @@ const animateHorizontalSection = (index) => {
   if (reduceMotion || Math.abs(targetLeft - main.scrollLeft) < 1) {
     main.scrollLeft = targetLeft;
     updateNavigationState(index);
-    updateParallax();
     return;
   }
 
@@ -771,7 +713,6 @@ const animateHorizontalSection = (index) => {
     main.classList.remove('is-programmatic-scroll');
     updateNavigationState(horizontalAnimationTargetIndex ?? index);
     horizontalAnimationTargetIndex = undefined;
-    updateParallax();
   };
 
   horizontalAnimationFrame = window.requestAnimationFrame(step);
@@ -938,7 +879,6 @@ const handleHorizontalScroll = () => {
 
   horizontalScrollFrame = window.requestAnimationFrame(() => {
     horizontalScrollFrame = undefined;
-    updateParallax();
     if (!main?.classList.contains('is-programmatic-scroll')) {
       setActiveLink();
     }
@@ -967,7 +907,6 @@ const enableHorizontalLayout = () => {
   window.scrollTo({ top: 0, behavior: 'auto' });
   positionHorizontalSection(currentIndex);
   updateNavigationState(currentIndex);
-  updateParallax();
 };
 
 const disableHorizontalLayout = () => {
@@ -991,7 +930,6 @@ const disableHorizontalLayout = () => {
       block: 'start',
     });
     updateNavigationState(currentIndex);
-    updateParallax();
   });
 };
 
@@ -1052,8 +990,6 @@ window.addEventListener('resize', () => {
     });
   }
 
-  queueParallaxUpdate();
-
   hotspotButtons
     .filter((button) => button.classList.contains('is-open'))
     .forEach(positionHotspotTooltip);
@@ -1063,7 +999,6 @@ window.addEventListener('scroll', () => {
   updateHeader();
   if (!isHorizontalLayout()) {
     setActiveLink();
-    queueParallaxUpdate();
   }
 }, { passive: true });
 
@@ -1072,7 +1007,6 @@ buildHorizontalProgress();
 syncHorizontalLayout();
 updateHeader();
 setActiveLink();
-updateParallax();
 
 const revealTargetSelector = [
   '.eyebrow',
