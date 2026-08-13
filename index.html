@@ -10,7 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>
-    document.documentElement.classList.add("hero-reveal-pending");
+    document.documentElement.classList.add("hero-reveal-pending", "preloader-pending");
+    window.setTimeout(() => document.documentElement.classList.remove("preloader-pending"), 5000);
     window.ModelViewerElement = window.ModelViewerElement || {};
     window.ModelViewerElement.dracoDecoderLocation = "https://www.gstatic.com/draco/versioned/decoders/1.5.7/";
   </script>
@@ -18,6 +19,13 @@
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
+  <div class="site-preloader" role="status" aria-live="polite" aria-label="A carregar o site" data-i18n-aria-label="preloader.label">
+    <div class="site-preloader-inner">
+      <img class="site-preloader-logo" src="assets/images/nordwire-logo.png" alt="NordWire">
+      <span class="site-preloader-track" aria-hidden="true"><span></span></span>
+    </div>
+  </div>
+
   <div class="site-shell">
     <header class="site-header" id="top">
       <div class="section-shell header-shell">
@@ -37,21 +45,27 @@
           <a href="#produtos" data-i18n="nav.products">Produtos</a>
           <a href="#parceiros" data-i18n="nav.partners">Parceiros</a>
           <a href="#contactos" data-i18n="nav.contact">Contactos</a>
-          <a class="header-partner-cta" href="#parceiros" data-i18n="cta.partner">Tornar-me Parceiro</a>
         </nav>
 
         <div class="header-actions">
-          <div class="language-switcher" role="group" aria-label="Seleção de idioma" data-i18n-aria-label="language.groupLabel">
-            <button class="language-option is-active" type="button" data-language="pt" aria-pressed="true" aria-label="Usar Português" data-i18n-aria-label="language.ptLabel">PT</button>
-            <span class="language-divider" aria-hidden="true"></span>
-            <button class="language-option" type="button" data-language="en" aria-pressed="false" aria-label="Usar Inglês" data-i18n-aria-label="language.enLabel">EN</button>
-          </div>
           <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Abrir menu de navegação" data-i18n-aria-label="header.openMenu">
             <span></span>
             <span></span>
             <span></span>
           </button>
         </div>
+      </div>
+
+      <div class="header-utilities">
+        <div class="language-switcher" role="group" aria-label="Seleção de idioma" data-i18n-aria-label="language.groupLabel">
+          <button class="language-option is-active" type="button" data-language="pt" aria-pressed="true" aria-label="Usar Português" data-i18n-aria-label="language.ptLabel">
+            <svg class="language-flag" viewBox="0 0 30 20" aria-hidden="true"><rect width="12" height="20" fill="#046a38"/><rect x="12" width="18" height="20" fill="#da291c"/><circle cx="12" cy="10" r="3.2" fill="#ffcd00"/><circle cx="12" cy="10" r="1.8" fill="#fff"/></svg>
+          </button>
+          <button class="language-option" type="button" data-language="en" aria-pressed="false" aria-label="Usar Inglês" data-i18n-aria-label="language.enLabel">
+            <svg class="language-flag" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#012169"/><path d="M0 0 30 20M30 0 0 20" stroke="#fff" stroke-width="5"/><path d="M0 0 30 20M30 0 0 20" stroke="#c8102e" stroke-width="2"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#c8102e" stroke-width="3.2"/></svg>
+          </button>
+        </div>
+        <a class="header-partner-cta" href="#parceiros" data-i18n="cta.partner">Tornar-me Parceiro</a>
       </div>
     </header>
 
@@ -445,6 +459,10 @@
       </div>
     </footer>
   </div>
+
+  <button class="back-to-top" type="button" tabindex="-1" aria-hidden="true" aria-label="Voltar ao início" data-i18n-aria-label="backToTop.label">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6.5 10.5 12 5l5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
 
   <script src="assets/js/script.js"></script>
 </body>

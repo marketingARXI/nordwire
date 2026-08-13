@@ -9,6 +9,9 @@ const navLinks = Array.from(document.querySelectorAll('.site-nav a'));
 const homeSection = document.querySelector('#inicio');
 const heroVideo = document.querySelector('.hero-background-video');
 const heroCopy = document.querySelector('.hero-copy');
+const preloaderModel = document.querySelector('#prototype-model');
+const preloader = document.querySelector('.site-preloader');
+const backToTopButton = document.querySelector('.back-to-top');
 const revealGroups = Array.from(document.querySelectorAll('[data-reveal]'))
   .filter((group) => (
     !group.closest('#inicio')
@@ -46,6 +49,8 @@ const translations = {
     'language.groupLabel': 'Seleção de idioma',
     'language.ptLabel': 'Usar Português',
     'language.enLabel': 'Usar Inglês',
+    'preloader.label': 'A carregar o site',
+    'backToTop.label': 'Voltar ao início',
     'header.homeLabel': 'NordWire - ir para o início',
     'header.navLabel': 'Navegação principal',
     'header.openMenu': 'Abrir menu de navegação',
@@ -155,6 +160,8 @@ const translations = {
     'language.groupLabel': 'Language selection',
     'language.ptLabel': 'Use Portuguese',
     'language.enLabel': 'Use English',
+    'preloader.label': 'Loading website',
+    'backToTop.label': 'Back to top',
     'header.homeLabel': 'NordWire - go to home',
     'header.navLabel': 'Main navigation',
     'header.openMenu': 'Open navigation menu',
@@ -391,6 +398,48 @@ const applyLanguage = (language, { persist = true } = {}) => {
 
 applyLanguage(currentLanguage, { persist: false });
 
+const hidePreloader = (reason) => {
+  if (!documentRoot.classList.contains('preloader-pending')) {
+    return;
+  }
+
+  documentRoot.classList.remove('preloader-pending');
+  preloader?.setAttribute('data-dismiss-reason', reason);
+  window.setTimeout(() => {
+    if (preloader) {
+      preloader.hidden = true;
+    }
+  }, reduceMotion ? 0 : 450);
+};
+
+const waitForHeroMedia = () => new Promise((resolve) => {
+  if (!heroVideo || staticHeroMedia.matches || heroVideo.readyState >= 2) {
+    resolve('hero-ready');
+    return;
+  }
+
+  const finish = () => resolve('hero-ready');
+  heroVideo.addEventListener('loadeddata', finish, { once: true });
+  heroVideo.addEventListener('error', finish, { once: true });
+});
+
+const waitForModelComponent = () => {
+  if (!preloaderModel || !window.customElements?.whenDefined) {
+    return Promise.resolve('model-fallback');
+  }
+
+  return window.customElements.whenDefined('model-viewer');
+};
+
+if (reduceMotion) {
+  hidePreloader('reduced-motion');
+} else {
+  Promise.race([
+    Promise.all([waitForHeroMedia(), waitForModelComponent()]),
+    new Promise((resolve) => window.setTimeout(resolve, 4200)),
+  ]).then(() => hidePreloader('essential-content-ready'));
+}
+
 languageButtons.forEach((button) => {
   button.addEventListener('click', () => {
     closeHotspots();
@@ -565,6 +614,9 @@ const closeNav = ({ restoreFocus = false } = {}) => {
   body.classList.remove('nav-open');
   menuToggle?.setAttribute('aria-expanded', 'false');
   menuToggle?.setAttribute('aria-label', translate('header.openMenu'));
+  const showBackToTop = activeSectionIndex > 0;
+  backToTopButton?.setAttribute('tabindex', showBackToTop ? '0' : '-1');
+  backToTopButton?.setAttribute('aria-hidden', String(!showBackToTop));
 
   if (restoreFocus) {
     menuToggle?.focus();
@@ -578,6 +630,8 @@ menuToggle?.addEventListener('click', () => {
     'aria-label',
     translate(open ? 'header.closeMenu' : 'header.openMenu'),
   );
+  backToTopButton?.setAttribute('tabindex', open || activeSectionIndex === 0 ? '-1' : '0');
+  backToTopButton?.setAttribute('aria-hidden', String(open || activeSectionIndex === 0));
 });
 
 const isHorizontalLayout = () => documentRoot.classList.contains('horizontal-ready');
@@ -603,6 +657,10 @@ const updateHeader = () => {
 const updateNavigationState = (index) => {
   activeSectionIndex = Math.max(0, Math.min(index, sections.length - 1));
   const currentId = sections[activeSectionIndex]?.id;
+  const showBackToTop = activeSectionIndex > 0 && !body.classList.contains('nav-open');
+  backToTopButton?.classList.toggle('is-visible', showBackToTop);
+  backToTopButton?.setAttribute('tabindex', showBackToTop ? '0' : '-1');
+  backToTopButton?.setAttribute('aria-hidden', String(!showBackToTop));
 
   navLinks.forEach((link) => {
     const active = link.getAttribute('href') === `#${currentId}`;
@@ -758,6 +816,8 @@ const navigateToSection = (index, { resetVertical = true } = {}) => {
   }
   window.history.replaceState(null, '', `#${target.id}`);
 };
+
+backToTopButton?.addEventListener('click', () => navigateToSection(0));
 
 sectionLinks.forEach((link) => {
   link.addEventListener('click', (event) => {
