@@ -173,7 +173,7 @@ const translations = {
     'hero.title': 'It all starts on the factory floor.',
     'hero.subtitle': 'NordWire builds electronic systems that capture everything happening on your production line - turning every second into useful information.',
     'cta.explore': 'Explore More',
-    'cta.partner': 'Become a Partner',
+    'cta.partner': 'Become a partner',
     'whatWeDo.eyebrow': 'What we do',
     'whatWeDo.title': 'Every machine has a story to tell.',
     'whatWeDo.subtitle': ["Every day, your factory floor generates thousands of data points.", "The question isn't whether they exist, it's whether you're making the most of them."],
