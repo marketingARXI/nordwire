@@ -21,9 +21,11 @@ const hotspotButtons = Array.from(document.querySelectorAll('[data-hotspot]'));
 const demoForms = Array.from(document.querySelectorAll('[data-demo-form]'));
 const placeholderLinks = Array.from(document.querySelectorAll('[data-placeholder-link]'));
 const languageButtons = Array.from(document.querySelectorAll('[data-language]'));
+const ambientLayers = Array.from(document.querySelectorAll('[data-ambient-background]'));
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const horizontalMedia = window.matchMedia('(min-width: 768px)');
 const staticHeroMedia = window.matchMedia('(max-width: 1024px)');
+const ambientPointerMedia = window.matchMedia('(min-width: 1025px) and (hover: hover) and (pointer: fine)');
 const sections = Array.from(main?.querySelectorAll(':scope > section') ?? []);
 const countUpNumbers = Array.from(document.querySelectorAll('[data-count-up]'));
 const sectionByHash = new Map(sections.map((section) => [`#${section.id}`, section]));
@@ -39,6 +41,12 @@ let horizontalScrollFrame;
 let horizontalAnimationFrame;
 let horizontalAnimationTargetIndex;
 let heroRevealTimer;
+let ambientGlowFrame;
+let activeAmbientLayer;
+let ambientGlowX = 68;
+let ambientGlowY = 34;
+let ambientTargetX = 68;
+let ambientTargetY = 34;
 let refreshModelLocalization = () => {};
 
 const languageStorageKey = 'nordwire-language';
@@ -440,6 +448,48 @@ if (reduceMotion) {
   ]).then(() => hidePreloader('essential-content-ready'));
 }
 
+const renderAmbientGlow = () => {
+  ambientGlowX += (ambientTargetX - ambientGlowX) * 0.09;
+  ambientGlowY += (ambientTargetY - ambientGlowY) * 0.09;
+  activeAmbientLayer?.style.setProperty('--ambient-glow-x', `${ambientGlowX.toFixed(2)}%`);
+  activeAmbientLayer?.style.setProperty('--ambient-glow-y', `${ambientGlowY.toFixed(2)}%`);
+
+  const stillMoving = Math.abs(ambientTargetX - ambientGlowX) > 0.05
+    || Math.abs(ambientTargetY - ambientGlowY) > 0.05;
+  ambientGlowFrame = stillMoving
+    ? window.requestAnimationFrame(renderAmbientGlow)
+    : undefined;
+};
+
+const handleAmbientPointer = (event) => {
+  if (reduceMotion || !ambientPointerMedia.matches || !ambientLayers.length) {
+    return;
+  }
+
+  const section = event.target.closest?.('section');
+  const layer = section?.querySelector('[data-ambient-background]');
+  if (!layer) {
+    return;
+  }
+
+  const sectionRect = section.getBoundingClientRect();
+  ambientTargetX = Math.max(0, Math.min(100, ((event.clientX - sectionRect.left) / sectionRect.width) * 100));
+  ambientTargetY = Math.max(0, Math.min(100, ((event.clientY - sectionRect.top) / sectionRect.height) * 100));
+
+  if (activeAmbientLayer !== layer) {
+    activeAmbientLayer = layer;
+    const layerStyles = getComputedStyle(layer);
+    ambientGlowX = Number.parseFloat(layerStyles.getPropertyValue('--ambient-glow-x')) || 50;
+    ambientGlowY = Number.parseFloat(layerStyles.getPropertyValue('--ambient-glow-y')) || 50;
+  }
+
+  if (!ambientGlowFrame) {
+    ambientGlowFrame = window.requestAnimationFrame(renderAmbientGlow);
+  }
+};
+
+main?.addEventListener('pointermove', handleAmbientPointer, { passive: true });
+
 languageButtons.forEach((button) => {
   button.addEventListener('click', () => {
     closeHotspots();
@@ -657,6 +707,9 @@ const updateHeader = () => {
 const updateNavigationState = (index) => {
   activeSectionIndex = Math.max(0, Math.min(index, sections.length - 1));
   const currentId = sections[activeSectionIndex]?.id;
+  sections.forEach((section, sectionIndex) => {
+    section.classList.toggle('is-ambient-active', sectionIndex === activeSectionIndex);
+  });
   const showBackToTop = activeSectionIndex > 0 && !body.classList.contains('nav-open');
   backToTopButton?.classList.toggle('is-visible', showBackToTop);
   backToTopButton?.setAttribute('tabindex', showBackToTop ? '0' : '-1');
