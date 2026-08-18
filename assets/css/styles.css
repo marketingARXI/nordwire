@@ -238,6 +238,78 @@ main > section {
   z-index: 2;
 }
 
+.ambient-background {
+  --ambient-glow-x: 68%;
+  --ambient-glow-y: 34%;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  contain: paint;
+}
+
+.ambient-background::before {
+  position: absolute;
+  inset: -14%;
+  background:
+    radial-gradient(circle at 18% 34%, rgba(34, 96, 242, 0.13), transparent 34%),
+    radial-gradient(circle at 78% 22%, rgba(34, 96, 242, 0.08), transparent 30%),
+    radial-gradient(circle at 56% 86%, rgba(13, 15, 20, 0.5), transparent 42%);
+  content: "";
+  opacity: 0.62;
+  transform: translate3d(-2%, 1%, 0) scale(1.06);
+  transform-origin: center;
+  will-change: auto;
+}
+
+section.is-ambient-active .ambient-background::before {
+  animation: ambientAurora 28s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  will-change: transform;
+}
+
+.ambient-background::after {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  content: "";
+  mix-blend-mode: soft-light;
+  opacity: 0.035;
+}
+
+.ambient-cursor-glow {
+  position: absolute;
+  top: var(--ambient-glow-y);
+  left: var(--ambient-glow-x);
+  width: clamp(22rem, 38vw, 42rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34, 96, 242, 0.13) 0%, rgba(34, 96, 242, 0.055) 34%, transparent 70%);
+  opacity: 0.72;
+  transform: translate3d(-50%, -50%, 0);
+  will-change: left, top;
+}
+
+#monitorizacao .ambient-background,
+#produtos .ambient-background {
+  --ambient-glow-x: 74%;
+  --ambient-glow-y: 66%;
+}
+
+#cloud .ambient-background,
+#parceiros .ambient-background {
+  --ambient-glow-x: 28%;
+  --ambient-glow-y: 72%;
+}
+
+#nordgo .ambient-background,
+#contactos .ambient-background {
+  --ambient-glow-x: 78%;
+  --ambient-glow-y: 28%;
+}
+
 .section-shell {
   width: var(--content-width);
   margin-inline: auto;
@@ -1914,6 +1986,19 @@ main > section:not(.hero) > .section-shell {
   55%, 100% { transform: translateX(245%); }
 }
 
+@keyframes ambientAurora {
+  0% { transform: translate3d(-2%, 1%, 0) scale(1.06); }
+  48% { transform: translate3d(2.5%, -1.5%, 0) scale(1.09); }
+  100% { transform: translate3d(-0.5%, 2.5%, 0) scale(1.07); }
+}
+
+@media (max-width: 1024px), (hover: none), (pointer: coarse) {
+  .ambient-cursor-glow {
+    opacity: 0.48;
+    will-change: auto;
+  }
+}
+
 @media (max-width: 1200px) {
   .hero-copy {
     grid-column: 6 / -1;
@@ -2506,5 +2591,17 @@ main > section:not(.hero) > .section-shell {
   .site-preloader-logo,
   .site-preloader-track span {
     animation: none;
+  }
+
+  .ambient-background::before,
+  section.is-ambient-active .ambient-background::before {
+    animation: none;
+    transform: none;
+    will-change: auto;
+  }
+
+  .ambient-cursor-glow {
+    opacity: 0.42;
+    will-change: auto;
   }
 }
