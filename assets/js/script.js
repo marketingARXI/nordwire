@@ -22,10 +22,12 @@ const demoForms = Array.from(document.querySelectorAll('[data-demo-form]'));
 const placeholderLinks = Array.from(document.querySelectorAll('[data-placeholder-link]'));
 const languageButtons = Array.from(document.querySelectorAll('[data-language]'));
 const ambientLayers = Array.from(document.querySelectorAll('[data-ambient-background]'));
+const customCursor = document.querySelector('.custom-cursor');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const horizontalMedia = window.matchMedia('(min-width: 768px)');
 const staticHeroMedia = window.matchMedia('(max-width: 1024px)');
 const ambientPointerMedia = window.matchMedia('(min-width: 1025px) and (hover: hover) and (pointer: fine)');
+const customCursorMedia = window.matchMedia('(min-width: 1025px) and (hover: hover) and (pointer: fine)');
 const sections = Array.from(main?.querySelectorAll(':scope > section') ?? []);
 const countUpNumbers = Array.from(document.querySelectorAll('[data-count-up]'));
 const sectionByHash = new Map(sections.map((section) => [`#${section.id}`, section]));
@@ -47,6 +49,13 @@ let ambientGlowX = 68;
 let ambientGlowY = 34;
 let ambientTargetX = 68;
 let ambientTargetY = 34;
+let languageTransitionTimer;
+let customCursorFrame;
+let customCursorX = 0;
+let customCursorY = 0;
+let customCursorTargetX = 0;
+let customCursorTargetY = 0;
+let customCursorHasPosition = false;
 let refreshModelLocalization = () => {};
 
 const languageStorageKey = 'nordwire-language';
@@ -59,6 +68,7 @@ const translations = {
     'language.enLabel': 'Usar Inglês',
     'preloader.label': 'A carregar o site',
     'backToTop.label': 'Voltar ao início',
+    'cursor.drag': 'Arrastar',
     'header.homeLabel': 'NordWire - ir para o início',
     'header.navLabel': 'Navegação principal',
     'header.openMenu': 'Abrir menu de navegação',
@@ -170,6 +180,7 @@ const translations = {
     'language.enLabel': 'Use English',
     'preloader.label': 'Loading website',
     'backToTop.label': 'Back to top',
+    'cursor.drag': 'Drag',
     'header.homeLabel': 'NordWire - go to home',
     'header.navLabel': 'Main navigation',
     'header.openMenu': 'Open navigation menu',
@@ -406,6 +417,33 @@ const applyLanguage = (language, { persist = true } = {}) => {
 
 applyLanguage(currentLanguage, { persist: false });
 
+if (!reduceMotion) {
+  documentRoot.classList.add('language-fade-ready');
+}
+
+const switchLanguage = (language) => {
+  const nextLanguage = language === 'en' ? 'en' : 'pt';
+
+  if (nextLanguage === currentLanguage) {
+    return;
+  }
+
+  window.clearTimeout(languageTransitionTimer);
+
+  if (reduceMotion) {
+    applyLanguage(nextLanguage);
+    return;
+  }
+
+  documentRoot.classList.add('language-switching');
+  languageTransitionTimer = window.setTimeout(() => {
+    applyLanguage(nextLanguage);
+    window.requestAnimationFrame(() => {
+      documentRoot.classList.remove('language-switching');
+    });
+  }, 130);
+};
+
 const hidePreloader = (reason) => {
   if (!documentRoot.classList.contains('preloader-pending')) {
     return;
@@ -490,10 +528,86 @@ const handleAmbientPointer = (event) => {
 
 main?.addEventListener('pointermove', handleAmbientPointer, { passive: true });
 
+const renderCustomCursor = () => {
+  customCursorX += (customCursorTargetX - customCursorX) * 0.22;
+  customCursorY += (customCursorTargetY - customCursorY) * 0.22;
+  customCursor.style.transform = `translate3d(${customCursorX.toFixed(2)}px, ${customCursorY.toFixed(2)}px, 0)`;
+
+  const stillMoving = Math.abs(customCursorTargetX - customCursorX) > 0.08
+    || Math.abs(customCursorTargetY - customCursorY) > 0.08;
+  customCursorFrame = stillMoving
+    ? window.requestAnimationFrame(renderCustomCursor)
+    : undefined;
+};
+
+const syncCustomCursor = () => {
+  const enabled = Boolean(customCursor) && customCursorMedia.matches && !reduceMotion;
+  documentRoot.classList.toggle('custom-cursor-enabled', enabled);
+
+  if (!enabled) {
+    customCursor?.classList.remove('is-visible', 'is-interactive', 'is-drag', 'is-dragging');
+    customCursorHasPosition = false;
+    window.cancelAnimationFrame(customCursorFrame);
+    customCursorFrame = undefined;
+  }
+};
+
+const handleCustomCursorMove = (event) => {
+  if (!documentRoot.classList.contains('custom-cursor-enabled')) {
+    return;
+  }
+
+  customCursorTargetX = event.clientX;
+  customCursorTargetY = event.clientY;
+
+  if (!customCursorHasPosition) {
+    customCursorX = customCursorTargetX;
+    customCursorY = customCursorTargetY;
+    customCursorHasPosition = true;
+  }
+
+  const eventPath = event.composedPath();
+  const isModel = eventPath.some((node) => (
+    node === preloaderModel
+    || node?.classList?.contains?.('prototype-model-viewer')
+  ));
+  const isInteractive = Boolean(event.target.closest?.(
+    'a, button, input, textarea, select, [role="button"], [data-hotspot]',
+  ));
+
+  customCursor.classList.add('is-visible');
+  customCursor.classList.toggle('is-drag', isModel);
+  customCursor.classList.toggle('is-interactive', isInteractive && !isModel);
+
+  if (!customCursorFrame) {
+    customCursorFrame = window.requestAnimationFrame(renderCustomCursor);
+  }
+};
+
+syncCustomCursor();
+customCursorMedia.addEventListener('change', syncCustomCursor);
+document.addEventListener('pointermove', handleCustomCursorMove, { passive: true });
+document.addEventListener('pointerdown', (event) => {
+  if (event.composedPath().includes(preloaderModel)) {
+    customCursor?.classList.add('is-dragging');
+  }
+});
+document.addEventListener('pointerup', () => {
+  customCursor?.classList.remove('is-dragging');
+});
+document.addEventListener('pointerout', (event) => {
+  if (!event.relatedTarget) {
+    customCursor?.classList.remove('is-visible', 'is-dragging');
+  }
+});
+window.addEventListener('blur', () => {
+  customCursor?.classList.remove('is-visible', 'is-dragging');
+});
+
 languageButtons.forEach((button) => {
   button.addEventListener('click', () => {
     closeHotspots();
-    applyLanguage(button.dataset.language);
+    switchLanguage(button.dataset.language);
   });
 });
 
