@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>
+    window.__nordwirePreloaderStartedAt = performance.now();
     document.documentElement.classList.add("hero-reveal-pending", "preloader-pending");
     window.setTimeout(() => document.documentElement.classList.remove("preloader-pending"), 5000);
     window.ModelViewerElement = window.ModelViewerElement || {};
@@ -75,7 +76,6 @@
           class="hero-background-video"
           autoplay
           muted
-          loop
           playsinline
           poster="assets/images/hero-background.png"
           aria-hidden="true"

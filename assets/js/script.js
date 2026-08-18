@@ -43,6 +43,8 @@ let horizontalScrollFrame;
 let horizontalAnimationFrame;
 let horizontalAnimationTargetIndex;
 let heroRevealTimer;
+let preloaderDismissTimer;
+let preloaderDismissScheduled = false;
 let ambientGlowFrame;
 let activeAmbientLayer;
 let ambientGlowX = 68;
@@ -445,17 +447,23 @@ const switchLanguage = (language) => {
 };
 
 const hidePreloader = (reason) => {
-  if (!documentRoot.classList.contains('preloader-pending')) {
+  if (!documentRoot.classList.contains('preloader-pending') || preloaderDismissScheduled) {
     return;
   }
 
-  documentRoot.classList.remove('preloader-pending');
-  preloader?.setAttribute('data-dismiss-reason', reason);
-  window.setTimeout(() => {
-    if (preloader) {
-      preloader.hidden = true;
-    }
-  }, reduceMotion ? 0 : 450);
+  preloaderDismissScheduled = true;
+  const startedAt = Number(window.__nordwirePreloaderStartedAt) || performance.now();
+  const remainingMinimum = Math.max(0, 1000 - (performance.now() - startedAt));
+
+  preloaderDismissTimer = window.setTimeout(() => {
+    documentRoot.classList.remove('preloader-pending');
+    preloader?.setAttribute('data-dismiss-reason', reason);
+    window.setTimeout(() => {
+      if (preloader) {
+        preloader.hidden = true;
+      }
+    }, reduceMotion ? 0 : 450);
+  }, remainingMinimum);
 };
 
 const waitForHeroMedia = () => new Promise((resolve) => {
@@ -557,15 +565,6 @@ const handleCustomCursorMove = (event) => {
     return;
   }
 
-  customCursorTargetX = event.clientX;
-  customCursorTargetY = event.clientY;
-
-  if (!customCursorHasPosition) {
-    customCursorX = customCursorTargetX;
-    customCursorY = customCursorTargetY;
-    customCursorHasPosition = true;
-  }
-
   const eventPath = event.composedPath();
   const isModel = eventPath.some((node) => (
     node === preloaderModel
@@ -574,6 +573,24 @@ const handleCustomCursorMove = (event) => {
   const isInteractive = Boolean(event.target.closest?.(
     'a, button, input, textarea, select, [role="button"], [data-hotspot]',
   ));
+  const shouldShow = isModel || isInteractive;
+
+  if (!shouldShow) {
+    customCursor.classList.remove('is-visible', 'is-interactive', 'is-drag', 'is-dragging');
+    customCursorHasPosition = false;
+    window.cancelAnimationFrame(customCursorFrame);
+    customCursorFrame = undefined;
+    return;
+  }
+
+  customCursorTargetX = event.clientX;
+  customCursorTargetY = event.clientY;
+
+  if (!customCursorHasPosition) {
+    customCursorX = customCursorTargetX;
+    customCursorY = customCursorTargetY;
+    customCursorHasPosition = true;
+  }
 
   customCursor.classList.add('is-visible');
   customCursor.classList.toggle('is-drag', isModel);
@@ -715,62 +732,66 @@ document.addEventListener('pointerdown', (event) => {
   }
 });
 
-const revealHeroCopy = (reason) => {
+const heroRevealLeadSeconds = 1.5;
+
+const revealHeroIntro = (reason) => {
   window.clearTimeout(heroRevealTimer);
   heroCopy?.classList.add('is-hero-visible');
+  header?.classList.add('is-hero-visible');
 
   if (heroCopy) {
     heroCopy.dataset.revealReason = reason;
   }
 };
 
-const handleHeroRevealFallback = () => {
-  const remainingSeconds = heroVideo
-    ? heroVideo.duration - heroVideo.currentTime
-    : 0;
-  const videoIsProgressing = Boolean(
-    heroVideo
-    && !heroVideo.paused
-    && heroVideo.currentTime > 0
-    && Number.isFinite(remainingSeconds)
-    && remainingSeconds > 0.15,
-  );
-
-  if (videoIsProgressing) {
-    heroRevealTimer = window.setTimeout(
-      () => revealHeroCopy('timeout-fallback'),
-      (remainingSeconds * 1000) + 250,
-    );
+const maybeRevealHeroIntro = () => {
+  if (!heroVideo || !Number.isFinite(heroVideo.duration) || heroVideo.duration <= 0) {
     return;
   }
 
-  revealHeroCopy('timeout-fallback');
+  const revealAt = Math.max(0, heroVideo.duration - heroRevealLeadSeconds);
+  if (heroVideo.currentTime >= revealAt) {
+    revealHeroIntro('video-final-window');
+    heroVideo.removeEventListener('timeupdate', maybeRevealHeroIntro);
+    heroVideo.removeEventListener('durationchange', maybeRevealHeroIntro);
+  }
+};
+
+const freezeHeroOnFinalFrame = () => {
+  if (!heroVideo) {
+    return;
+  }
+
+  heroVideo.pause();
+  revealHeroIntro('video-ended');
 };
 
 if (!heroCopy) {
   documentRoot.classList.remove('hero-reveal-pending');
 } else if (reduceMotion) {
-  revealHeroCopy('reduced-motion');
+  revealHeroIntro('reduced-motion');
 } else if (!heroVideo || staticHeroMedia.matches) {
-  revealHeroCopy('static-background');
+  revealHeroIntro('static-background');
 } else {
-  heroVideo.addEventListener('ended', () => revealHeroCopy('video-ended'), {
-    once: true,
-  });
-
-  heroRevealTimer = window.setTimeout(
-    handleHeroRevealFallback,
-    6000,
-  );
+  heroVideo.loop = false;
+  heroVideo.addEventListener('loadedmetadata', maybeRevealHeroIntro, { once: true });
+  heroVideo.addEventListener('durationchange', maybeRevealHeroIntro);
+  heroVideo.addEventListener('timeupdate', maybeRevealHeroIntro);
+  heroVideo.addEventListener('ended', freezeHeroOnFinalFrame, { once: true });
+  heroRevealTimer = window.setTimeout(() => {
+    revealHeroIntro('video-timing-fallback');
+  }, 7000);
 
   if (heroVideo.ended) {
-    revealHeroCopy('video-already-ended');
+    freezeHeroOnFinalFrame();
+  } else {
+    maybeRevealHeroIntro();
   }
 }
 
 staticHeroMedia.addEventListener('change', (event) => {
   if (event.matches) {
-    revealHeroCopy('static-background');
+    revealHeroIntro('static-background');
   }
 });
 

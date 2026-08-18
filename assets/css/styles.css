@@ -354,12 +354,12 @@ section.is-ambient-active .ambient-background::before {
 
 .custom-cursor::before {
   position: absolute;
-  width: 1.1rem;
-  height: 1.1rem;
-  border: 1px solid rgba(34, 96, 242, 0.86);
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgba(34, 96, 242, 0.76);
   border-radius: 50%;
-  background: rgba(13, 15, 20, 0.3);
-  box-shadow: 0 0 1rem rgba(34, 96, 242, 0.2);
+  background: rgba(34, 96, 242, 0.06);
+  box-shadow: 0 0 1.2rem rgba(34, 96, 242, 0.28);
   content: "";
   transition:
     width 220ms ease-out,
@@ -370,13 +370,7 @@ section.is-ambient-active .ambient-background::before {
 }
 
 .custom-cursor-dot {
-  position: absolute;
-  width: 0.25rem;
-  height: 0.25rem;
-  border-radius: 50%;
-  background: #2260f2;
-  box-shadow: 0 0 0.6rem rgba(34, 96, 242, 0.55);
-  transition: opacity 160ms ease-out, transform 220ms ease-out;
+  display: none;
 }
 
 .custom-cursor-drag-label {
@@ -396,14 +390,10 @@ section.is-ambient-active .ambient-background::before {
 }
 
 .custom-cursor.is-interactive::before {
-  width: 2rem;
-  height: 2rem;
-  background: rgba(34, 96, 242, 0.08);
-  box-shadow: 0 0 1.4rem rgba(34, 96, 242, 0.3);
-}
-
-.custom-cursor.is-interactive .custom-cursor-dot {
-  transform: scale(1.25);
+  width: 2.15rem;
+  height: 2.15rem;
+  background: rgba(34, 96, 242, 0.09);
+  box-shadow: 0 0 1.5rem rgba(34, 96, 242, 0.36);
 }
 
 .custom-cursor.is-drag::before {
@@ -412,10 +402,6 @@ section.is-ambient-active .ambient-background::before {
   border-radius: 999px;
   background: rgba(13, 15, 20, 0.72);
   box-shadow: 0 0 1.5rem rgba(34, 96, 242, 0.32);
-}
-
-.custom-cursor.is-drag .custom-cursor-dot {
-  opacity: 0;
 }
 
 .custom-cursor.is-drag .custom-cursor-drag-label {
@@ -429,11 +415,6 @@ section.is-ambient-active .ambient-background::before {
 @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
   .custom-cursor {
     display: grid;
-  }
-
-  html.custom-cursor-enabled,
-  html.custom-cursor-enabled * {
-    cursor: none !important;
   }
 }
 
@@ -548,6 +529,21 @@ section.is-ambient-active .ambient-background::before {
   left: 0;
   z-index: 100;
   pointer-events: none;
+}
+
+.hero-reveal-pending .site-header {
+  opacity: 0;
+  transform: translateY(-12px);
+  animation: heroCopyFallback 720ms cubic-bezier(0.22, 1, 0.36, 1) 6s forwards;
+  transition:
+    opacity 720ms ease,
+    transform 720ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-reveal-pending .site-header.is-hero-visible {
+  opacity: 1;
+  transform: translateY(0);
+  animation: none;
 }
 
 .header-shell {
@@ -2377,6 +2373,12 @@ main > section:not(.hero) > .section-shell {
     animation: none;
   }
 
+  .hero-reveal-pending .site-header {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
   .hero-grid {
     align-items: center;
   }
@@ -2716,6 +2718,12 @@ main > section:not(.hero) > .section-shell {
   }
 
   .hero-reveal-pending .hero-copy {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .hero-reveal-pending .site-header {
     opacity: 1;
     transform: none;
     animation: none;
