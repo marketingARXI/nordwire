@@ -1502,7 +1502,7 @@ main > section:not(.hero) > .section-shell {
 .what-we-do-grid .section-copy,
 .notes-section-grid .section-copy {
   grid-column: 1 / span 7;
-  min-height: 21rem;
+  min-height: 0;
 }
 
 .partner-layout .section-copy {
@@ -1614,10 +1614,11 @@ main > section:not(.hero) > .section-shell {
 }
 
 .what-we-do-note-list {
+  --shared-feature-card-height: clamp(8.25rem, 15.8vh, 8.85rem);
   grid-column: 1 / -1;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(0.85rem, 1.5vw, 1.35rem);
-  margin-top: clamp(1.25rem, 3vh, 2.5rem);
+  margin-top: clamp(1.25rem, 3vh, 2.2rem);
 }
 
 #o-que-fazemos .section-copy h2 {
@@ -1632,8 +1633,44 @@ main > section:not(.hero) > .section-shell {
 }
 
 .what-we-do-note-list .prototype-note {
-  min-height: 10.5rem;
+  display: block;
+  min-height: var(--shared-feature-card-height);
   max-height: none;
+  padding: clamp(0.8rem, 1.7vh, 1rem) 1rem;
+}
+
+.what-we-do-note-list .prototype-note .value-highlight-index {
+  display: block;
+  padding-top: 0;
+}
+
+.what-we-do-note-list .prototype-note > div {
+  display: contents;
+}
+
+.what-we-do-note-list .prototype-note h3 {
+  margin: clamp(0.8rem, 1.6vh, 1.2rem) 0 0.4rem;
+}
+
+.what-we-do-note-list .prototype-note p {
+  max-width: 20ch;
+}
+
+#nordgo .value-highlights {
+  --shared-feature-card-height: clamp(8.25rem, 15.8vh, 8.85rem);
+  margin-top: clamp(1.25rem, 3vh, 2.2rem);
+}
+
+#nordgo .value-highlights .value-highlight {
+  min-height: var(--shared-feature-card-height);
+  padding: clamp(0.8rem, 1.7vh, 1rem) 1rem;
+}
+
+@media (min-width: 768px) and (max-width: 900px) {
+  .what-we-do-note-list,
+  #nordgo .value-highlights {
+    --shared-feature-card-height: 10rem;
+  }
 }
 
 .product-actions {
@@ -2955,7 +2992,7 @@ main > section:not(.hero) > .section-shell {
   }
 
   .what-we-do-note-list .prototype-note {
-    min-height: 8.75rem;
+    min-height: var(--shared-feature-card-height);
     max-height: none;
   }
 
