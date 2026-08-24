@@ -2853,7 +2853,7 @@ main > section:not(.hero) > .section-shell {
 
 .featured-product-visual {
   position: relative;
-  aspect-ratio: 16 / 7.4;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
   background: #10131b;
 }
@@ -2974,6 +2974,10 @@ main > section:not(.hero) > .section-shell {
   .featured-product-visual {
     aspect-ratio: 16 / 5.6;
   }
+
+  .featured-product-visual img {
+    object-fit: contain;
+  }
 }
 
 @media (max-width: 640px) {
@@ -2986,7 +2990,11 @@ main > section:not(.hero) > .section-shell {
   }
 
   .featured-product-visual {
-    aspect-ratio: 16 / 7;
+    aspect-ratio: 3 / 2;
+  }
+
+  .featured-product-visual img {
+    object-fit: cover;
   }
 
   .featured-product-description {
