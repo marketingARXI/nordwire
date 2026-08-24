@@ -119,6 +119,7 @@ const products = [
   },
   {
     id: 'nordsense-p4',
+    image: 'assets/images/prod-nordsense-p4.png',
     category: 'sensors',
     price: { pt: '249 €', en: '€249' },
     name: { pt: 'NordSense P4', en: 'NordSense P4' },
@@ -163,6 +164,7 @@ const products = [
   },
   {
     id: 'nordgate-connect-lte',
+    image: 'assets/images/prod-nordgate-connect-lte.png',
     category: 'gateways',
     price: { pt: 'Preço sob consulta', en: 'Price on request' },
     name: { pt: 'NordGate Connect LTE', en: 'NordGate Connect LTE' },
@@ -192,6 +194,7 @@ const products = [
   },
   {
     id: 'railmount-flex-kit',
+    image: 'assets/images/prod-railmount-flex-kit.png',
     category: 'accessories',
     price: { pt: '59 €', en: '€59' },
     name: { pt: 'RailMount Flex Kit', en: 'RailMount Flex Kit' },
@@ -206,6 +209,7 @@ const products = [
   },
   {
     id: 'shieldpower-24',
+    image: 'assets/images/prod-shieldpower-24.png',
     category: 'accessories',
     price: { pt: '89 €', en: '€89' },
     name: { pt: 'ShieldPower 24', en: 'ShieldPower 24' },
