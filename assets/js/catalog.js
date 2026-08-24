@@ -104,6 +104,7 @@ const translations = {
 const products = [
   {
     id: 'nordsense-t1',
+    image: 'assets/images/prod-nordsense-t1.png',
     category: 'sensors',
     price: { pt: '189 €', en: '€189' },
     name: { pt: 'NordSense T1', en: 'NordSense T1' },
@@ -132,6 +133,7 @@ const products = [
   },
   {
     id: 'nordvision-o2',
+    image: 'assets/images/prod-nordvision-o2.png',
     category: 'sensors',
     price: { pt: 'Preço sob consulta', en: 'Price on request' },
     name: { pt: 'NordVision O2', en: 'NordVision O2' },
@@ -146,6 +148,7 @@ const products = [
   },
   {
     id: 'nordgate-edge-200',
+    image: 'assets/images/prod-nordgate-edge200.png',
     category: 'gateways',
     price: { pt: '469 €', en: '€469' },
     name: { pt: 'NordGate Edge 200', en: 'NordGate Edge 200' },
@@ -174,6 +177,7 @@ const products = [
   },
   {
     id: 'nordcore-io-16',
+    image: 'assets/images/prod-nordcore-io16.png',
     category: 'gateways',
     price: { pt: '329 €', en: '€329' },
     name: { pt: 'NordCore IO 16', en: 'NordCore IO 16' },
@@ -249,9 +253,10 @@ const createProductCard = (product, index) => {
   const visual = document.createElement('span');
   visual.className = 'product-card-visual';
   const image = document.createElement('img');
-  image.src = 'assets/images/catalog-product-placeholder.svg';
+  image.src = product.image ?? 'assets/images/catalog-product-placeholder.svg';
   image.alt = '';
   image.loading = 'lazy';
+  image.decoding = 'async';
   const productIndex = document.createElement('span');
   productIndex.className = 'product-index';
   productIndex.setAttribute('aria-hidden', 'true');
@@ -295,6 +300,9 @@ const renderProducts = () => {
 };
 
 const updateProductDetail = () => {
+  const detailImage = productDialog.querySelector('[data-detail-image]');
+  detailImage.src = selectedProduct.image ?? 'assets/images/catalog-product-placeholder.svg';
+  detailImage.alt = selectedProduct.name[currentLanguage];
   productDialog.querySelector('[data-detail-category]').textContent = getCategoryLabel(selectedProduct.category);
   productDialog.querySelector('[data-detail-name]').textContent = selectedProduct.name[currentLanguage];
   productDialog.querySelector('[data-detail-description]').textContent = selectedProduct.description[currentLanguage];
