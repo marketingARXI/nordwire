@@ -1614,9 +1614,38 @@ main > section:not(.hero) > .section-shell {
 }
 
 .what-we-do-note-list {
-  grid-column: 8 / -1;
-  align-self: start;
-  margin-top: 0;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: clamp(0.8rem, 1.8vh, 1.25rem);
+}
+
+#o-que-fazemos .section-copy {
+  min-height: 0;
+}
+
+#o-que-fazemos .section-copy h2 {
+  font-size: clamp(2.1rem, min(4.4vw, 6.6vh), 4rem);
+  line-height: 1;
+}
+
+#o-que-fazemos .section-copy > p {
+  margin-top: clamp(0.7rem, 1.4vh, 1rem);
+  font-size: clamp(0.95rem, min(1.2vw, 1.9vh), 1.1rem);
+  line-height: 1.45;
+}
+
+.what-we-do-note-list .prototype-note {
+  min-height: 0;
+  max-height: 6.25rem;
+}
+
+.what-we-do-note-list .prototype-note h3 {
+  font-size: clamp(0.95rem, min(1.15vw, 2vh), 1.08rem);
+}
+
+.what-we-do-note-list .prototype-note p {
+  font-size: clamp(0.8rem, min(0.95vw, 1.7vh), 0.92rem);
+  line-height: 1.4;
 }
 
 .product-actions {
@@ -2904,7 +2933,13 @@ main > section:not(.hero) > .section-shell {
 
   .what-we-do-note-list {
     grid-column: 1 / -1;
-    margin-top: 2rem;
+    grid-template-columns: 1fr;
+    margin-top: 1.25rem;
+  }
+
+  .what-we-do-note-list .prototype-note {
+    min-height: 0;
+    max-height: 6.25rem;
   }
 
   .product-catalog-cta {
