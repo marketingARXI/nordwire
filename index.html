@@ -12,12 +12,15 @@
   <script>
     window.__nordwirePreloaderStartedAt = performance.now();
     document.documentElement.classList.add("hero-reveal-pending", "preloader-pending");
+    if (window.location.hash && window.location.hash !== "#inicio") {
+      document.documentElement.classList.add("section-entry");
+    }
     window.setTimeout(() => document.documentElement.classList.remove("preloader-pending"), 5000);
     window.ModelViewerElement = window.ModelViewerElement || {};
     window.ModelViewerElement.dracoDecoderLocation = "https://www.gstatic.com/draco/versioned/decoders/1.5.7/";
   </script>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260824-4">
 </head>
 <body>
   <div class="site-preloader" role="status" aria-live="polite" aria-label="A carregar o site" data-i18n-aria-label="preloader.label">
@@ -485,6 +488,6 @@
     <span class="custom-cursor-drag-label" data-i18n="cursor.drag">Arrastar</span>
   </div>
 
-  <script src="assets/js/script.js"></script>
+  <script src="assets/js/script.js?v=20260824-2"></script>
 </body>
 </html>

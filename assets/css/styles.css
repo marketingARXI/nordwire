@@ -567,6 +567,14 @@ section.is-ambient-active .ambient-background::before {
   animation: none;
 }
 
+.hero-reveal-pending.section-entry .site-header,
+html.hero-reveal-pending:has(main > section:not(#inicio):target) .site-header {
+  opacity: 1;
+  transform: translateY(0);
+  animation: none;
+  transition: none;
+}
+
 .header-shell {
   min-height: 72px;
   display: grid;
@@ -2195,11 +2203,11 @@ main > section:not(.hero) > .section-shell {
     align-items: center;
     gap: 0.35rem;
     padding: 0.45rem 0.6rem;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.025);
     border-radius: var(--radius-pill);
-    background: rgba(10, 10, 10, 0.48);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(10, 10, 10, 0.07);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     transform: translateX(-50%);
     transition: opacity 180ms ease;
   }
@@ -2545,11 +2553,11 @@ main > section:not(.hero) > .section-shell {
     align-items: center;
     gap: 0.02rem;
     padding: 0.3rem 0.4rem;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.025);
     border-radius: var(--radius-pill);
-    background: rgba(10, 10, 10, 0.5);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(10, 10, 10, 0.09);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     transform: translateX(-50%);
   }
 
