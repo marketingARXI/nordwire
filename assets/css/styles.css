@@ -1613,6 +1613,12 @@ main > section:not(.hero) > .section-shell {
   max-width: none;
 }
 
+.what-we-do-note-list {
+  grid-column: 8 / -1;
+  align-self: start;
+  margin-top: 0;
+}
+
 .product-actions {
   margin-top: 2rem;
 }
@@ -2838,6 +2844,25 @@ main > section:not(.hero) > .section-shell {
   margin-top: 0;
 }
 
+.product-catalog-cta {
+  min-height: 62px;
+  padding: clamp(1rem, min(1.35vw, 2.2vh), 1.15rem) clamp(1.7rem, 2.5vw, 2.4rem);
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 14px 34px rgba(34, 96, 242, 0.24);
+  color: #fff;
+  font-size: clamp(0.95rem, min(1.05vw, 1.9vh), 1.08rem);
+  font-weight: 600;
+}
+
+.product-catalog-cta:hover,
+.product-catalog-cta:focus-visible {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 18px 42px rgba(34, 96, 242, 0.38), 0 0 0 6px rgba(34, 96, 242, 0.1);
+  filter: brightness(1.08);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .featured-product-card:hover {
     border-color: rgba(34, 96, 242, 0.58);
@@ -2875,6 +2900,15 @@ main > section:not(.hero) > .section-shell {
 
   .featured-product-description {
     white-space: normal;
+  }
+
+  .what-we-do-note-list {
+    grid-column: 1 / -1;
+    margin-top: 2rem;
+  }
+
+  .product-catalog-cta {
+    min-height: 58px;
   }
 }
 
