@@ -95,11 +95,11 @@ const translations = {
     'whatWeDo.subtitle': ['Todos os dias, o teu chão de fábrica gera milhares de dados.', 'A questão não é se eles existem, é se estás a aproveitá-los.'],
     'whatWeDo.cardsLabel': 'Destaques do que fazemos',
     'whatWeDo.card1Title': 'Tempo real',
-    'whatWeDo.card1Text': 'Dados capturados no momento em que acontecem.',
+    'whatWeDo.card1Text': 'Dados capturados no momento.',
     'whatWeDo.card2Title': 'Acesso remoto',
-    'whatWeDo.card2Text': 'A tua produção acessível onde quer que estejas.',
+    'whatWeDo.card2Text': 'Produção acessível onde estiveres.',
     'whatWeDo.card3Title': 'À tua medida',
-    'whatWeDo.card3Text': 'Cada solução desenhada para o teu chão de fábrica.',
+    'whatWeDo.card3Text': 'Soluções feitas para a tua fábrica.',
     'monitoring.eyebrow': 'Monitorização',
     'monitoring.title': ['Os sensores captam.', 'Nada se perde.'],
     'monitoring.subtitle': 'Sensores desenvolvidos por nós registam a atividade de cada máquina em tempo real. E o acesso à informação é simples e imediato, diretamente junto de cada equipamento.',
@@ -217,11 +217,11 @@ const translations = {
     'whatWeDo.subtitle': ["Every day, your factory floor generates thousands of data points.", "The question isn't whether they exist, it's whether you're making the most of them."],
     'whatWeDo.cardsLabel': 'What we do highlights',
     'whatWeDo.card1Title': 'Real time',
-    'whatWeDo.card1Text': 'Data captured the moment it happens.',
+    'whatWeDo.card1Text': 'Data captured as it happens.',
     'whatWeDo.card2Title': 'Remote access',
-    'whatWeDo.card2Text': 'Your production accessible wherever you are.',
+    'whatWeDo.card2Text': 'Production accessible anywhere.',
     'whatWeDo.card3Title': 'Tailored to you',
-    'whatWeDo.card3Text': 'Every solution designed for your factory floor.',
+    'whatWeDo.card3Text': 'Solutions built for your factory.',
     'monitoring.eyebrow': 'Monitoring',
     'monitoring.title': ['The sensors capture.', 'Nothing gets lost.'],
     'monitoring.subtitle': "Sensors we develop record each machine's activity in real time. And access to the information is simple and immediate, right next to each piece of equipment.",
@@ -1128,9 +1128,10 @@ const handleHorizontalWheel = (event) => {
 
   wheelLocked = true;
   const targetSection = sections[nextIndex];
-  targetSection.scrollTop = direction > 0
-    ? 0
-    : Math.max(0, targetSection.scrollHeight - targetSection.clientHeight);
+  const targetHasScrollableContent = hasScrollableVerticalContent(targetSection);
+  targetSection.scrollTop = direction < 0 && targetHasScrollableContent
+    ? Math.max(0, targetSection.scrollHeight - targetSection.clientHeight)
+    : 0;
   navigateToSection(nextIndex, { resetVertical: false });
 
   window.clearTimeout(wheelLockTimer);
@@ -1294,7 +1295,10 @@ const revealTargetSelector = [
 
 const revealCounts = new WeakMap();
 const revealTargets = revealGroups.flatMap((group) => {
-  const nestedTargets = Array.from(group.querySelectorAll(revealTargetSelector));
+  const revealAsGroup = group.classList.contains('what-we-do-note-list');
+  const nestedTargets = revealAsGroup
+    ? []
+    : Array.from(group.querySelectorAll(revealTargetSelector));
   const targets = nestedTargets.length ? nestedTargets : [group];
   const section = group.closest('section') ?? group;
   let targetIndex = revealCounts.get(section) ?? 0;
