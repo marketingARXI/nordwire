@@ -33,6 +33,11 @@ const countUpNumbers = Array.from(document.querySelectorAll('[data-count-up]'));
 const sectionByHash = new Map(sections.map((section) => [`#${section.id}`, section]));
 const sectionLinks = Array.from(document.querySelectorAll('a[href^="#"]'))
   .filter((link) => sectionByHash.has(link.getAttribute('href')));
+const initialSectionTarget = sectionByHash.get(window.location.hash);
+
+if (initialSectionTarget && initialSectionTarget !== homeSection) {
+  header?.classList.add('is-hero-visible');
+}
 
 let activeSectionIndex = 0;
 let horizontalProgress;
@@ -1210,6 +1215,36 @@ const syncHorizontalLayout = () => {
   }
 };
 
+const restoreSectionFromLocation = () => {
+  const target = sectionByHash.get(window.location.hash);
+  const targetIndex = sections.indexOf(target);
+
+  if (targetIndex < 0) {
+    return;
+  }
+
+  if (targetIndex > 0) {
+    header?.classList.add('is-hero-visible');
+    documentRoot.classList.remove('section-entry');
+  }
+
+  if (isHorizontalLayout()) {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    positionHorizontalSection(targetIndex);
+  } else {
+    target.scrollIntoView({ behavior: 'auto', block: 'start' });
+  }
+
+  updateNavigationState(targetIndex);
+};
+
+const scheduleSectionRestore = () => {
+  restoreSectionFromLocation();
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(restoreSectionFromLocation);
+  });
+};
+
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') {
     closeHotspots({ restoreFocus: true });
@@ -1274,8 +1309,11 @@ window.addEventListener('scroll', () => {
 horizontalMedia.addEventListener('change', syncHorizontalLayout);
 buildHorizontalProgress();
 syncHorizontalLayout();
+scheduleSectionRestore();
 updateHeader();
 setActiveLink();
+window.addEventListener('load', scheduleSectionRestore, { once: true });
+window.addEventListener('pageshow', scheduleSectionRestore);
 
 const revealTargetSelector = [
   '.eyebrow',
