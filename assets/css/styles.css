@@ -2714,6 +2714,170 @@ main > section:not(.hero) > .section-shell {
   padding-bottom: 0;
 }
 
+.product-showcase-layout {
+  row-gap: clamp(0.8rem, 1.7vh, 1.25rem);
+}
+
+.product-showcase-layout .section-copy,
+.product-showcase-layout .featured-products,
+.product-showcase-layout .product-actions {
+  grid-column: 1 / -1;
+}
+
+#produtos .section-copy h2 {
+  max-width: none;
+}
+
+#produtos .section-copy > p {
+  max-width: 48rem;
+  margin-top: clamp(0.55rem, 1.2vh, 0.9rem);
+}
+
+.featured-products {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.75rem, 1.2vw, 1.1rem);
+  min-width: 0;
+}
+
+.featured-product-card {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(25, 30, 41, 0.96), rgba(16, 19, 27, 0.96));
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.035), 0 18px 38px rgba(0, 0, 0, 0.2);
+  transition:
+    transform var(--motion-duration) var(--motion-ease),
+    border-color var(--motion-duration) var(--motion-ease),
+    box-shadow var(--motion-duration) var(--motion-ease);
+}
+
+.featured-product-visual {
+  position: relative;
+  aspect-ratio: 16 / 7.4;
+  overflow: hidden;
+  background: #10131b;
+}
+
+.featured-product-visual::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 52%, rgba(13, 15, 20, 0.42));
+  content: "";
+  pointer-events: none;
+}
+
+.featured-product-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 500ms var(--motion-ease);
+}
+
+.featured-product-visual > span {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  z-index: 1;
+  display: grid;
+  width: 1.75rem;
+  height: 1.75rem;
+  place-items: center;
+  border: 1px solid rgba(34, 96, 242, 0.42);
+  border-radius: 50%;
+  background: rgba(13, 15, 20, 0.8);
+  color: var(--accent);
+  font-size: 0.62rem;
+  font-weight: 600;
+}
+
+.featured-product-copy {
+  display: grid;
+  min-width: 0;
+  padding: clamp(0.75rem, min(1.1vw, 1.7vh), 1rem);
+}
+
+.featured-product-category {
+  margin: 0 0 0.35rem;
+  color: var(--accent);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.featured-product-card h3 {
+  margin: 0;
+  overflow: hidden;
+  font-size: clamp(0.95rem, min(1.2vw, 2vh), 1.12rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.featured-product-description {
+  overflow: hidden;
+  margin: 0.4rem 0 0.7rem;
+  color: var(--muted);
+  font-size: clamp(0.72rem, min(0.85vw, 1.55vh), 0.84rem);
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.featured-product-copy strong {
+  color: var(--text);
+  font-size: clamp(0.78rem, min(0.92vw, 1.7vh), 0.9rem);
+  font-weight: 600;
+}
+
+.product-showcase-layout .product-actions {
+  margin-top: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .featured-product-card:hover {
+    border-color: rgba(34, 96, 242, 0.58);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.3), 0 0 26px rgba(34, 96, 242, 0.12);
+    transform: translateY(-4px);
+  }
+
+  .featured-product-card:hover .featured-product-visual img {
+    transform: scale(1.025);
+  }
+}
+
+@media (max-width: 1100px) {
+  .featured-products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .featured-product-visual {
+    aspect-ratio: 16 / 5.6;
+  }
+}
+
+@media (max-width: 640px) {
+  .product-showcase-layout {
+    row-gap: 1rem;
+  }
+
+  .featured-products {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-product-visual {
+    aspect-ratio: 16 / 7;
+  }
+
+  .featured-product-description {
+    white-space: normal;
+  }
+}
+
 :where(a, button, input, textarea, select, model-viewer):focus-visible {
   outline: 2px solid var(--accent) !important;
   outline-offset: 3px;
@@ -2756,7 +2920,9 @@ main > section:not(.hero) > .section-shell {
 
   .button:hover,
   .button:focus-visible,
-  .value-highlight:hover {
+  .value-highlight:hover,
+  .featured-product-card:hover,
+  .featured-product-card:hover .featured-product-visual img {
     transform: none;
   }
 

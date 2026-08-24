@@ -283,67 +283,69 @@
       <section class="feature-section placeholder-section section-dark" id="produtos" data-nav-label="Produtos" data-i18n-nav-label="nav.products">
         <div class="ambient-background" data-ambient-background aria-hidden="true"><span class="ambient-cursor-glow"></span></div>
         <div class="section-shell">
-          <div class="grid-12 feature-grid placeholder-layout placeholder-layout-products">
+          <div class="grid-12 feature-grid placeholder-layout placeholder-layout-products product-showcase-layout">
             <div class="section-copy reveal" data-reveal>
               <p class="eyebrow" data-i18n="products.eyebrow">Produtos</p>
               <h2 data-i18n="products.title">Os nossos produtos.</h2>
-              <p data-i18n="products.subtitle">Hardware desenhado à medida da produção real. Explora as soluções que já desenvolvemos.</p>
-              <div class="product-actions">
-                <a class="button button-primary" href="catalogo.html" data-i18n="products.storeButton">Ver Loja</a>
-              </div>
+              <p data-i18n="products.subtitle">Explora a nossa gama de produtos, criada para ligar o chão de fábrica a decisões mais rápidas.</p>
             </div>
-            <div class="product-hotspot-visual reveal" data-reveal>
-              <div class="product-hotspot-stage" role="group" aria-label="Detalhes interativos da placa NordCore" data-i18n-aria-label="products.hotspotsLabel">
-                <img class="product-hotspot-image" src="assets/images/nordcore.png" alt="Placa eletrónica NordCore vista de cima." data-i18n-alt="products.imageAlt">
 
-                <button class="product-hotspot" type="button" style="--hotspot-x: 43%; --hotspot-y: 21%;" aria-label="Módulo de processamento" data-i18n-aria-label="products.processingTitle" aria-describedby="hotspot-processing" aria-expanded="false" data-hotspot>
-                  <span class="product-hotspot-dot" aria-hidden="true"></span>
-                  <span class="product-hotspot-tooltip" id="hotspot-processing" role="tooltip">
-                    <strong data-i18n="products.processingTitle">Módulo de processamento</strong>
-                    <span data-i18n="products.processingText">O cérebro do sistema - processa os dados recolhidos no chão de fábrica em tempo real.</span>
-                  </span>
-                </button>
+            <div class="featured-products reveal" data-reveal aria-label="Produtos em destaque" data-i18n-aria-label="products.showcaseLabel">
+              <article class="featured-product-card">
+                <div class="featured-product-visual">
+                  <img src="assets/images/catalog-product-placeholder.svg" alt="" loading="lazy">
+                  <span aria-hidden="true">01</span>
+                </div>
+                <div class="featured-product-copy">
+                  <p class="featured-product-category" data-i18n="products.feature1Category">Sensores</p>
+                  <h3>NordSense T1</h3>
+                  <p class="featured-product-description" data-i18n="products.feature1Text">Sensor compacto de temperatura e vibração.</p>
+                  <strong>189 €</strong>
+                </div>
+              </article>
 
-                <button class="product-hotspot" type="button" style="--hotspot-x: 41%; --hotspot-y: 84%;" aria-label="Ligação à rede" data-i18n-aria-label="products.networkTitle" aria-describedby="hotspot-network" aria-expanded="false" data-hotspot>
-                  <span class="product-hotspot-dot" aria-hidden="true"></span>
-                  <span class="product-hotspot-tooltip" id="hotspot-network" role="tooltip">
-                    <strong data-i18n="products.networkTitle">Ligação à rede</strong>
-                    <span data-i18n="products.networkText">Ligação de rede estável para comunicar com a infraestrutura da fábrica.</span>
-                  </span>
-                </button>
+              <article class="featured-product-card">
+                <div class="featured-product-visual">
+                  <img src="assets/images/catalog-product-placeholder.svg" alt="" loading="lazy">
+                  <span aria-hidden="true">02</span>
+                </div>
+                <div class="featured-product-copy">
+                  <p class="featured-product-category" data-i18n="products.feature2Category">Sensores</p>
+                  <h3>NordVision O2</h3>
+                  <p class="featured-product-description" data-i18n="products.feature2Text">Sensor ótico para contagem e presença.</p>
+                  <strong data-i18n="products.priceOnRequest">Preço sob consulta</strong>
+                </div>
+              </article>
 
-                <button class="product-hotspot" type="button" style="--hotspot-x: 57%; --hotspot-y: 93%;" aria-label="Alimentação e configuração" data-i18n-aria-label="products.powerTitle" aria-describedby="hotspot-power" aria-expanded="false" data-hotspot>
-                  <span class="product-hotspot-dot" aria-hidden="true"></span>
-                  <span class="product-hotspot-tooltip" id="hotspot-power" role="tooltip">
-                    <strong data-i18n="products.powerTitle">Alimentação e configuração</strong>
-                    <span data-i18n="products.powerText">Alimentação e configuração simples, prontas a integrar em qualquer ambiente.</span>
-                  </span>
-                </button>
+              <article class="featured-product-card">
+                <div class="featured-product-visual">
+                  <img src="assets/images/catalog-product-placeholder.svg" alt="" loading="lazy">
+                  <span aria-hidden="true">03</span>
+                </div>
+                <div class="featured-product-copy">
+                  <p class="featured-product-category" data-i18n="products.feature3Category">Gateways</p>
+                  <h3>NordGate Edge 200</h3>
+                  <p class="featured-product-description" data-i18n="products.feature3Text">Gateway industrial para dados em tempo real.</p>
+                  <strong>469 €</strong>
+                </div>
+              </article>
 
-                <button class="product-hotspot" type="button" style="--hotspot-x: 17%; --hotspot-y: 72%;" aria-label="Memória de segurança" data-i18n-aria-label="products.memoryTitle" aria-describedby="hotspot-memory" aria-expanded="false" data-hotspot>
-                  <span class="product-hotspot-dot" aria-hidden="true"></span>
-                  <span class="product-hotspot-tooltip" id="hotspot-memory" role="tooltip">
-                    <strong data-i18n="products.memoryTitle">Memória de segurança</strong>
-                    <span data-i18n="products.memoryText">Mantém as definições e o registo temporal seguros, mesmo sem energia.</span>
-                  </span>
-                </button>
+              <article class="featured-product-card">
+                <div class="featured-product-visual">
+                  <img src="assets/images/catalog-product-placeholder.svg" alt="" loading="lazy">
+                  <span aria-hidden="true">04</span>
+                </div>
+                <div class="featured-product-copy">
+                  <p class="featured-product-category" data-i18n="products.feature4Category">Gateways</p>
+                  <h3>NordCore IO 16</h3>
+                  <p class="featured-product-description" data-i18n="products.feature4Text">Controlador de entradas e saídas industriais.</p>
+                  <strong>329 €</strong>
+                </div>
+              </article>
+            </div>
 
-                <button class="product-hotspot" type="button" style="--hotspot-x: 82%; --hotspot-y: 84%;" aria-label="Expansão" data-i18n-aria-label="products.expansionTitle" aria-describedby="hotspot-expansion" aria-expanded="false" data-hotspot>
-                  <span class="product-hotspot-dot" aria-hidden="true"></span>
-                  <span class="product-hotspot-tooltip" id="hotspot-expansion" role="tooltip">
-                    <strong data-i18n="products.expansionTitle">Expansão</strong>
-                    <span data-i18n="products.expansionText">Preparado para expansão e armazenamento adicional, à medida das necessidades.</span>
-                  </span>
-                </button>
-
-                <button class="product-hotspot" type="button" style="--hotspot-x: 69%; --hotspot-y: 20%;" aria-label="Arrefecimento" data-i18n-aria-label="products.coolingTitle" aria-describedby="hotspot-cooling" aria-expanded="false" data-hotspot>
-                  <span class="product-hotspot-dot" aria-hidden="true"></span>
-                  <span class="product-hotspot-tooltip" id="hotspot-cooling" role="tooltip">
-                    <strong data-i18n="products.coolingTitle">Arrefecimento</strong>
-                    <span data-i18n="products.coolingText">Arrefecimento ativo para um funcionamento fiável e contínuo.</span>
-                  </span>
-                </button>
-              </div>
+            <div class="product-actions reveal" data-reveal>
+              <a class="button button-primary" href="catalogo.html" data-i18n="products.storeButton">Ver catálogo completo</a>
             </div>
           </div>
         </div>
