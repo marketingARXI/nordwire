@@ -470,16 +470,16 @@ section.is-ambient-active .ambient-background::before {
   position: relative;
   display: grid;
   flex: 0 0 auto;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   padding: 0;
   place-items: center;
   border-radius: var(--radius-pill);
 }
 
 .horizontal-progress button::before {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: var(--radius-pill);
   background: var(--muted-deep);
   content: "";
@@ -532,9 +532,9 @@ section.is-ambient-active .ambient-background::before {
 }
 
 .horizontal-progress button.is-active::before {
-  width: 22px;
+  width: 18px;
   background: var(--accent);
-  box-shadow: 0 0 14px rgba(34, 96, 242, 0.58);
+  box-shadow: 0 0 10px rgba(34, 96, 242, 0.48);
 }
 
 .grid-12 {
@@ -612,8 +612,8 @@ section.is-ambient-active .ambient-background::before {
   z-index: 90;
   display: inline-flex;
   align-items: center;
-  width: 46px;
-  height: 46px;
+  width: 42px;
+  height: 42px;
   transition: width 220ms ease, height 220ms ease, opacity 180ms ease;
 }
 
@@ -624,8 +624,8 @@ section.is-ambient-active .ambient-background::before {
 }
 
 .site-header.is-compact .header-brand {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
 }
 
 .header-logo-frame {
@@ -1616,11 +1616,8 @@ main > section:not(.hero) > .section-shell {
 .what-we-do-note-list {
   grid-column: 1 / -1;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: clamp(0.8rem, 1.8vh, 1.25rem);
-}
-
-#o-que-fazemos .section-copy {
-  min-height: 0;
+  gap: clamp(0.85rem, 1.5vw, 1.35rem);
+  margin-top: clamp(1.25rem, 3vh, 2.5rem);
 }
 
 #o-que-fazemos .section-copy h2 {
@@ -1635,17 +1632,8 @@ main > section:not(.hero) > .section-shell {
 }
 
 .what-we-do-note-list .prototype-note {
-  min-height: 0;
-  max-height: 6.25rem;
-}
-
-.what-we-do-note-list .prototype-note h3 {
-  font-size: clamp(0.95rem, min(1.15vw, 2vh), 1.08rem);
-}
-
-.what-we-do-note-list .prototype-note p {
-  font-size: clamp(0.8rem, min(0.95vw, 1.7vh), 0.92rem);
-  line-height: 1.4;
+  min-height: 10.5rem;
+  max-height: none;
 }
 
 .product-actions {
@@ -1994,6 +1982,35 @@ main > section:not(.hero) > .section-shell {
     align-items: start;
   }
 
+  main > :is(
+    #o-que-fazemos,
+    #monitorizacao,
+    #cloud,
+    #nordgo,
+    #prototipagem,
+    #produtos,
+    #parceiros
+  ) > .section-shell {
+    align-items: center;
+    padding-top: 0;
+  }
+
+  main > :is(
+    #o-que-fazemos,
+    #monitorizacao,
+    #cloud,
+    #nordgo,
+    #prototipagem,
+    #produtos,
+    #parceiros
+  ) :is(.feature-grid, .monitoring-grid, .placeholder-layout) {
+    align-content: center;
+  }
+
+  #prototipagem .feature-grid-standard {
+    align-items: center;
+  }
+
   #prototipagem .prototype-model-column {
     align-self: center;
   }
@@ -2139,13 +2156,13 @@ main > section:not(.hero) > .section-shell {
     bottom: clamp(1rem, 2.5vh, 1.75rem);
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    padding: 0.7rem 0.85rem;
-    border: 1px solid var(--line);
+    gap: 0.35rem;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: var(--radius-pill);
-    background: rgba(10, 10, 10, 0.78);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: rgba(10, 10, 10, 0.48);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     transform: translateX(-50%);
     transition: opacity 180ms ease;
   }
@@ -2489,19 +2506,19 @@ main > section:not(.hero) > .section-shell {
     left: 50%;
     display: flex;
     align-items: center;
-    gap: 0.05rem;
-    padding: 0.35rem 0.45rem;
-    border: 1px solid var(--line);
+    gap: 0.02rem;
+    padding: 0.3rem 0.4rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: var(--radius-pill);
-    background: rgba(10, 10, 10, 0.82);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: rgba(10, 10, 10, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     transform: translateX(-50%);
   }
 
   .horizontal-progress button {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
   }
 
   .horizontal-progress button::before {
@@ -2514,7 +2531,7 @@ main > section:not(.hero) > .section-shell {
   }
 
   .horizontal-progress button.is-active::before {
-    width: 16px;
+    width: 14px;
   }
 }
 
@@ -2934,12 +2951,12 @@ main > section:not(.hero) > .section-shell {
   .what-we-do-note-list {
     grid-column: 1 / -1;
     grid-template-columns: 1fr;
-    margin-top: 1.25rem;
+    margin-top: 2rem;
   }
 
   .what-we-do-note-list .prototype-note {
-    min-height: 0;
-    max-height: 6.25rem;
+    min-height: 8.75rem;
+    max-height: none;
   }
 
   .product-catalog-cta {
