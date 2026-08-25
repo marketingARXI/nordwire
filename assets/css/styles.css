@@ -9,8 +9,8 @@
   --bg-elevated: #1a1a1a;
   --bg-panel: #222222;
   --text: #ffffff;
-  --muted: #9a9a9a;
-  --muted-deep: #6a6a6a;
+  --muted: #a0a4ad;
+  --muted-deep: #858a95;
   --line: rgba(255, 255, 255, 0.08);
   --line-strong: rgba(255, 255, 255, 0.16);
   --accent: #2260f2;
@@ -25,8 +25,17 @@
   --radius-pill: 999px;
   --font-display: "Inter", "Segoe UI", sans-serif;
   --font-body: "Inter", "Segoe UI", sans-serif;
-  --section-title-size: clamp(2.15rem, min(5vw, 8vh), 4.5rem);
-  --section-subtitle-size: clamp(1rem, min(1.35vw, 2.4vh), 1.3rem);
+  --fs-h1: clamp(2.65rem, min(4.8vw, 7.2vh), 4.5rem);
+  --fs-h2: clamp(2.3rem, min(4.2vw, 6.5vh), 4rem);
+  --fs-h3: clamp(1rem, min(1.25vw, 2.1vh), 1.25rem);
+  --fs-body: clamp(1rem, min(1.22vw, 2.05vh), 1.2rem);
+  --fs-ui: clamp(0.88rem, min(0.95vw, 1.7vh), 1rem);
+  --fs-small: clamp(0.78rem, min(0.82vw, 1.45vh), 0.9rem);
+  --lh-heading: 1.1;
+  --lh-body: 1.55;
+  --tracking-heading: -0.02em;
+  --section-title-size: var(--fs-h2);
+  --section-subtitle-size: var(--fs-body);
   --section-content-top: 21dvh;
   --footer-panel-height: clamp(10.5rem, 24dvh, 14rem);
   --motion-duration: 280ms;
@@ -1162,25 +1171,28 @@ body.nav-open .menu-toggle span:nth-child(3) {
 
 .eyebrow {
   margin: 0 0 1rem;
-  font-size: 0.82rem;
-  text-transform: uppercase;
-  letter-spacing: 0.24em;
   color: var(--muted);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  line-height: 1.35;
+  text-transform: uppercase;
 }
 
 .hero-copy h1,
 .section-copy h2,
 .footer-heading-wrap h2 {
   margin: 0;
+  color: var(--text);
   font-family: var(--font-display);
   font-weight: 600;
-  letter-spacing: -0.045em;
+  letter-spacing: var(--tracking-heading);
 }
 
 .hero-copy h1 {
   max-width: 14ch;
-  font-size: var(--section-title-size);
-  line-height: 0.98;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-heading);
   text-align: left;
 }
 
@@ -1188,8 +1200,9 @@ body.nav-open .menu-toggle span:nth-child(3) {
   max-width: 44rem;
   margin: 1.5rem 0 0;
   color: var(--muted);
-  font-size: var(--section-subtitle-size);
-  line-height: 1.5;
+  font-size: var(--fs-body);
+  font-weight: 400;
+  line-height: var(--lh-body);
   text-align: left;
 }
 
@@ -1198,13 +1211,15 @@ body.nav-open .menu-toggle span:nth-child(3) {
 .meta-list span,
 .stat-block span {
   color: var(--muted);
-  line-height: 1.8;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: var(--lh-body);
 }
 
 .lead {
   max-width: 34rem;
   margin: 1.4rem 0 0;
-  font-size: clamp(0.95rem, 1.1vw, 1rem);
+  font-size: var(--fs-body);
 }
 
 .hero-actions {
@@ -1471,15 +1486,17 @@ main > section:not(.hero) > .section-shell {
 
 .section-copy h2 {
   max-width: 14ch;
-  font-size: var(--section-title-size);
-  line-height: 0.98;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
 }
 
 .section-copy > p {
   max-width: 42rem;
   margin: clamp(0.9rem, 2vh, 1.5rem) 0 0;
-  font-size: var(--section-subtitle-size);
-  line-height: 1.5;
+  font-size: var(--fs-body);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: var(--lh-body);
 }
 
 .controlled-line {
@@ -1570,16 +1587,21 @@ main > section:not(.hero) > .section-shell {
 
 .value-highlight h3 {
   margin: clamp(0.8rem, 1.6vh, 1.2rem) 0 0.4rem;
-  font-size: clamp(1rem, min(1.4vw, 2.4vh), 1.3rem);
+  color: var(--text);
+  font-size: var(--fs-h3);
   font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.25;
 }
 
 .value-highlight p {
   max-width: 28ch;
   margin: 0;
   color: var(--muted);
-  font-size: clamp(0.88rem, min(1.05vw, 2vh), 1rem);
-  line-height: 1.5;
+  font-size: var(--fs-small);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: var(--lh-body);
 }
 
 .prototype-note-list {
@@ -1622,14 +1644,14 @@ main > section:not(.hero) > .section-shell {
 }
 
 #o-que-fazemos .section-copy h2 {
-  font-size: clamp(2.1rem, min(4.4vw, 6.6vh), 4rem);
-  line-height: 1;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
 }
 
 #o-que-fazemos .section-copy > p {
   margin-top: clamp(0.7rem, 1.4vh, 1rem);
-  font-size: clamp(0.95rem, min(1.2vw, 1.9vh), 1.1rem);
-  line-height: 1.45;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
 }
 
 .what-we-do-note-list .prototype-note {
@@ -1704,9 +1726,10 @@ main > section:not(.hero) > .section-shell {
 
 .form-field > span {
   color: var(--text);
-  font-size: 0.78rem;
+  font-size: var(--fs-small);
   font-weight: 600;
   letter-spacing: 0.04em;
+  line-height: 1.35;
 }
 
 .form-field input,
@@ -1717,8 +1740,10 @@ main > section:not(.hero) > .section-shell {
   background: rgba(13, 15, 20, 0.72);
   color: var(--text);
   font: inherit;
-  font-size: 0.92rem;
-  line-height: 1.45;
+  font-size: var(--fs-ui);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: var(--lh-body);
   transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
 }
 
@@ -1886,8 +1911,14 @@ main > section:not(.hero) > .section-shell {
 .stat-block strong {
   display: block;
   font-size: clamp(1.7rem, 2vw, 2.2rem);
-  letter-spacing: -0.05em;
+  font-weight: 600;
+  letter-spacing: var(--tracking-heading);
+  line-height: 1.1;
   margin-bottom: 0.4rem;
+}
+
+.stat-block span {
+  font-size: var(--fs-small);
 }
 
 .site-footer {
@@ -1900,8 +1931,8 @@ main > section:not(.hero) > .section-shell {
 }
 
 .footer-heading-wrap h2 {
-  font-size: clamp(2.6rem, 5vw, 5rem);
-  line-height: 0.94;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-heading);
   max-width: 10ch;
 }
 
@@ -2347,6 +2378,12 @@ main > section:not(.hero) > .section-shell {
 @media (max-width: 1024px) {
   :root {
     --content-width: min(100vw - 40px, 1540px);
+    --fs-h1: clamp(2.4rem, min(5.8vw, 6.6vh), 3.7rem);
+    --fs-h2: clamp(2.2rem, min(5.1vw, 6vh), 3.3rem);
+    --fs-h3: clamp(1rem, min(1.8vw, 2vh), 1.2rem);
+    --fs-body: clamp(1rem, min(1.75vw, 1.9vh), 1.15rem);
+    --fs-ui: clamp(0.88rem, min(1.5vw, 1.65vh), 0.98rem);
+    --fs-small: clamp(0.78rem, min(1.35vw, 1.45vh), 0.88rem);
     --section-space: clamp(4.25rem, 8vh, 6rem);
   }
 
@@ -2575,6 +2612,12 @@ main > section:not(.hero) > .section-shell {
 @media (max-width: 768px) {
   :root {
     --content-width: min(100vw - 28px, 1540px);
+    --fs-h1: clamp(2.25rem, 9.5vw, 3rem);
+    --fs-h2: clamp(2rem, 8.4vw, 2.75rem);
+    --fs-h3: clamp(1rem, 4.4vw, 1.18rem);
+    --fs-body: clamp(1rem, 4.2vw, 1.12rem);
+    --fs-ui: clamp(0.9rem, 3.7vw, 1rem);
+    --fs-small: clamp(0.78rem, 3.2vw, 0.88rem);
     --section-space: clamp(4.5rem, 10vw, 6rem);
     --header-height: 76px;
     --header-height-compact: 64px;
@@ -2635,7 +2678,7 @@ main > section:not(.hero) > .section-shell {
   .hero-copy h1 {
     max-width: 14ch;
     margin-inline: 0;
-    font-size: var(--section-title-size);
+    font-size: var(--fs-h1);
     text-align: left;
   }
 
@@ -2654,7 +2697,7 @@ main > section:not(.hero) > .section-shell {
   .feature-item p,
   .meta-list span,
   .stat-block span {
-    font-size: 0.95rem;
+    font-size: var(--fs-small);
   }
 
   .hero-tagline {
@@ -2699,6 +2742,17 @@ main > section:not(.hero) > .section-shell {
     grid-template-columns: 1fr;
   }
 
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --fs-h1: clamp(3.5rem, min(4.55vw, 7.2vh), 4.75rem);
+    --fs-h2: clamp(3.2rem, min(4vw, 6.4vh), 4.25rem);
+    --fs-h3: clamp(1.08rem, min(1.2vw, 2vh), 1.3rem);
+    --fs-body: clamp(1.05rem, min(1.15vw, 1.95vh), 1.25rem);
+    --fs-ui: clamp(0.92rem, min(0.9vw, 1.55vh), 1rem);
+    --fs-small: clamp(0.8rem, min(0.78vw, 1.35vh), 0.92rem);
+  }
 }
 
 @media (max-width: 640px) {
