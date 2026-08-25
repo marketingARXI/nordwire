@@ -44,6 +44,9 @@ let horizontalProgress;
 let horizontalProgressButtons = [];
 let wheelLocked = false;
 let wheelLockTimer;
+let wheelGestureDelta = 0;
+let wheelGestureLastAt = 0;
+let wheelLockUntil = 0;
 let horizontalScrollFrame;
 let horizontalAnimationFrame;
 let horizontalAnimationTargetIndex;
@@ -1088,6 +1091,33 @@ const hasScrollableVerticalContent = (section) => {
   );
 };
 
+const touchpadGestureThreshold = 42;
+const wheelGestureIdleMs = 180;
+const wheelNavigationLockMs = 1000;
+
+const scheduleWheelUnlock = () => {
+  window.clearTimeout(wheelLockTimer);
+
+  const now = performance.now();
+  const animationDelay = horizontalAnimationFrame ? 80 : 0;
+  const remainingDelay = Math.max(
+    wheelLockUntil - now,
+    (wheelGestureLastAt + wheelGestureIdleMs) - now,
+    animationDelay,
+  );
+
+  if (remainingDelay > 0) {
+    wheelLockTimer = window.setTimeout(
+      scheduleWheelUnlock,
+      Math.max(32, remainingDelay),
+    );
+    return;
+  }
+
+  wheelLocked = false;
+  wheelGestureDelta = 0;
+};
+
 const handleHorizontalWheel = (event) => {
   if (
     !isHorizontalLayout()
@@ -1098,14 +1128,16 @@ const handleHorizontalWheel = (event) => {
     return;
   }
 
-  const direction = Math.sign(event.deltaY);
-  if (!direction) {
-    return;
+  const eventTime = performance.now();
+  if (eventTime - wheelGestureLastAt > wheelGestureIdleMs) {
+    wheelGestureDelta = 0;
   }
+  wheelGestureLastAt = eventTime;
 
+  const rawDirection = Math.sign(event.deltaY);
   const currentIndex = getHorizontalSectionIndex();
   const currentSection = sections[currentIndex];
-  if (!currentSection) {
+  if (!currentSection || !rawDirection) {
     return;
   }
 
@@ -1116,34 +1148,61 @@ const handleHorizontalWheel = (event) => {
       >= currentSection.scrollHeight - 2
     );
 
-    if ((direction > 0 && !atBottom) || (direction < 0 && !atTop)) {
+    if ((rawDirection > 0 && !atBottom) || (rawDirection < 0 && !atTop)) {
+      wheelGestureDelta = 0;
       return;
     }
   }
 
-  const nextIndex = currentIndex + direction;
-  if (nextIndex < 0 || nextIndex >= sections.length) {
+  event.preventDefault();
+  if (wheelLocked) {
+    scheduleWheelUnlock();
     return;
   }
 
-  event.preventDefault();
-  if (wheelLocked) {
+  const isLikelyTouchpad = (
+    event.deltaMode === WheelEvent.DOM_DELTA_PIXEL
+    && Math.abs(event.deltaY) < 48
+  );
+
+  if (isLikelyTouchpad) {
+    if (
+      wheelGestureDelta
+      && Math.sign(wheelGestureDelta) !== rawDirection
+    ) {
+      wheelGestureDelta = event.deltaY;
+    } else {
+      wheelGestureDelta += event.deltaY;
+    }
+
+    if (Math.abs(wheelGestureDelta) < touchpadGestureThreshold) {
+      return;
+    }
+  }
+
+  const direction = isLikelyTouchpad
+    ? Math.sign(wheelGestureDelta)
+    : rawDirection;
+  if (!direction) {
+    return;
+  }
+
+  const nextIndex = currentIndex + direction;
+  if (nextIndex < 0 || nextIndex >= sections.length) {
+    wheelGestureDelta = 0;
     return;
   }
 
   wheelLocked = true;
+  wheelGestureDelta = 0;
+  wheelLockUntil = eventTime + (reduceMotion ? 120 : wheelNavigationLockMs);
   const targetSection = sections[nextIndex];
   const targetHasScrollableContent = hasScrollableVerticalContent(targetSection);
   targetSection.scrollTop = direction < 0 && targetHasScrollableContent
     ? Math.max(0, targetSection.scrollHeight - targetSection.clientHeight)
     : 0;
   navigateToSection(nextIndex, { resetVertical: false });
-
-  window.clearTimeout(wheelLockTimer);
-  wheelLockTimer = window.setTimeout(
-    releaseWheelLock,
-    reduceMotion ? 80 : 1050,
-  );
+  scheduleWheelUnlock();
 };
 
 const handleHorizontalScroll = () => {
@@ -1161,6 +1220,8 @@ const handleHorizontalScroll = () => {
 
 const releaseWheelLock = () => {
   wheelLocked = false;
+  wheelGestureDelta = 0;
+  wheelLockUntil = 0;
   window.clearTimeout(wheelLockTimer);
 };
 
@@ -1176,7 +1237,6 @@ const enableHorizontalLayout = () => {
     capture: true,
   });
   main.addEventListener('scroll', handleHorizontalScroll, { passive: true });
-  main.addEventListener('scrollend', releaseWheelLock);
   documentRoot.classList.add('horizontal-ready');
   window.scrollTo({ top: 0, behavior: 'auto' });
   positionHorizontalSection(currentIndex);
@@ -1191,7 +1251,6 @@ const disableHorizontalLayout = () => {
   const currentIndex = getHorizontalSectionIndex();
   main.removeEventListener('wheel', handleHorizontalWheel, { capture: true });
   main.removeEventListener('scroll', handleHorizontalScroll);
-  main.removeEventListener('scrollend', releaseWheelLock);
   cancelHorizontalAnimation();
   documentRoot.classList.remove('horizontal-ready');
   body.classList.remove('footer-visible');
