@@ -433,6 +433,27 @@ body.partner-modal-open {
   outline-offset: 3px;
 }
 
+@media (min-width: 1100px) {
+  .partner-modal-section {
+    width: min(calc(100% - 3rem), 92rem);
+  }
+
+  .partner-modal-heading,
+  .partner-modal-heading h2,
+  .partner-modal-heading > p:not(.eyebrow) {
+    width: 100%;
+    max-width: none;
+  }
+
+  .partner-application .partner-modal-heading {
+    grid-column: 1 / -1;
+  }
+
+  .partner-application-form {
+    grid-column: 2 / -1;
+  }
+}
+
 @media (max-width: 1099px) {
   .partner-program-layout .section-copy {
     grid-column: 1 / span 8;
