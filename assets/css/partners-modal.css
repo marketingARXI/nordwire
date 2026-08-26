@@ -339,16 +339,15 @@ body.partner-modal-open {
 }
 
 .partner-application {
-  display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(30rem, 1.2fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: start;
+  display: block;
 }
 
 .partner-application-form {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
+  width: 100%;
+  margin-top: clamp(2rem, 4vw, 3.25rem);
   padding: clamp(1.25rem, 2.5vw, 2rem);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -445,13 +444,6 @@ body.partner-modal-open {
     max-width: none;
   }
 
-  .partner-application .partner-modal-heading {
-    grid-column: 1 / -1;
-  }
-
-  .partner-application-form {
-    grid-column: 2 / -1;
-  }
 }
 
 @media (max-width: 1099px) {
@@ -464,9 +456,6 @@ body.partner-modal-open {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .partner-application {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 767px) {
