@@ -1516,6 +1516,69 @@ main > section:not(.hero) > .section-shell {
   max-width: none;
 }
 
+.monitoring-dashboard-visual {
+  grid-column: 8 / -1;
+  align-self: center;
+  display: grid;
+  min-width: 0;
+  perspective: 1100px;
+  perspective-origin: 50% 44%;
+  place-items: center;
+}
+
+.monitoring-dashboard-tilt {
+  --dashboard-tilt-x: 0deg;
+  --dashboard-tilt-y: 0deg;
+  width: min(100%, 42rem);
+  transform: rotateX(var(--dashboard-tilt-x)) rotateY(var(--dashboard-tilt-y));
+  transform-style: preserve-3d;
+  transition: transform 460ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.monitoring-dashboard-tilt.is-tilting {
+  transition-duration: 90ms;
+}
+
+.monitoring-dashboard-float {
+  transform-style: preserve-3d;
+  animation: monitoring-dashboard-float 7.2s ease-in-out infinite;
+  will-change: transform;
+}
+
+.monitoring-dashboard-float img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 24px 30px rgba(0, 0, 0, 0.34))
+    drop-shadow(0 0 22px rgba(34, 96, 242, 0.12));
+  transform: translateZ(18px);
+}
+
+@keyframes monitoring-dashboard-float {
+  0%,
+  100% {
+    transform: translate3d(0, 2px, 0) rotateX(0.25deg) rotateZ(-0.18deg);
+  }
+
+  50% {
+    transform: translate3d(0, -7px, 0) rotateX(-0.25deg) rotateZ(0.18deg);
+  }
+}
+
+@keyframes monitoring-dashboard-float-soft {
+  0%,
+  100% {
+    transform: translate3d(0, 1px, 0) rotateZ(-0.08deg);
+  }
+
+  50% {
+    transform: translate3d(0, -3px, 0) rotateZ(0.08deg);
+  }
+}
+
 .what-we-do-grid .section-copy,
 .notes-section-grid .section-copy {
   grid-column: 1 / span 7;
@@ -3068,6 +3131,53 @@ main > section:not(.hero) > .section-shell {
   outline-offset: 3px;
 }
 
+@media (min-width: 768px) and (max-width: 1024px) {
+  #monitorizacao .monitoring-grid .section-copy {
+    grid-column: 1 / span 7;
+  }
+
+  #monitorizacao .monitoring-dashboard-visual {
+    grid-column: 8 / -1;
+  }
+
+  .monitoring-dashboard-tilt {
+    width: min(100%, 32rem);
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+
+  .monitoring-dashboard-float {
+    animation: monitoring-dashboard-float-soft 8s ease-in-out infinite;
+  }
+
+  .monitoring-dashboard-float img {
+    transform: none;
+  }
+}
+
+@media (max-width: 767px) {
+  #monitorizacao .monitoring-dashboard-visual {
+    grid-column: 1 / -1;
+    margin-top: clamp(1.25rem, 6vw, 2rem);
+  }
+
+  .monitoring-dashboard-tilt {
+    width: min(100%, 32rem);
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+
+  .monitoring-dashboard-float {
+    animation: monitoring-dashboard-float-soft 8.5s ease-in-out infinite;
+  }
+
+  .monitoring-dashboard-float img {
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -3148,5 +3258,14 @@ main > section:not(.hero) > .section-shell {
 
   .custom-cursor {
     display: none;
+  }
+
+  .monitoring-dashboard-tilt,
+  .monitoring-dashboard-float,
+  .monitoring-dashboard-float img {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto;
   }
 }
