@@ -1,6 +1,5 @@
+const siteModals = Array.from(document.querySelectorAll('[data-site-modal]'));
 const partnerModal = document.querySelector('[data-partner-modal]');
-const partnerModalOpen = document.querySelector('[data-partner-modal-open]');
-const partnerModalClose = document.querySelector('[data-partner-modal-close]');
 const partnerModalScroll = document.querySelector('[data-partner-modal-scroll]');
 const partnerApplication = document.querySelector('[data-partner-application]');
 const partnerTypeCards = Array.from(document.querySelectorAll('[data-partner-type]'));
@@ -8,11 +7,112 @@ const partnerTypeSelect = document.querySelector('[data-partner-type-select]');
 const partnerForm = document.querySelector('[data-partner-form]');
 const partnerStatus = document.querySelector('[data-partner-status]');
 const partnerReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const modalDocumentRoot = document.documentElement;
+const modalBody = document.body;
+const pageMain = document.querySelector('main');
+let activeSiteModal = null;
+let activeModalOpener = null;
+let siteModalCloseTimer;
+let savedWindowScrollY = 0;
+let savedMainScrollLeft = 0;
+
+const lockBackgroundScroll = () => {
+  savedWindowScrollY = window.scrollY;
+  savedMainScrollLeft = pageMain?.scrollLeft ?? 0;
+  modalBody.style.top = `-${savedWindowScrollY}px`;
+  modalDocumentRoot.classList.add('partner-modal-open');
+  modalBody.classList.add('partner-modal-open');
+};
+
+const unlockBackgroundScroll = () => {
+  modalDocumentRoot.classList.remove('partner-modal-open');
+  modalBody.classList.remove('partner-modal-open');
+  modalBody.style.removeProperty('top');
+  window.scrollTo({ top: savedWindowScrollY, behavior: 'auto' });
+  if (pageMain) {
+    pageMain.scrollLeft = savedMainScrollLeft;
+  }
+};
+
+const finishSiteModalClose = (modal) => {
+  modal.classList.remove('is-open', 'is-closing');
+  modal.close();
+};
+
+const closeSiteModal = (modal = activeSiteModal) => {
+  if (!modal?.open || modal.classList.contains('is-closing')) {
+    return;
+  }
+
+  modal.classList.add('is-closing');
+  modal.classList.remove('is-open');
+  window.clearTimeout(siteModalCloseTimer);
+  siteModalCloseTimer = window.setTimeout(
+    () => finishSiteModalClose(modal),
+    partnerReducedMotion ? 0 : 260,
+  );
+};
+
+const openSiteModal = (modal, opener) => {
+  if (!modal || modal.open || activeSiteModal?.open) {
+    return;
+  }
+
+  const modalScroll = modal.querySelector('[data-site-modal-scroll]');
+  activeSiteModal = modal;
+  activeModalOpener = opener;
+  lockBackgroundScroll();
+  modal.showModal();
+  if (modalScroll) {
+    modalScroll.scrollTop = 0;
+  }
+  window.requestAnimationFrame(() => modal.classList.add('is-open'));
+};
+
+siteModals.forEach((modal) => {
+  const modalName = modal.dataset.siteModal;
+  const openers = Array.from(document.querySelectorAll(`[data-site-modal-open="${modalName}"]`));
+  const closeButton = modal.querySelector('[data-site-modal-close]');
+
+  openers.forEach((opener) => {
+    opener.addEventListener('click', () => openSiteModal(modal, opener));
+  });
+
+  closeButton?.addEventListener('click', () => closeSiteModal(modal));
+
+  modal.addEventListener('cancel', (event) => {
+    event.preventDefault();
+    closeSiteModal(modal);
+  });
+
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      closeSiteModal(modal);
+    }
+  });
+
+  modal.addEventListener('close', () => {
+    window.clearTimeout(siteModalCloseTimer);
+    if (activeSiteModal === modal) {
+      unlockBackgroundScroll();
+      if (activeModalOpener instanceof HTMLElement) {
+        activeModalOpener.focus({ preventScroll: true });
+      }
+      activeSiteModal = null;
+      activeModalOpener = null;
+    }
+  });
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && activeSiteModal?.open) {
+    event.preventDefault();
+    closeSiteModal(activeSiteModal);
+  }
+});
 
 if (
   partnerModal
-  && partnerModalOpen
-  && partnerModalClose
   && partnerModalScroll
   && partnerApplication
   && partnerTypeSelect
@@ -33,14 +133,7 @@ if (
       success: 'Application registered successfully. Thank you for your interest!',
     },
   };
-  const modalDocumentRoot = document.documentElement;
-  const modalBody = document.body;
-  const pageMain = document.querySelector('main');
   let selectedPartnerType = 'integrator';
-  let opener = null;
-  let closeTimer;
-  let savedWindowScrollY = 0;
-  let savedMainScrollLeft = 0;
 
   const currentCopy = () => copy[modalDocumentRoot.lang.startsWith('en') ? 'en' : 'pt'];
 
@@ -91,52 +184,6 @@ if (
     }, partnerReducedMotion ? 0 : 420);
   };
 
-  const lockBackgroundScroll = () => {
-    savedWindowScrollY = window.scrollY;
-    savedMainScrollLeft = pageMain?.scrollLeft ?? 0;
-    modalBody.style.top = `-${savedWindowScrollY}px`;
-    modalDocumentRoot.classList.add('partner-modal-open');
-    modalBody.classList.add('partner-modal-open');
-  };
-
-  const unlockBackgroundScroll = () => {
-    modalDocumentRoot.classList.remove('partner-modal-open');
-    modalBody.classList.remove('partner-modal-open');
-    modalBody.style.removeProperty('top');
-    window.scrollTo({ top: savedWindowScrollY, behavior: 'auto' });
-    if (pageMain) {
-      pageMain.scrollLeft = savedMainScrollLeft;
-    }
-  };
-
-  const openModal = () => {
-    if (partnerModal.open) {
-      return;
-    }
-
-    opener = document.activeElement;
-    lockBackgroundScroll();
-    partnerModal.showModal();
-    partnerModalScroll.scrollTop = 0;
-    window.requestAnimationFrame(() => partnerModal.classList.add('is-open'));
-  };
-
-  const finishClose = () => {
-    partnerModal.classList.remove('is-open', 'is-closing');
-    partnerModal.close();
-  };
-
-  const closeModal = () => {
-    if (!partnerModal.open || partnerModal.classList.contains('is-closing')) {
-      return;
-    }
-
-    partnerModal.classList.add('is-closing');
-    partnerModal.classList.remove('is-open');
-    window.clearTimeout(closeTimer);
-    closeTimer = window.setTimeout(finishClose, partnerReducedMotion ? 0 : 260);
-  };
-
   const validateForm = () => {
     clearFormState();
     const localizedCopy = currentCopy();
@@ -157,36 +204,6 @@ if (
     firstInvalid?.focus();
     return !firstInvalid;
   };
-
-  partnerModalOpen.addEventListener('click', openModal);
-  partnerModalClose.addEventListener('click', closeModal);
-
-  partnerModal.addEventListener('cancel', (event) => {
-    event.preventDefault();
-    closeModal();
-  });
-
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && partnerModal.open) {
-      event.preventDefault();
-      closeModal();
-    }
-  });
-
-  partnerModal.addEventListener('click', (event) => {
-    if (event.target === partnerModal) {
-      closeModal();
-    }
-  });
-
-  partnerModal.addEventListener('close', () => {
-    window.clearTimeout(closeTimer);
-    unlockBackgroundScroll();
-    if (opener instanceof HTMLElement) {
-      opener.focus({ preventScroll: true });
-    }
-    opener = null;
-  });
 
   partnerTypeCards.forEach((card) => {
     card.addEventListener('click', () => {

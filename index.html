@@ -21,7 +21,7 @@
   </script>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
   <link rel="stylesheet" href="assets/css/styles.css?v=20260827">
-  <link rel="stylesheet" href="assets/css/partners-modal.css?v=20260826-4">
+  <link rel="stylesheet" href="assets/css/partners-modal.css?v=20260828">
 </head>
 <body>
   <div class="site-preloader" role="status" aria-live="polite" aria-label="A carregar o site" data-i18n-aria-label="preloader.label">
@@ -160,6 +160,10 @@
               <p data-i18n="monitoring.subtitle">
                 Sensores desenvolvidos por nós registam a atividade de cada máquina em tempo real. E o acesso à informação é simples e imediato, diretamente junto de cada equipamento.
               </p>
+
+              <div class="copy-actions monitoring-dashboard-actions">
+                <button class="button button-primary partner-program-open monitoring-dashboard-open" type="button" data-site-modal-open="dashboard" aria-haspopup="dialog" aria-controls="dashboard-modal" data-i18n="monitoring.dashboardCta">Ver dashboard em tempo real</button>
+              </div>
 
               <div class="stats-cluster" aria-label="Estatísticas de monitorização" data-i18n-aria-label="monitoring.statsLabel">
                 <article class="stat-block">
@@ -384,7 +388,7 @@
                 Leva tecnologia industrial NordWire a mais fábricas, com apoio técnico, formação e condições pensadas para criar valor em conjunto.
               </p>
               <div class="partner-program-actions">
-                <button class="button button-primary partner-program-open" type="button" data-partner-modal-open data-i18n="partners.openModal">Quero ser parceiro</button>
+                <button class="button button-primary partner-program-open" type="button" data-partner-modal-open data-site-modal-open="partners" aria-haspopup="dialog" aria-controls="partner-modal" data-i18n="partners.openModal">Quero ser parceiro</button>
               </div>
             </div>
           </div>
@@ -471,19 +475,19 @@
     </footer>
   </div>
 
-  <dialog class="partner-modal" data-partner-modal aria-labelledby="partner-modal-label">
+  <dialog class="partner-modal" id="partner-modal" data-partner-modal data-site-modal="partners" aria-labelledby="partner-modal-label">
     <div class="partner-modal-frame">
       <div class="partner-modal-toolbar">
         <div>
           <p class="partner-modal-kicker" id="partner-modal-label" data-i18n="partnerModal.kicker">Programa de Parceiros NordWire</p>
           <p class="partner-modal-position" data-i18n="partnerModal.position">Descobre o programa e envia a tua candidatura.</p>
         </div>
-        <button class="partner-modal-close" type="button" data-partner-modal-close aria-label="Fechar programa de parceiros" data-i18n-aria-label="partnerModal.closeLabel">
+        <button class="partner-modal-close" type="button" data-partner-modal-close data-site-modal-close aria-label="Fechar programa de parceiros" data-i18n-aria-label="partnerModal.closeLabel">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
         </button>
       </div>
 
-      <div class="partner-modal-scroll" data-partner-modal-scroll>
+      <div class="partner-modal-scroll" data-partner-modal-scroll data-site-modal-scroll>
         <section class="partner-modal-section" aria-labelledby="partner-benefits-title">
           <div class="partner-modal-heading">
             <p class="eyebrow" data-i18n="partnerModal.benefits.eyebrow">Benefícios</p>
@@ -575,6 +579,52 @@
     </div>
   </dialog>
 
+  <dialog class="partner-modal dashboard-modal" id="dashboard-modal" data-site-modal="dashboard" aria-labelledby="dashboard-modal-label">
+    <div class="partner-modal-frame">
+      <div class="partner-modal-toolbar">
+        <div>
+          <h2 class="partner-modal-kicker" id="dashboard-modal-label" data-i18n="dashboardModal.kicker">Dashboard NordWire</h2>
+          <p class="partner-modal-position" data-i18n="dashboardModal.position">Monitorização industrial em tempo real.</p>
+        </div>
+        <button class="partner-modal-close" type="button" data-site-modal-close aria-label="Fechar dashboard" data-i18n-aria-label="dashboardModal.closeLabel">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+
+      <div class="partner-modal-scroll dashboard-modal-scroll" data-site-modal-scroll>
+        <section class="partner-modal-section dashboard-modal-overview" aria-label="Funcionalidades do dashboard NordWire" data-i18n-aria-label="dashboardModal.featuresLabel">
+          <div class="dashboard-modal-image-frame">
+            <img
+              src="assets/images/dashboard-nordwire.png"
+              alt="Dashboard de monitorização NordWire com dados de produção em tempo real."
+              data-i18n-alt="monitoring.dashboardAlt"
+              decoding="async"
+            >
+          </div>
+
+          <div class="dashboard-modal-grid">
+            <article class="partner-modal-card dashboard-modal-card">
+              <h3 data-i18n="dashboardModal.oee.title">OEE em tempo real</h3>
+              <p data-i18n="dashboardModal.oee.description">Acompanha a eficiência de cada linha ao segundo.</p>
+            </article>
+            <article class="partner-modal-card dashboard-modal-card">
+              <h3 data-i18n="dashboardModal.downtime.title">Deteção automática de paragens</h3>
+              <p data-i18n="dashboardModal.downtime.description">Identifica e classifica o downtime sem intervenção manual.</p>
+            </article>
+            <article class="partner-modal-card dashboard-modal-card">
+              <h3 data-i18n="dashboardModal.multiline.title">Visão multi-linha</h3>
+              <p data-i18n="dashboardModal.multiline.description">Monitoriza várias máquinas em simultâneo num só ecrã.</p>
+            </article>
+            <article class="partner-modal-card dashboard-modal-card">
+              <h3 data-i18n="dashboardModal.history.title">Histórico e análise</h3>
+              <p data-i18n="dashboardModal.history.description">Compara turnos e identifica padrões de perda.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+  </dialog>
+
   <button class="back-to-top" type="button" tabindex="-1" aria-hidden="true" aria-label="Voltar ao início" data-i18n-aria-label="backToTop.label">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6.5 10.5 12 5l5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </button>
@@ -584,7 +634,7 @@
     <span class="custom-cursor-drag-label" data-i18n="cursor.drag">Arrastar</span>
   </div>
 
-  <script src="assets/js/script.js?v=20260827"></script>
-  <script src="assets/js/partners-modal.js?v=20260826-2"></script>
+  <script src="assets/js/script.js?v=20260828"></script>
+  <script src="assets/js/partners-modal.js?v=20260828"></script>
 </body>
 </html>
