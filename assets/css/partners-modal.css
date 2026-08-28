@@ -63,6 +63,10 @@ body.partner-modal-open {
   -webkit-backdrop-filter: blur(24px) saturate(115%);
 }
 
+.dashboard-modal {
+  width: min(92vw, 60rem);
+}
+
 .partner-modal[open] {
   display: block;
 }
@@ -180,6 +184,12 @@ body.partner-modal-open {
 
 .dashboard-modal-overview {
   padding-block: clamp(1.25rem, 3vw, 2.5rem);
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+}
+
+.dashboard-modal.is-open .dashboard-modal-overview {
+  animation: dashboard-modal-content-in 540ms cubic-bezier(0.16, 1, 0.3, 1) 60ms forwards;
 }
 
 .dashboard-modal-image-frame {
@@ -193,6 +203,7 @@ body.partner-modal-open {
     0 24px 64px rgba(0, 0, 0, 0.32),
     0 0 34px rgba(34, 96, 242, 0.09),
     inset 0 1px 0 rgba(255, 255, 255, 0.045);
+  margin-top: clamp(1rem, 2.4vw, 2rem);
   place-items: center;
 }
 
@@ -201,29 +212,22 @@ body.partner-modal-open {
   width: 100%;
   height: auto;
   object-fit: contain;
-  opacity: 0;
-  transform: translate3d(0, 14px, 0) scale(0.988);
-}
-
-.dashboard-modal.is-open .dashboard-modal-image-frame img {
-  animation: dashboard-modal-image-in 560ms cubic-bezier(0.16, 1, 0.3, 1) 70ms forwards;
 }
 
 .dashboard-modal-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(0.8rem, 1.5vw, 1.15rem);
-  margin-top: clamp(1rem, 2.4vw, 2rem);
 }
 
 .dashboard-modal-card {
   min-width: 0;
 }
 
-@keyframes dashboard-modal-image-in {
+@keyframes dashboard-modal-content-in {
   to {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -575,8 +579,8 @@ body.partner-modal-open {
     transform: none;
   }
 
-  .dashboard-modal-image-frame img,
-  .dashboard-modal.is-open .dashboard-modal-image-frame img {
+  .dashboard-modal-overview,
+  .dashboard-modal.is-open .dashboard-modal-overview {
     animation: none;
     opacity: 1;
     transform: none;

@@ -23,13 +23,11 @@ const placeholderLinks = Array.from(document.querySelectorAll('[data-placeholder
 const languageButtons = Array.from(document.querySelectorAll('[data-language]'));
 const ambientLayers = Array.from(document.querySelectorAll('[data-ambient-background]'));
 const customCursor = document.querySelector('.custom-cursor');
-const monitoringDashboard = document.querySelector('[data-dashboard-tilt]');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const horizontalMedia = window.matchMedia('(min-width: 768px)');
 const staticHeroMedia = window.matchMedia('(max-width: 1024px)');
 const ambientPointerMedia = window.matchMedia('(min-width: 1025px) and (hover: hover) and (pointer: fine)');
 const customCursorMedia = window.matchMedia('(min-width: 1025px) and (hover: hover) and (pointer: fine)');
-const dashboardPointerMedia = window.matchMedia('(min-width: 1025px) and (hover: hover) and (pointer: fine)');
 const sections = Array.from(main?.querySelectorAll(':scope > section') ?? []);
 const countUpNumbers = Array.from(document.querySelectorAll('[data-count-up]'));
 const sectionByHash = new Map(sections.map((section) => [`#${section.id}`, section]));
@@ -671,58 +669,6 @@ const handleAmbientPointer = (event) => {
 };
 
 main?.addEventListener('pointermove', handleAmbientPointer, { passive: true });
-
-if (monitoringDashboard) {
-  const dashboardTiltLayer = monitoringDashboard.querySelector('.monitoring-dashboard-tilt');
-  let dashboardTiltFrame;
-  let currentTiltX = 0;
-  let currentTiltY = 0;
-  let targetTiltX = 0;
-  let targetTiltY = 0;
-
-  const renderDashboardTilt = () => {
-    currentTiltX += (targetTiltX - currentTiltX) * 0.14;
-    currentTiltY += (targetTiltY - currentTiltY) * 0.14;
-    dashboardTiltLayer?.style.setProperty('--dashboard-tilt-x', `${currentTiltX.toFixed(2)}deg`);
-    dashboardTiltLayer?.style.setProperty('--dashboard-tilt-y', `${currentTiltY.toFixed(2)}deg`);
-
-    const stillMoving = Math.abs(targetTiltX - currentTiltX) > 0.02
-      || Math.abs(targetTiltY - currentTiltY) > 0.02;
-    dashboardTiltFrame = stillMoving
-      ? window.requestAnimationFrame(renderDashboardTilt)
-      : undefined;
-  };
-
-  const requestDashboardTiltFrame = () => {
-    if (!dashboardTiltFrame) {
-      dashboardTiltFrame = window.requestAnimationFrame(renderDashboardTilt);
-    }
-  };
-
-  const resetDashboardTilt = () => {
-    targetTiltX = 0;
-    targetTiltY = 0;
-    dashboardTiltLayer?.classList.remove('is-tilting');
-    requestDashboardTiltFrame();
-  };
-
-  monitoringDashboard.addEventListener('pointermove', (event) => {
-    if (reduceMotion || !dashboardPointerMedia.matches || !dashboardTiltLayer) {
-      return;
-    }
-
-    const bounds = monitoringDashboard.getBoundingClientRect();
-    const pointerX = Math.max(-1, Math.min(1, ((event.clientX - bounds.left) / bounds.width) * 2 - 1));
-    const pointerY = Math.max(-1, Math.min(1, ((event.clientY - bounds.top) / bounds.height) * 2 - 1));
-    targetTiltX = pointerY * -2.2;
-    targetTiltY = pointerX * 2.8;
-    dashboardTiltLayer.classList.add('is-tilting');
-    requestDashboardTiltFrame();
-  }, { passive: true });
-
-  monitoringDashboard.addEventListener('pointerleave', resetDashboardTilt);
-  dashboardPointerMedia.addEventListener('change', resetDashboardTilt);
-}
 
 const renderCustomCursor = () => {
   customCursorX += (customCursorTargetX - customCursorX) * 0.22;
