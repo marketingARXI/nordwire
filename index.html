@@ -20,8 +20,8 @@
     window.ModelViewerElement.dracoDecoderLocation = "https://www.gstatic.com/draco/versioned/decoders/1.5.7/";
   </script>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
-  <link rel="stylesheet" href="assets/css/styles.css?v=20260827">
-  <link rel="stylesheet" href="assets/css/partners-modal.css?v=20260828">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260828-2">
+  <link rel="stylesheet" href="assets/css/partners-modal.css?v=20260828-2">
 </head>
 <body>
   <div class="site-preloader" role="status" aria-live="polite" aria-label="A carregar o site" data-i18n-aria-label="preloader.label">
@@ -161,10 +161,6 @@
                 Sensores desenvolvidos por nós registam a atividade de cada máquina em tempo real. E o acesso à informação é simples e imediato, diretamente junto de cada equipamento.
               </p>
 
-              <div class="copy-actions monitoring-dashboard-actions">
-                <button class="button button-primary partner-program-open monitoring-dashboard-open" type="button" data-site-modal-open="dashboard" aria-haspopup="dialog" aria-controls="dashboard-modal" data-i18n="monitoring.dashboardCta">Ver dashboard em tempo real</button>
-              </div>
-
               <div class="stats-cluster" aria-label="Estatísticas de monitorização" data-i18n-aria-label="monitoring.statsLabel">
                 <article class="stat-block">
                   <strong data-count-up data-count-target="99.2" data-count-decimals="1" data-count-suffix="%">99.2%</strong>
@@ -179,19 +175,20 @@
                   <span data-i18n="monitoring.stat3">Tempo médio de resposta</span>
                 </article>
               </div>
-            </div>
-            <div class="monitoring-dashboard-visual reveal" data-reveal data-dashboard-tilt>
-              <div class="monitoring-dashboard-tilt">
-                <div class="monitoring-dashboard-float">
-                  <img
-                    src="assets/images/dashboard-nordwire.png"
-                    alt="Dashboard de monitorização NordWire com dados de produção em tempo real."
-                    data-i18n-alt="monitoring.dashboardAlt"
-                    loading="lazy"
-                    decoding="async"
-                  >
-                </div>
+
+              <div class="copy-actions monitoring-dashboard-actions">
+                <button class="button button-primary partner-program-open monitoring-dashboard-open" type="button" data-site-modal-open="dashboard" aria-haspopup="dialog" aria-controls="dashboard-modal" data-i18n="monitoring.dashboardCta">Ver dashboard em tempo real</button>
               </div>
+            </div>
+            <div class="monitoring-dashboard-visual reveal" data-reveal>
+              <img
+                class="monitoring-dashboard-image"
+                src="assets/images/dashboard-nordwire.png"
+                alt="Dashboard de monitorização NordWire com dados de produção em tempo real."
+                data-i18n-alt="monitoring.dashboardAlt"
+                loading="lazy"
+                decoding="async"
+              >
             </div>
           </div>
         </div>
@@ -593,15 +590,6 @@
 
       <div class="partner-modal-scroll dashboard-modal-scroll" data-site-modal-scroll>
         <section class="partner-modal-section dashboard-modal-overview" aria-label="Funcionalidades do dashboard NordWire" data-i18n-aria-label="dashboardModal.featuresLabel">
-          <div class="dashboard-modal-image-frame">
-            <img
-              src="assets/images/dashboard-nordwire.png"
-              alt="Dashboard de monitorização NordWire com dados de produção em tempo real."
-              data-i18n-alt="monitoring.dashboardAlt"
-              decoding="async"
-            >
-          </div>
-
           <div class="dashboard-modal-grid">
             <article class="partner-modal-card dashboard-modal-card">
               <h3 data-i18n="dashboardModal.oee.title">OEE em tempo real</h3>
@@ -620,6 +608,15 @@
               <p data-i18n="dashboardModal.history.description">Compara turnos e identifica padrões de perda.</p>
             </article>
           </div>
+
+          <div class="dashboard-modal-image-frame">
+            <img
+              src="assets/images/dashboard-nordwire.png"
+              alt="Dashboard de monitorização NordWire com dados de produção em tempo real."
+              data-i18n-alt="monitoring.dashboardAlt"
+              decoding="async"
+            >
+          </div>
         </section>
       </div>
     </div>
@@ -634,7 +631,7 @@
     <span class="custom-cursor-drag-label" data-i18n="cursor.drag">Arrastar</span>
   </div>
 
-  <script src="assets/js/script.js?v=20260828"></script>
-  <script src="assets/js/partners-modal.js?v=20260828"></script>
+  <script src="assets/js/script.js?v=20260828-2"></script>
+  <script src="assets/js/partners-modal.js?v=20260828-2"></script>
 </body>
 </html>
