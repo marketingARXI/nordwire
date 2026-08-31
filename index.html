@@ -20,8 +20,8 @@
     window.ModelViewerElement.dracoDecoderLocation = "https://www.gstatic.com/draco/versioned/decoders/1.5.7/";
   </script>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
-  <link rel="stylesheet" href="assets/css/styles.css?v=20260828-2">
-  <link rel="stylesheet" href="assets/css/partners-modal.css?v=20260828-2">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260831">
+  <link rel="stylesheet" href="assets/css/partners-modal.css?v=20260831">
 </head>
 <body>
   <div class="site-preloader" role="status" aria-live="polite" aria-label="A carregar o site" data-i18n-aria-label="preloader.label">
@@ -177,18 +177,8 @@
               </div>
 
               <div class="copy-actions monitoring-dashboard-actions">
-                <button class="button button-primary partner-program-open monitoring-dashboard-open" type="button" data-site-modal-open="dashboard" aria-haspopup="dialog" aria-controls="dashboard-modal" data-i18n="monitoring.dashboardCta">Ver dashboard em tempo real</button>
+                <button class="button button-primary partner-program-open monitoring-dashboard-open" type="button" data-site-modal-open="dashboard" aria-haspopup="dialog" aria-controls="dashboard-modal" data-i18n="monitoring.dashboardCta">Ver como os sensores captam a atividade</button>
               </div>
-            </div>
-            <div class="monitoring-dashboard-visual reveal" data-reveal>
-              <img
-                class="monitoring-dashboard-image"
-                src="assets/images/dashboard-nordwire.png"
-                alt="Dashboard de monitorização NordWire com dados de produção em tempo real."
-                data-i18n-alt="monitoring.dashboardAlt"
-                loading="lazy"
-                decoding="async"
-              >
             </div>
           </div>
         </div>
@@ -590,22 +580,27 @@
 
       <div class="partner-modal-scroll dashboard-modal-scroll" data-site-modal-scroll>
         <section class="partner-modal-section dashboard-modal-overview" aria-label="Funcionalidades do dashboard NordWire" data-i18n-aria-label="dashboardModal.featuresLabel">
+          <div class="partner-modal-heading dashboard-modal-heading">
+            <h2 data-i18n="dashboardModal.title">Da máquina ao ecrã, em tempo real</h2>
+            <p data-i18n="dashboardModal.subtitle">Os sensores NordWire captam a atividade de cada máquina e transformam-na na informação que vês no dashboard.</p>
+          </div>
+
           <div class="dashboard-modal-grid">
             <article class="partner-modal-card dashboard-modal-card">
-              <h3 data-i18n="dashboardModal.oee.title">OEE em tempo real</h3>
-              <p data-i18n="dashboardModal.oee.description">Acompanha a eficiência de cada linha ao segundo.</p>
+              <h3 data-i18n="dashboardModal.oee.title">Sensores em cada linha</h3>
+              <p data-i18n="dashboardModal.oee.description">Os dispositivos NordWire ligados às máquinas captam a atividade em contínuo, e é essa leitura que alimenta os contadores e o estado de cada máquina no dashboard.</p>
             </article>
             <article class="partner-modal-card dashboard-modal-card">
-              <h3 data-i18n="dashboardModal.downtime.title">Deteção automática de paragens</h3>
-              <p data-i18n="dashboardModal.downtime.description">Identifica e classifica o downtime sem intervenção manual.</p>
+              <h3 data-i18n="dashboardModal.downtime.title">Recolha automática</h3>
+              <p data-i18n="dashboardModal.downtime.description">Os dados são captados ao segundo, sem intervenção manual, para que o OEE e as paragens que vês sejam sempre reais e atualizados.</p>
             </article>
             <article class="partner-modal-card dashboard-modal-card">
-              <h3 data-i18n="dashboardModal.multiline.title">Visão multi-linha</h3>
-              <p data-i18n="dashboardModal.multiline.description">Monitoriza várias máquinas em simultâneo num só ecrã.</p>
+              <h3 data-i18n="dashboardModal.multiline.title">Envio para a cloud</h3>
+              <p data-i18n="dashboardModal.multiline.description">A informação sobe em tempo real para a plataforma NordWire, permitindo acompanhar tudo à distância no mesmo ecrã.</p>
             </article>
             <article class="partner-modal-card dashboard-modal-card">
-              <h3 data-i18n="dashboardModal.history.title">Histórico e análise</h3>
-              <p data-i18n="dashboardModal.history.description">Compara turnos e identifica padrões de perda.</p>
+              <h3 data-i18n="dashboardModal.history.title">Do sinal ao ecrã</h3>
+              <p data-i18n="dashboardModal.history.description">Cada sinal captado transforma-se nos gráficos, na timeline e nos indicadores que vês no dashboard.</p>
             </article>
           </div>
 
@@ -631,7 +626,7 @@
     <span class="custom-cursor-drag-label" data-i18n="cursor.drag">Arrastar</span>
   </div>
 
-  <script src="assets/js/script.js?v=20260828-2"></script>
+  <script src="assets/js/script.js?v=20260831"></script>
   <script src="assets/js/partners-modal.js?v=20260828-2"></script>
 </body>
 </html>
