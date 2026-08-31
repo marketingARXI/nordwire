@@ -192,6 +192,10 @@ body.partner-modal-open {
   animation: dashboard-modal-content-in 540ms cubic-bezier(0.16, 1, 0.3, 1) 60ms forwards;
 }
 
+.dashboard-modal-heading > p:not(.eyebrow) {
+  margin-top: clamp(0.45rem, 1vh, 0.7rem);
+}
+
 .dashboard-modal-image-frame {
   display: grid;
   width: 100%;
@@ -218,6 +222,7 @@ body.partner-modal-open {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(0.8rem, 1.5vw, 1.15rem);
+  margin-top: clamp(0.8rem, 1.4vw, 1.1rem);
 }
 
 .dashboard-modal-card {
