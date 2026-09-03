@@ -14,7 +14,7 @@ html.partner-modal-open, body.partner-modal-open { overflow: hidden; overscroll-
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--accent) 42%, transparent);
   border-radius: clamp(1rem, 2vw, 1.75rem);
-  background: color-mix(in srgb, var(--bg-elevated) 88%, transparent);
+  background: var(--bg-elevated);
   color: var(--text);
   box-shadow: 0 32px 100px color-mix(in srgb, var(--bg-deep) 62%, transparent), 0 0 54px var(--accent-soft);
   opacity: 0;
@@ -42,7 +42,7 @@ html.partner-modal-open, body.partner-modal-open { overflow: hidden; overscroll-
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   height: 100%;
-  background: radial-gradient(circle at 88% 8%, var(--accent-soft), transparent 28rem);
+  background: var(--bg-elevated);
 }
 
 .partner-modal-toolbar {
@@ -55,7 +55,7 @@ html.partner-modal-open, body.partner-modal-open { overflow: hidden; overscroll-
   gap: 1rem;
   padding: 0.8rem clamp(1rem, 2.4vw, 2rem);
   border-bottom: 1px solid var(--line);
-  background: color-mix(in srgb, var(--bg-panel) 88%, transparent);
+  background: var(--bg-elevated);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
 }
@@ -161,7 +161,7 @@ html.partner-modal-open, body.partner-modal-open { overflow: hidden; overscroll-
 }
 
 .partner-type-card .partner-modal-icon { grid-row: 1 / span 3; margin: 0; }
-.partner-type-index, .partner-step > span { color: var(--accent-warm); font-size: var(--fs-small); font-weight: 700; }
+.partner-type-index, .partner-step > span { color: var(--accent); font-size: var(--fs-small); font-weight: 700; }
 .partner-type-card strong { font-size: var(--fs-h3); }
 .partner-type-card > span:last-child { margin-top: 0.45rem; color: var(--muted); font-size: var(--fs-small); }
 
@@ -179,8 +179,8 @@ html.partner-modal-open, body.partner-modal-open { overflow: hidden; overscroll-
 .partner-field { display: grid; min-width: 0; gap: 0.45rem; color: var(--text); font-size: var(--fs-small); font-weight: 600; }
 .partner-field input, .partner-field textarea, .partner-field select { width: 100%; border: 1px solid var(--line-strong); border-radius: 0.8rem; background: var(--bg-panel); color: var(--text); padding: 0.8rem 0.9rem; resize: vertical; }
 .partner-field input:focus, .partner-field textarea:focus, .partner-field select:focus { border-color: var(--accent); outline: 0; box-shadow: 0 0 0 3px var(--accent-soft); }
-.partner-field [aria-invalid="true"] { border-color: var(--accent-warm); }
-.partner-field-error { min-height: 1.2em; color: var(--accent-warm); font-weight: 500; }
+.partner-field [aria-invalid="true"] { border-color: var(--accent); }
+.partner-field-error { min-height: 1.2em; color: var(--accent); font-weight: 500; }
 .partner-field-wide, .partner-application-submit, .partner-form-status { grid-column: 1 / -1; }
 .partner-application-submit { justify-self: start; }
 .partner-form-status { color: var(--text); font-size: var(--fs-small); }
