@@ -9,16 +9,13 @@ const partnerStatus = document.querySelector('[data-partner-status]');
 const partnerReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const modalDocumentRoot = document.documentElement;
 const modalBody = document.body;
-const pageMain = document.querySelector('main');
 let activeSiteModal = null;
 let activeModalOpener = null;
 let siteModalCloseTimer;
 let savedWindowScrollY = 0;
-let savedMainScrollLeft = 0;
 
 const lockBackgroundScroll = () => {
   savedWindowScrollY = window.scrollY;
-  savedMainScrollLeft = pageMain?.scrollLeft ?? 0;
   modalBody.style.top = `-${savedWindowScrollY}px`;
   modalDocumentRoot.classList.add('partner-modal-open');
   modalBody.classList.add('partner-modal-open');
@@ -29,9 +26,6 @@ const unlockBackgroundScroll = () => {
   modalBody.classList.remove('partner-modal-open');
   modalBody.style.removeProperty('top');
   window.scrollTo({ top: savedWindowScrollY, behavior: 'auto' });
-  if (pageMain) {
-    pageMain.scrollLeft = savedMainScrollLeft;
-  }
 };
 
 const finishSiteModalClose = (modal) => {
