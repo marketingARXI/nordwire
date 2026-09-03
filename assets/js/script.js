@@ -158,15 +158,6 @@ backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: r
 window.addEventListener('scroll', updateBackToTop, { passive: true });
 updateBackToTop();
 
-if (!coarsePointer) document.querySelectorAll('[data-ambient-background]').forEach((layer) => {
-  const section = layer.parentElement;
-  section?.addEventListener('pointermove', (event) => {
-    const rect = section.getBoundingClientRect();
-    layer.style.setProperty('--glow-x', `${event.clientX - rect.left}px`);
-    layer.style.setProperty('--glow-y', `${event.clientY - rect.top}px`);
-  }, { passive: true });
-});
-
 const cursor = document.querySelector('.custom-cursor');
 if (cursor && !coarsePointer && !reduceMotion) {
   document.addEventListener('pointermove', (event) => {
