@@ -1,4 +1,4 @@
-.partner-program-layout .section-copy { grid-column: 1 / span 8; max-width: 52rem; }
+.partner-program-layout .section-copy { grid-column: 1; max-width: 52rem; }
 .partner-program-open { border-color: var(--accent); background: var(--accent); box-shadow: 0 12px 30px var(--accent-soft); }
 .partner-program-open:hover { border-color: var(--accent); background: var(--accent); box-shadow: 0 16px 38px color-mix(in srgb, var(--accent) 34%, transparent); }
 
